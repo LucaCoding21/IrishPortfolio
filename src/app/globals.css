@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { 
+  color-scheme: dark; 
+}
+
+html, body, #__next { 
+  height: 100%; 
+}
+
+body { 
+  @apply bg-bg text-fg antialiased; 
+}
+
+/* Apply Figtree to all headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+  }
+}
+
+/* Smooth scrolling and selection */
+html { 
+  scroll-behavior: auto; /* Instant snapping instead of smooth */
+}
+
+/* Improve scroll snap behavior */
+html {
+  scroll-padding-top: 0;
+}
+
+::selection { 
+  background: rgba(29, 78, 216, 0.35); 
+}
+
