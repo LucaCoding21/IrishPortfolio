@@ -1,40 +1,44 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import ImageLightbox from "@/components/ui/ImageLightbox";
 
 export default function ProjectContentSections({ sections }) {
   const sectionsRef = useRef({});
+  const [activeSection, setActiveSection] = useState("problem");
+  const [sectionHeights, setSectionHeights] = useState({});
 
   // Default sections if none provided (for backward compatibility)
-  const defaultSections = [
+  const defaultSections = useMemo(() => [
     {
       id: "problem",
       title: "Problem & Research",
       content: (
         <>
           <div className="mb-12">
-            <h3 className="text-[25px] font-heading font-semibold text-black mb-4">Problem</h3>
-            <p className="text-[#000000] text-[25px] font-sans font-semibold leading-relaxed mb-8">
+            <h3 className="text-[40px] font-heading font-semibold text-black mb-4">Problem</h3>
+            <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-8">
               Em Dep Aesthetics relied on social media and a booking link, but this setup didn&apos;t reflect its brand identity or provide enough information about the business.
             </p>
-            <div className="relative w-full h-[400px] rounded-2xl overflow-hidden bg-gray-100">
-              <Image
-                src="/images/hero-bg.png"
+            <div className="relative w-full h-auto rounded-2xl overflow-hidden bg-gray-100">
+              <ImageLightbox
+                src="/images/emdep-problem.png"
                 alt="Problem illustration"
-                fill
-                className="object-cover"
+                width={1296}
+                height={870}
+                className="w-full h-auto rounded-2xl"
               />
             </div>
           </div>
 
-          <div>
-            <h3 className="text-[25px] font-heading font-semibold text-black mb-4">Research</h3>
-            <h4 className="text-[25px] font-heading font-semibold text-[#4A7C59] mb-3">Competitive Analysis & Interview</h4>
-            <p className="text-[#000000] text-[25px] font-sans font-semibold leading-relaxed mb-6">
+          <div className="mt-12">
+            <h3 className="text-[40px] font-heading font-semibold text-black mb-4">Research</h3>
+            <h4 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-3">Competitive Analysis & Interview</h4>
+            <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-6">
               I reviewed local competitors to identify effective design elements for beauty websites and interviewed the my client to understand her brand values. She wanted a clean, minimalist site that felt modern and professional.
             </p>
-            <p className="text-[#000000] text-[25px] font-sans font-semibold leading-relaxed">
+            <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed">
               Combining her vision with my research guided the overall design direction.
             </p>
           </div>
@@ -47,12 +51,12 @@ export default function ProjectContentSections({ sections }) {
       content: (
         <>
           {/* Main Title */}
-          <h2 className="text-[50px] font-heading font-bold text-black mb-8">Goal</h2>
+          <h3 className="text-[40px] font-heading font-semibold text-black mb-8">Goal</h3>
 
           {/* User Goals Section */}
-          <div className="mb-8">
-            <h3 className="text-[25px] font-heading font-bold text-[#4A7C59] mb-4">User Goals</h3>
-            <ul className="space-y-3 text-[#000000] text-[25px] font-sans font-normal leading-relaxed">
+          <div className="mt-12 mb-8">
+            <h3 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-4">User Goals</h3>
+            <ul className="space-y-3 text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed">
               <li className="flex items-start">
                 <span className="mr-3">•</span>
                 <span>Understand services & pricing quickly</span>
@@ -69,9 +73,9 @@ export default function ProjectContentSections({ sections }) {
           </div>
 
           {/* Business Goals Section */}
-          <div className="mb-12">
-            <h3 className="text-[25px] font-heading font-bold text-[#4A7C59] mb-4">Business goals</h3>
-            <ul className="space-y-3 text-[#000000] text-[25px] font-sans font-normal leading-relaxed">
+          <div className="mt-12 mb-12">
+            <h3 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-4">Business goals</h3>
+            <ul className="space-y-3 text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed">
               <li className="flex items-start">
                 <span className="mr-3">•</span>
                 <span>Increase online visibility</span>
@@ -87,53 +91,15 @@ export default function ProjectContentSections({ sections }) {
             </ul>
           </div>
 
-          {/* Action Cards Container */}
-          <div className="bg-gray-200 rounded-2xl p-8">
-            <div className="grid grid-cols-4 gap-6">
-              {/* Card 1 - Smartphone */}
-              <div className="bg-gray-100 rounded-2xl p-6 flex flex-col items-center text-center">
-                <div className="w-16 h-16 mb-4 flex items-center justify-center">
-                  <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="1.5" style={{ transform: 'rotate(15deg)' }}>
-                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
-                    <line x1="12" y1="18" x2="12" y2="18.01" />
-                  </svg>
-                </div>
-                <p className="text-[18px] font-sans font-normal text-black leading-tight">Create a professional online presence</p>
-              </div>
-
-              {/* Card 2 - T Logo */}
-              <div className="bg-gray-100 rounded-2xl p-6 flex flex-col items-center text-center">
-                <div className="w-16 h-16 mb-4 flex items-center justify-center border-2 border-dashed border-black rounded-lg">
-                  <span className="text-2xl font-bold">T</span>
-                </div>
-                <p className="text-[18px] font-sans font-normal text-black leading-tight">Design a minimalist logo</p>
-              </div>
-
-              {/* Card 3 - Desktop Monitor */}
-              <div className="bg-gray-100 rounded-2xl p-6 flex flex-col items-center text-center">
-                <div className="w-16 h-16 mb-4 flex items-center justify-center">
-                  <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="1.5">
-                    <rect x="2" y="4" width="20" height="14" rx="2" ry="2" />
-                    <line x1="8" y1="20" x2="16" y2="20" />
-                    <line x1="12" y1="16" x2="12" y2="20" />
-                    <rect x="6" y="8" width="12" height="6" rx="1" />
-                  </svg>
-                </div>
-                <p className="text-[18px] font-sans font-normal text-black leading-tight">Build a WordPress website</p>
-              </div>
-
-              {/* Card 4 - Target */}
-              <div className="bg-gray-100 rounded-2xl p-6 flex flex-col items-center text-center relative">
-                <div className="w-16 h-16 mb-4 flex items-center justify-center">
-                  <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="1.5">
-                    <circle cx="12" cy="12" r="10" />
-                    <circle cx="12" cy="12" r="6" />
-                    <circle cx="12" cy="12" r="2" />
-                  </svg>
-                </div>
-                <p className="text-[18px] font-sans font-normal text-black leading-tight">Increase foot traffic & build trust</p>
-              </div>
-            </div>
+          {/* Goals and Tools Image */}
+          <div className="relative w-full h-auto">
+            <Image
+              src="/images/emdep-goal-tools.png"
+              alt="Goals and Tools"
+              width={795}
+              height={248}
+              className="w-full h-auto"
+            />
           </div>
         </>
       )
@@ -144,57 +110,166 @@ export default function ProjectContentSections({ sections }) {
       content: (
         <>
           <div className="mb-12">
-            <h3 className="text-[25px] font-heading font-semibold text-black mb-4">Inspirations</h3>
-            <p className="text-[#000000] text-[25px] font-sans font-semibold leading-relaxed mb-8">
-              I drew inspiration from luxury spa websites, high-end fashion brands, and modern wellness platforms. The goal was to create a design that feels both calming and sophisticated.
+            <h3 className="text-[40px] font-heading font-semibold text-black mb-4">My Process</h3>
+            <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-8">
+            I created a mood board from Pinterest and Cosmos website to gather inspirations.
             </p>
-            <div className="grid grid-cols-2 gap-4 mb-12">
-              <div className="relative w-full h-[250px] rounded-2xl overflow-hidden bg-gray-100">
+            <div className="flex flex-col gap-8 mb-12">
+              {/* First Image */}
+              <div className="relative w-full h-auto">
                 <Image
-                  src="/images/hero-bg.png"
+                  src="/images/emdep-inspo2.png"
                   alt="Inspiration 1"
-                  fill
-                  className="object-cover"
+                  width={795}
+                  height={692}
+                  className="w-full h-auto"
                 />
               </div>
-              <div className="relative w-full h-[250px] rounded-2xl overflow-hidden bg-gray-100">
+              
+              {/* Text */}
+              <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed">
+                With a minimalist design in mind, I explored clean layouts from different websites and put them together like puzzle pieces to create the right vision.
+              </p>
+              
+              {/* Second Image */}
+              <div className="relative w-full h-auto">
                 <Image
-                  src="/images/hero-bg.png"
+                  src="/images/emdep-inspo1.png"
                   alt="Inspiration 2"
-                  fill
-                  className="object-cover"
+                  width={795}
+                  height={598}
+                  className="w-full h-auto"
                 />
               </div>
             </div>
           </div>
 
-          <div className="mb-12">
-            <h3 className="text-[25px] font-heading font-semibold text-black mb-4">Logo & Typography</h3>
-            <p className="text-[#000000] text-[25px] font-sans font-semibold leading-relaxed mb-8">
-              The logo design combines modern minimalism with elegant serif typography. I chose a clean, sophisticated font that reflects the premium nature of the services.
+          <div className="mt-12 mb-12">
+            <h3 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-4">Typography</h3>
+            <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-8">
+              With the typography, I wanted to incorporate a clean, modern and elegant look just like what the client has requested.
             </p>
-            <div className="relative w-full h-[400px] rounded-2xl overflow-hidden bg-gray-100">
+            <div className="relative w-full h-auto">
               <Image
-                src="/images/hero-bg.png"
-                alt="Logo and Typography"
-                fill
-                className="object-cover"
+                src="/images/emdep-typography.png"
+                alt="Typography"
+                width={2385}
+                height={3597}
+                className="w-full h-auto"
               />
             </div>
           </div>
 
-          <div>
-            <h3 className="text-[25px] font-heading font-semibold text-black mb-4">Color Palette</h3>
-            <p className="text-[#000000] text-[25px] font-sans font-semibold leading-relaxed mb-8">
-              The color palette was carefully selected to evoke feelings of calm, luxury, and trustworthiness. Soft neutrals combined with subtle accent colors create a harmonious atmosphere.
+          <div className="mt-12 mb-12">
+            <h3 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-4">Color Palette</h3>
+            <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-8">
+            I chose these colours to give a sense of calm, yet timeless feeling to support that modern and elegant look. 
             </p>
-            <div className="relative w-full h-[300px] rounded-2xl overflow-hidden bg-gray-100">
+            <div className="relative w-full h-auto">
               <Image
-                src="/images/hero-bg.png"
+                src="/images/emdep-colourpalette.png"
                 alt="Color Palette"
-                fill
-                className="object-cover"
+                width={795}
+                height={938}
+                className="w-full h-auto"
               />
+            </div>
+          </div>
+
+          <div className="mt-12 mb-12">
+            <h3 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-4">Logo</h3>
+            <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-8">
+              The Em Dep logo was designed to reflect the brand&apos;s clean, modern, and professional identity. Its minimalist form and elegant typography convey beauty and trust to portray Em Deps beauty services. To the brand identity separately, click here
+            </p>
+            <div className="relative w-full h-auto">
+              <Image
+                src="/images/emdep-logoprev.png"
+                alt="Logo Preview"
+                width={795}
+                height={419}
+                className="w-full h-auto"
+              />
+            </div>
+          </div>
+
+          <div className="mt-12">
+            <h3 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-4">Website Design + Development</h3>
+            <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-6">
+              Using the mood board as a foundation, I followed the same modern visual direction and designed the experience mobile first in Figma. I then built the website in WordPress using Blocksy and Kadence, which allowed me to work more efficiently through their pre-made layout components.
+            </p>
+            <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed">
+              I also implemented SEO best practices which included optimized headings, alt text, metadata, and fast load performance in order to improve discoverability and help the studio attract new customers organically.
+            </p>
+          </div>
+
+          <div className="mt-12 mb-12">
+            <h3 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-4">Desktop View</h3>
+            <div className="relative w-full h-[600px] rounded-2xl overflow-hidden bg-gray-100 flex items-center justify-center">
+              <div className="text-gray-400 text-lg">Video placeholder</div>
+            </div>
+          </div>
+
+          <div className="mt-12">
+            <h3 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-4">Mobile View</h3>
+            <div className="grid grid-cols-2 gap-6">
+              <div className="relative w-full h-auto rounded-2xl overflow-hidden">
+                <ImageLightbox
+                  src="/images/hero-bg.png"
+                  alt="Mobile View 1"
+                  width={400}
+                  height={800}
+                  className="w-full h-auto rounded-2xl"
+                />
+              </div>
+              <div className="relative w-full h-auto rounded-2xl overflow-hidden">
+                <ImageLightbox
+                  src="/images/hero-bg.png"
+                  alt="Mobile View 2"
+                  width={400}
+                  height={800}
+                  className="w-full h-auto rounded-2xl"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 mb-12">
+            <h3 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-4">Desktop Low-Fidelity Wireframes</h3>
+            <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-8">
+              Check out the wireframes here
+            </p>
+            <div className="relative w-full h-auto rounded-2xl overflow-hidden">
+              <ImageLightbox
+                src="/images/emdep-lowfid-desktop.png"
+                alt="Desktop Low-Fidelity Wireframes"
+                width={2385}
+                height={1557}
+                className="w-full h-auto rounded-2xl"
+              />
+            </div>
+          </div>
+
+          <div className="mt-12">
+            <h3 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-4">Mobile Wireframes</h3>
+            <div className="grid grid-cols-1 gap-[37px]">
+              <div className="relative w-full h-auto rounded-2xl overflow-hidden">
+                <ImageLightbox
+                  src="/images/emdep-lowfid-mobile.png"
+                  alt="Mobile Low-Fidelity Wireframes"
+                  width={2385}
+                  height={1788}
+                  className="w-full h-auto rounded-2xl"
+                />
+              </div>
+              <div className="relative w-full h-auto rounded-2xl overflow-hidden">
+                <ImageLightbox
+                  src="/images/emdep-highfid-mobile.png"
+                  alt="Mobile High-Fidelity Wireframes"
+                  width={2385}
+                  height={1788}
+                  className="w-full h-auto rounded-2xl"
+                />
+              </div>
             </div>
           </div>
         </>
@@ -202,37 +277,146 @@ export default function ProjectContentSections({ sections }) {
     },
     {
       id: "solution",
-      title: "Final Solution",
+      title: "Results & Impact",
       content: (
         <>
           <div>
-            <h3 className="text-[25px] font-heading font-semibold text-black mb-4">Final Design</h3>
-            <p className="text-[#000000] text-[25px] font-sans font-semibold leading-relaxed mb-8">
-              The final website design successfully merges aesthetics with functionality. Each page is carefully crafted to guide users through their journey, from discovering services to booking appointments.
-            </p>
-            <div className="relative w-full h-[500px] rounded-2xl overflow-hidden bg-gray-100 mb-6">
-              <Image
-                src="/images/hero-bg.png"
-                alt="Final Design"
-                fill
-                className="object-cover"
-              />
+            <h3 className="text-[40px] font-heading font-semibold text-black mb-4">Results & Impact</h3>
+            
+            <div className="mt-12 mb-12">
+              <h4 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-4">After Launch</h4>
+              <ul className="space-y-3 text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed">
+                <li className="flex items-start">
+                  <span className="mr-3">•</span>
+                  <span>Clients found key information much faster</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-3">•</span>
+                  <span>Fewer DM&apos;s and tasks for the owner</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-3">•</span>
+                  <span>Brand increased trust</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-3">•</span>
+                  <span>New customers online</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-3">•</span>
+                  <span>Bookings are generated organically</span>
+                </li>
+              </ul>
             </div>
-            <div className="relative w-full h-[500px] rounded-2xl overflow-hidden bg-gray-100">
-              <Image
-                src="/images/hero-bg.png"
-                alt="Final Design Mobile"
-                fill
-                className="object-cover"
-              />
+
+            <div className="mt-12">
+              <h4 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-4">Reflection</h4>
+              <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-6">
+                As my first client project, I learned many lessons that will carry forward into future work:
+              </p>
+              <ul className="space-y-3 text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed">
+                <li className="flex items-start">
+                  <span className="mr-3">•</span>
+                  <span>Businesses don&apos;t always have time for frequent communication, so it&apos;s best to clarify all key details early on.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-3">•</span>
+                  <span>I learned how to manage my time effectively over the 2.5 month project period by planning and organizing my workflow using tools like Notion and Google Calendar.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-3">•</span>
+                  <span>I used real data to identify what was working and what wasn&apos;t, allowing me to continuously improve the website.</span>
+                </li>
+              </ul>
             </div>
           </div>
         </>
       )
     }
-  ];
+  ], []);
 
-  const sectionsToRender = sections || defaultSections;
+  const sectionsToRender = useMemo(() => sections || defaultSections, [sections, defaultSections]);
+
+  // Measure content section heights and apply to title containers
+  useEffect(() => {
+    const measureHeights = () => {
+      const heights = {};
+      sectionsToRender.forEach((section) => {
+        const element = sectionsRef.current[section.id];
+        if (element) {
+          heights[section.id] = element.offsetHeight;
+        }
+      });
+      // Only update if we have measurements
+      if (Object.keys(heights).length > 0) {
+        setSectionHeights(prev => ({ ...prev, ...heights }));
+      }
+    };
+
+    // Measure after images load
+    measureHeights();
+    
+    // Re-measure on window resize
+    window.addEventListener("resize", measureHeights);
+    
+    // Re-measure after a delay to account for image loading
+    const timer = setTimeout(measureHeights, 1000);
+
+    return () => {
+      window.removeEventListener("resize", measureHeights);
+      clearTimeout(timer);
+    };
+  }, [sectionsToRender]);
+
+  // Track which section is currently in view
+  useEffect(() => {
+    const handleScroll = () => {
+      const resultsSection = sectionsRef.current["solution"];
+      const designSection = sectionsRef.current["design"];
+      
+      if (!resultsSection || !designSection) return;
+
+      const resultsRect = resultsSection.getBoundingClientRect();
+      const designRect = designSection.getBoundingClientRect();
+      
+      // Check if Results & Impact section is significantly in view
+      // Only switch from Design Process when Results & Impact is well into viewport
+      if (resultsRect.top < window.innerHeight * 0.3 && resultsRect.bottom > window.innerHeight * 0.1) {
+        setActiveSection("solution");
+      } 
+      // Check if Design Process section is still visible (including Mobile Wireframes at the bottom)
+      else if (designRect.bottom > window.innerHeight * 0.2) {
+        setActiveSection("design");
+      }
+      // Otherwise, check other sections
+      else {
+        sectionsToRender.forEach((section) => {
+          if (section.id === "solution" || section.id === "design") return; // Already handled above
+          
+          const element = sectionsRef.current[section.id];
+          if (!element) return;
+          
+          const rect = element.getBoundingClientRect();
+          // Section is active if its top is in the upper portion of viewport
+          if (rect.top <= window.innerHeight * 0.4 && rect.bottom > window.innerHeight * 0.2) {
+            setActiveSection(section.id);
+          }
+        });
+      }
+    };
+
+    // Initial check
+    handleScroll();
+    
+    // Listen to scroll events
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, [sectionsToRender]);
 
   return (
     <div className="container max-w-[1500px] mx-auto px-8 pb-12">
@@ -240,52 +424,63 @@ export default function ProjectContentSections({ sections }) {
         <div className="grid grid-cols-[380px_1fr] gap-20">
           {/* Left: Titles Column */}
           <div className="relative">
-            {sectionsToRender.map((section, index) => (
-              <div
-                key={section.id}
-                className={`relative ${index === sectionsToRender.length - 1 ? 'min-h-screen' : ''}`}
-                style={{
-                  minHeight: index !== sectionsToRender.length - 1 ? 'calc(100vh + 200px)' : undefined
-                }}
-              >
-                <div className="sticky top-32 pb-32 overflow-hidden">
-                  <motion.h2
-                    initial={{ 
-                      opacity: 0, 
-                      y: 60,
-                      scale: 0.9,
-                      filter: "blur(10px)",
-                      rotateX: 15
-                    }}
-                    whileInView={{ 
-                      opacity: 1, 
-                      y: 0,
-                      scale: 1,
-                      filter: "blur(0px)",
-                      rotateX: 0
-                    }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ 
-                      duration: 0.8,
-                      ease: [0.16, 1, 0.3, 1],
-                      opacity: { duration: 0.6 },
-                      scale: { 
-                        type: "spring",
-                        damping: 20,
-                        stiffness: 100
-                      }
-                    }}
-                    className="text-[25px] font-sans font-semibold text-[#959494] leading-tight"
-                    style={{ 
-                      transformPerspective: 1000,
-                      transformStyle: "preserve-3d"
-                    }}
-                  >
-                    {section.title}
-                  </motion.h2>
+            {sectionsToRender.map((section, index) => {
+              const isLastSection = index === sectionsToRender.length - 1;
+              const isActive = activeSection === section.id;
+              const contentHeight = sectionHeights[section.id];
+              
+              return (
+                <div
+                  key={section.id}
+                  className="relative"
+                  style={{
+                    minHeight: contentHeight ? `${contentHeight}px` : 'calc(100vh + 200px)'
+                  }}
+                >
+                  <div className="sticky top-32 pb-32 overflow-hidden">
+                    <motion.h2
+                      initial={{ 
+                        opacity: 0, 
+                        y: 60,
+                        scale: 0.9,
+                        filter: "blur(10px)",
+                        rotateX: 15
+                      }}
+                      animate={isActive ? { 
+                        opacity: 1, 
+                        y: 0,
+                        scale: 1,
+                        filter: "blur(0px)",
+                        rotateX: 0
+                      } : {
+                        opacity: isLastSection ? 0 : 1,
+                        y: isLastSection ? 60 : 0,
+                        scale: isLastSection ? 0.9 : 1,
+                        filter: isLastSection ? "blur(10px)" : "blur(0px)",
+                        rotateX: isLastSection ? 15 : 0
+                      }}
+                      transition={{ 
+                        duration: 0.8,
+                        ease: [0.16, 1, 0.3, 1],
+                        opacity: { duration: 0.6 },
+                        scale: { 
+                          type: "spring",
+                          damping: 20,
+                          stiffness: 100
+                        }
+                      }}
+                      className="text-[25px] font-sans font-semibold text-[#959494] leading-tight"
+                      style={{ 
+                        transformPerspective: 1000,
+                        transformStyle: "preserve-3d"
+                      }}
+                    >
+                      {section.title}
+                    </motion.h2>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Right: Content Column */}
@@ -295,7 +490,7 @@ export default function ProjectContentSections({ sections }) {
                 key={section.id}
                 id={section.id}
                 ref={(el) => (sectionsRef.current[section.id] = el)}
-                className={index !== sectionsToRender.length - 1 ? "mb-32" : ""}
+                className="mb-32 last:mb-0 pt-5"
               >
                 {section.content}
               </section>

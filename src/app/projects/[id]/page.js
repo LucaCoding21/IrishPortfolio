@@ -17,7 +17,7 @@ export default function ProjectDetailPage({ params }) {
       <div className="container max-w-[1500px] mx-auto px-8 pt-24 pb-8">
         <div className="relative w-full h-[500px] rounded-3xl overflow-hidden">
           <Image
-            src="/images/hero-bg.png"
+            src="/images/emdep-mockup1.png"
             alt={project.title}
             fill
             className="object-cover"
@@ -27,14 +27,14 @@ export default function ProjectDetailPage({ params }) {
 
       {/* Project Details Card */}
       <div className="container max-w-[1500px] mx-auto px-8 pb-8">
-        <div className="bg-white rounded-3xl p-12 pb-[38px]">
+        <div className="bg-white rounded-3xl p-12">
           <div className="grid grid-cols-2 gap-12 items-start mb-8">
             {/* Left: Title and Details */}
             <div>
               <h1 className="font-heading text-[50px] font-semibold text-black mb-4 leading-tight">
                 Em Dep Aesthetics
               </h1>
-              <p className="text-gray-600 text-[25px] font-semibold leading-relaxed mb-8">
+              <p className="text-gray-600 text-[25px] font-sans font-semibold leading-relaxed mb-12">
                 Em Dep Aesthetics is a Vancouver based beauty studio specialized in professional cosmetic and skincare services.
               </p>
 
@@ -42,27 +42,27 @@ export default function ProjectDetailPage({ params }) {
               <div className="grid grid-cols-2 gap-x-8 gap-y-8 mb-8">
                 {/* Date */}
                 <div>
-                  <p className="text-[30px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">Date</p>
-                  <p className="text-[25px] text-gray-700 font-semibold leading-relaxed">Sept 2024 - Nov 2024</p>
+                  <p className="text-[20px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">Date</p>
+                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">Sept 2024 - Nov 2024</p>
                 </div>
 
                 {/* Timeline */}
                 <div>
-                  <p className="text-[30px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">Timeline</p>
-                  <p className="text-[25px] text-gray-700 font-semibold leading-relaxed">3 months</p>
+                  <p className="text-[20px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">Timeline</p>
+                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">3 months</p>
                 </div>
 
                 {/* Role */}
                 <div>
-                  <p className="text-[30px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">Role</p>
-                  <p className="text-[25px] text-gray-700 font-semibold leading-relaxed">Brand & Web Designer</p>
+                  <p className="text-[20px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">Role</p>
+                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">Brand & Web Designer</p>
                 </div>
 
                 {/* Deliverables */}
                 <div>
-                  <p className="text-[30px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">Deliverables</p>
-                  <p className="text-[25px] text-gray-700 font-semibold leading-relaxed">Brand Identity</p>
-                  <p className="text-[25px] text-gray-700 font-semibold leading-relaxed">Responsive Website</p>
+                  <p className="text-[20px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">Deliverables</p>
+                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">Brand Identity</p>
+                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">Responsive Website</p>
                 </div>
               </div>
 
@@ -90,9 +90,9 @@ export default function ProjectDetailPage({ params }) {
             </div>
 
             {/* Right: Image */}
-            <div className="relative w-[550px] h-[550px] rounded-2xl overflow-hidden ml-[50px]">
+            <div className="relative w-full h-[550px] rounded-2xl overflow-hidden">
               <Image
-                src="/images/hero-bg.png"
+                src="/images/emdep-mockup2.png"
                 alt="Project preview"
                 fill
                 className="object-cover"
@@ -127,7 +127,7 @@ export default function ProjectDetailPage({ params }) {
               </div>
               <div className="flex items-center gap-6 py-6 border-b border-gray-600">
                 <span className="text-[25px] text-[#4A7C59] font-heading font-medium">04</span>
-                <a href="#solution" className="text-[25px] text-gray-700 font-semibold hover:text-black">Final Solution</a>
+                <a href="#solution" className="text-[25px] text-gray-700 font-semibold hover:text-black">Results & Impact</a>
               </div>
             </div>
           </div>

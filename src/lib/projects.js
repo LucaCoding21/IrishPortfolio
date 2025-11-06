@@ -68,7 +68,7 @@ export const PROJECT_CASE_STUDIES = {
       problem: {
         heading: "Problem",
         text: "Em Dep Aesthetics relied on social media and a booking link, but this setup didn't reflect its brand identity or provide enough information about the business.",
-        image: "/images/hero-bg.png",
+        image: "/images/emdep-problem.png",
       },
       research: {
         heading: "Research",

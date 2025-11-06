@@ -585,6 +585,46 @@ src/
 
 ---
 
+## November 4, 2025
+
+### Sticky Title Alignment & Height Matching ✓
+
+**Fixed sticky side titles to properly align and persist throughout their content:**
+
+1. **Vertical Alignment Fix**
+   - Added `pt-32` (128px) padding to all content sections
+   - Matches the `top-32` position of sticky titles
+   - "Design Process" title now aligns perfectly with "My Process" heading
+   - Consistent alignment across all sections
+
+2. **Dynamic Height Matching**
+   - **Problem Identified**: Fixed minHeight for title containers didn't match actual content heights
+   - Design Process section is much longer than other sections (multiple subsections with images)
+   - Old approach: All title containers got generic `calc(100vh + 200px)` height
+   - This caused "Design Process" sticky title to scroll away before content ended
+   
+3. **Solution Implemented**
+   - Added `sectionHeights` state to track actual content section heights
+   - Created useEffect to measure each content section's offsetHeight
+   - Applied measured heights to corresponding title containers on left
+   - Each title container now matches its content section height exactly
+   - Re-measures on window resize and after image load delay
+   
+4. **Result**
+   - "Design Process" sticky title stays visible throughout ALL Design Process content
+   - Title persists through: My Process, Typography, Color Palette, Logo, Website Design, Desktop/Mobile views, and all Wireframes
+   - "Results & Impact" title appears exactly when its content starts
+   - Perfect synchronization between left titles and right content
+   - No more premature title transitions
+
+5. **Technical Details**
+   - Uses refs to measure actual DOM element heights
+   - Falls back to `calc(100vh + 200px)` before measurement completes
+   - Measures after 1-second delay to account for image loading
+   - Simple, performant solution that scales to any content length
+
+---
+
 ## Next Steps
 
 ### Required Tasks
