@@ -1,11 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
-import { PROJECTS } from "@/lib/projects";
+import { PROJECTS, PROJECT_CASE_STUDIES } from "@/lib/projects";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import ProjectContentSections from "@/components/projects/ProjectContentSections";
 
+const TOOL_ICONS = {
+  Figma: { src: "/icons/figma.svg", alt: "Figma icon" },
+  Photoshop: { src: "/icons/photoshop.svg", alt: "Photoshop icon" },
+  Illustrator: { src: "/icons/illustrator.svg", alt: "Illustrator icon" },
+  Canva: { src: "/icons/canva.svg", alt: "Canva icon" },
+  WordPress: { src: "/icons/wordpress.svg", alt: "WordPress icon" },
+};
+
 export default function ProjectDetailPage({ params }) {
   const project = PROJECTS.find((p) => p.id === params.id);
+  const caseStudy = PROJECT_CASE_STUDIES[params.id];
 
   if (!project) {
     return <div>Project not found</div>;
@@ -14,10 +23,10 @@ export default function ProjectDetailPage({ params }) {
   return (
     <main className="bg-[#F2F3EE] min-h-screen">
       {/* Hero Image */}
-      <div className="container max-w-[1500px] mx-auto px-8 pt-24 pb-8">
+      <div className="container max-w-[1500px] mx-auto px-8 pt-32 pb-8">
         <div className="relative w-full h-[500px] rounded-3xl overflow-hidden">
           <Image
-            src="/images/emdep-mockup1.png"
+            src={caseStudy?.hero?.image || "/images/hero-bg.png"}
             alt={project.title}
             fill
             className="object-cover"
@@ -32,10 +41,10 @@ export default function ProjectDetailPage({ params }) {
             {/* Left: Title and Details */}
             <div>
               <h1 className="font-heading text-[50px] font-semibold text-black mb-4 leading-tight">
-                Em Dep Aesthetics
+                {caseStudy?.hero?.title || project.title}
               </h1>
               <p className="text-gray-600 text-[25px] font-sans font-semibold leading-relaxed mb-12">
-                Em Dep Aesthetics is a Vancouver based beauty studio specialized in professional cosmetic and skincare services.
+                {caseStudy?.hero?.description || project.subtitle}
               </p>
 
               {/* Project Details Grid */}
@@ -43,56 +52,62 @@ export default function ProjectDetailPage({ params }) {
                 {/* Date */}
                 <div>
                   <p className="text-[20px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">Date</p>
-                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">Sept 2024 - Nov 2024</p>
+                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">{caseStudy?.details?.date || "N/A"}</p>
                 </div>
 
                 {/* Timeline */}
                 <div>
                   <p className="text-[20px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">Timeline</p>
-                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">3 months</p>
+                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">{caseStudy?.details?.timeline || "N/A"}</p>
                 </div>
 
                 {/* Role */}
                 <div>
                   <p className="text-[20px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">Role</p>
-                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">Brand & Web Designer</p>
+                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">{caseStudy?.details?.role || "N/A"}</p>
                 </div>
 
                 {/* Deliverables */}
                 <div>
                   <p className="text-[20px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">Deliverables</p>
-                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">Brand Identity</p>
-                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">Responsive Website</p>
+                  {caseStudy?.details?.deliverables?.map((deliverable, i) => (
+                    <p key={i} className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">{deliverable}</p>
+                  ))}
                 </div>
               </div>
 
               {/* Tool Icons */}
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 flex items-center justify-center">
-                  <svg className="w-10 h-10" viewBox="0 0 48 48" fill="none">
-                    <rect width="48" height="48" rx="8" fill="#1ABCFE"/>
-                    <text x="24" y="32" fill="white" fontSize="24" fontWeight="bold" textAnchor="middle">F</text>
-                  </svg>
-                </div>
-                <div className="w-10 h-10 flex items-center justify-center bg-[#31A8FF] rounded-lg">
-                  <span className="text-white font-bold text-lg">Ps</span>
-                </div>
-                <div className="w-10 h-10 flex items-center justify-center bg-[#FF9A00] rounded-lg">
-                  <span className="text-white font-bold text-lg">Ai</span>
-                </div>
-                <div className="w-10 h-10 flex items-center justify-center bg-[#6C7EFF] rounded-lg">
-                  <span className="text-white font-bold text-xs">Canva</span>
-                </div>
-                <div className="w-10 h-10 flex items-center justify-center bg-[#21759B] rounded-lg">
-                  <span className="text-white font-bold text-lg">W</span>
-                </div>
+              <div className="flex flex-wrap items-center gap-4 pt-6">
+                {(caseStudy?.details?.tools ?? []).map((tool) => {
+                  const icon = TOOL_ICONS[tool];
+                  if (!icon) {
+                    return (
+                      <span
+                        key={tool}
+                        className="text-sm font-semibold text-gray-600"
+                      >
+                        {tool}
+                      </span>
+                    );
+                  }
+                  return (
+                    <Image
+                      key={tool}
+                      src={icon.src}
+                      alt={icon.alt}
+                      width={40}
+                      height={40}
+                      className="w-10 h-10"
+                    />
+                  );
+                })}
               </div>
             </div>
 
             {/* Right: Image */}
             <div className="relative w-full h-[550px] rounded-2xl overflow-hidden">
               <Image
-                src="/images/emdep-mockup2.png"
+                src={caseStudy?.previewImage || caseStudy?.hero?.image || "/images/hero-bg.png"}
                 alt="Project preview"
                 fill
                 className="object-cover"
@@ -113,29 +128,19 @@ export default function ProjectDetailPage({ params }) {
           {/* Right: Numbered List */}
           <div>
             <div className="space-y-0">
-              <div className="flex items-center gap-6 py-6 border-t border-b border-gray-600">
-                <span className="text-[25px] text-[#4A7C59] font-heading font-medium">01</span>
-                <a href="#problem" className="text-[25px] text-gray-700 font-semibold hover:text-black">Problem & Research</a>
-              </div>
-              <div className="flex items-center gap-6 py-6 border-b border-gray-600">
-                <span className="text-[25px] text-[#4A7C59] font-heading font-medium">02</span>
-<a href="#insight" className="text-[25px] text-gray-700 font-semibold hover:text-black">Goals</a>
-              </div>
-              <div className="flex items-center gap-6 py-6 border-b border-gray-600">
-                <span className="text-[25px] text-[#4A7C59] font-heading font-medium">03</span>
-                <a href="#design" className="text-[25px] text-gray-700 font-semibold hover:text-black">Design Process</a>
-              </div>
-              <div className="flex items-center gap-6 py-6 border-b border-gray-600">
-                <span className="text-[25px] text-[#4A7C59] font-heading font-medium">04</span>
-                <a href="#solution" className="text-[25px] text-gray-700 font-semibold hover:text-black">Results & Impact</a>
-              </div>
+              {(caseStudy?.tableOfContents || []).map((item, index) => (
+                <div key={item.id} className={`flex items-center gap-6 py-6 ${index === 0 ? 'border-t border-b' : 'border-b'} border-gray-600`}>
+                  <span className="text-[25px] text-[#4A7C59] font-heading font-medium">{item.number}</span>
+                  <a href={`#${item.id}`} className="text-[25px] text-gray-700 font-semibold hover:text-black">{item.title}</a>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
 
       {/* Content Sections with Sticky Titles */}
-      <ProjectContentSections />
+      <ProjectContentSections sections={caseStudy?.sections} tableOfContents={caseStudy?.tableOfContents} />
 
       {/* View More Projects */}
       <div className="py-12">
@@ -202,4 +207,3 @@ export async function generateStaticParams() {
     id: project.id,
   }));
 }
-

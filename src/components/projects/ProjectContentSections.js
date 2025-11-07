@@ -4,10 +4,253 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import ImageLightbox from "@/components/ui/ImageLightbox";
 
-export default function ProjectContentSections({ sections }) {
+// Helper function to convert case study sections format to component format
+function convertCaseStudySections(caseStudySections, tableOfContents) {
+  if (!caseStudySections || !tableOfContents) return null;
+  
+  return tableOfContents.map((tocItem) => {
+    const sectionId = tocItem.id;
+    const sectionData = caseStudySections[sectionId];
+    if (!sectionData) return null;
+
+    let content = null;
+
+    // Problem section (can include problem + research)
+    if (sectionId === "problem") {
+      content = (
+        <>
+          {sectionData.heading && (
+            <div className="mb-12">
+              <h3 className="text-[40px] font-heading font-semibold text-black mb-4">{sectionData.heading}</h3>
+              {sectionData.text && (
+                <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-8">
+                  {sectionData.text}
+                </p>
+              )}
+              {sectionData.image && (
+                <div className="relative w-full h-auto rounded-2xl overflow-hidden bg-gray-100">
+                  <ImageLightbox
+                    src={sectionData.image}
+                    alt={sectionData.heading}
+                    width={1296}
+                    height={870}
+                    className="w-full h-auto rounded-2xl"
+                  />
+                </div>
+              )}
+            </div>
+          )}
+          {caseStudySections.research && (
+            <div className="mt-12">
+              <h3 className="text-[40px] font-heading font-semibold text-black mb-4">{caseStudySections.research.heading}</h3>
+              {caseStudySections.research.subheading && (
+                <h4 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-3">{caseStudySections.research.subheading}</h4>
+              )}
+              {caseStudySections.research.paragraphs?.map((para, i) => (
+                <p key={i} className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-6">
+                  {para}
+                </p>
+              ))}
+              {caseStudySections.research.image && (
+                <div className="relative w-full h-auto rounded-2xl overflow-hidden bg-gray-100 mt-6">
+                  <ImageLightbox
+                    src={caseStudySections.research.image}
+                    alt={caseStudySections.research.heading}
+                    width={1296}
+                    height={870}
+                    className="w-full h-auto rounded-2xl"
+                  />
+                </div>
+              )}
+            </div>
+          )}
+        </>
+      );
+    }
+    // Goals/Insight section
+    else if (sectionId === "insight" || sectionId === "goals") {
+      const goalsData = caseStudySections.goals || sectionData;
+      content = (
+        <>
+          <h3 className="text-[40px] font-heading font-semibold text-black mb-8">{goalsData.heading || "Goals"}</h3>
+          {goalsData.list && (
+            <ul className="space-y-3 text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed">
+              {goalsData.list.map((goal, i) => (
+                <li key={i} className="flex items-start">
+                  <span className="mr-3">•</span>
+                  <span>{goal}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
+      );
+    }
+    // Design Process section (combines multiple design sections)
+    else if (sectionId === "design") {
+      content = (
+        <>
+          {caseStudySections.insights && (
+            <div className="mb-12">
+              <h3 className="text-[40px] font-heading font-semibold text-black mb-4">{caseStudySections.insights.heading}</h3>
+              {caseStudySections.insights.text && (
+                <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-8">
+                  {caseStudySections.insights.text}
+                </p>
+              )}
+              {caseStudySections.insights.image && (
+                <div className="relative w-full h-auto rounded-2xl overflow-hidden bg-gray-100">
+                  <ImageLightbox
+                    src={caseStudySections.insights.image}
+                    alt={caseStudySections.insights.heading}
+                    width={1296}
+                    height={870}
+                    className="w-full h-auto rounded-2xl"
+                  />
+                </div>
+              )}
+            </div>
+          )}
+          {caseStudySections.inspirations && (
+            <div className="mt-12 mb-12">
+              <h3 className="text-[40px] font-heading font-semibold text-black mb-4">{caseStudySections.inspirations.heading}</h3>
+              {caseStudySections.inspirations.text && (
+                <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-8">
+                  {caseStudySections.inspirations.text}
+                </p>
+              )}
+              {caseStudySections.inspirations.images && (
+                <div className="grid grid-cols-2 gap-6">
+                  {caseStudySections.inspirations.images.map((img, i) => (
+                    <div key={i} className="relative w-full h-auto rounded-2xl overflow-hidden">
+                      <ImageLightbox
+                        src={img}
+                        alt={`${caseStudySections.inspirations.heading} ${i + 1}`}
+                        width={600}
+                        height={400}
+                        className="w-full h-auto rounded-2xl"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+          {caseStudySections.logoTypography && (
+            <div className="mt-12 mb-12">
+              <h3 className="text-[40px] font-heading font-semibold text-black mb-4">{caseStudySections.logoTypography.heading}</h3>
+              {caseStudySections.logoTypography.text && (
+                <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-8">
+                  {caseStudySections.logoTypography.text}
+                </p>
+              )}
+              {caseStudySections.logoTypography.image && (
+                <div className="relative w-full h-auto rounded-2xl overflow-hidden bg-gray-100">
+                  <ImageLightbox
+                    src={caseStudySections.logoTypography.image}
+                    alt={caseStudySections.logoTypography.heading}
+                    width={1296}
+                    height={870}
+                    className="w-full h-auto rounded-2xl"
+                  />
+                </div>
+              )}
+            </div>
+          )}
+          {caseStudySections.colorPalette && (
+            <div className="mt-12 mb-12">
+              <h3 className="text-[40px] font-heading font-semibold text-black mb-4">{caseStudySections.colorPalette.heading}</h3>
+              {caseStudySections.colorPalette.text && (
+                <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-8">
+                  {caseStudySections.colorPalette.text}
+                </p>
+              )}
+              {caseStudySections.colorPalette.image && (
+                <div className="relative w-full h-auto rounded-2xl overflow-hidden bg-gray-100">
+                  <ImageLightbox
+                    src={caseStudySections.colorPalette.image}
+                    alt={caseStudySections.colorPalette.heading}
+                    width={1296}
+                    height={870}
+                    className="w-full h-auto rounded-2xl"
+                  />
+                </div>
+              )}
+            </div>
+          )}
+        </>
+      );
+    }
+    // Final Solution section
+    else if (sectionId === "solution") {
+      content = (
+        <>
+          {caseStudySections.finalDesign && (
+            <div>
+              <h3 className="text-[40px] font-heading font-semibold text-black mb-4">{caseStudySections.finalDesign.heading}</h3>
+              {caseStudySections.finalDesign.text && (
+                <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-8">
+                  {caseStudySections.finalDesign.text}
+                </p>
+              )}
+              {caseStudySections.finalDesign.images && (
+                <div className="grid grid-cols-1 gap-6">
+                  {caseStudySections.finalDesign.images.map((img, i) => (
+                    <div key={i} className="relative w-full h-auto rounded-2xl overflow-hidden">
+                      <ImageLightbox
+                        src={img}
+                        alt={`${caseStudySections.finalDesign.heading} ${i + 1}`}
+                        width={1296}
+                        height={870}
+                        className="w-full h-auto rounded-2xl"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </>
+      );
+    }
+    // Generic section fallback
+    else {
+      content = (
+        <>
+          {sectionData.heading && (
+            <h3 className="text-[40px] font-heading font-semibold text-black mb-4">{sectionData.heading}</h3>
+          )}
+          {sectionData.text && (
+            <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-8">
+              {sectionData.text}
+            </p>
+          )}
+          {sectionData.image && (
+            <div className="relative w-full h-auto rounded-2xl overflow-hidden bg-gray-100">
+              <ImageLightbox
+                src={sectionData.image}
+                alt={sectionData.heading || "Section image"}
+                width={1296}
+                height={870}
+                className="w-full h-auto rounded-2xl"
+              />
+            </div>
+          )}
+        </>
+      );
+    }
+
+    return {
+      id: sectionId,
+      title: tocItem.title,
+      content,
+    };
+  }).filter(Boolean);
+}
+
+export default function ProjectContentSections({ sections, tableOfContents }) {
   const sectionsRef = useRef({});
   const [activeSection, setActiveSection] = useState("problem");
-  const [sectionHeights, setSectionHeights] = useState({});
 
   // Default sections if none provided (for backward compatibility)
   const defaultSections = useMemo(() => [
@@ -335,80 +578,62 @@ export default function ProjectContentSections({ sections }) {
     }
   ], []);
 
-  const sectionsToRender = useMemo(() => sections || defaultSections, [sections, defaultSections]);
-
-  // Measure content section heights and apply to title containers
-  useEffect(() => {
-    const measureHeights = () => {
-      const heights = {};
-      sectionsToRender.forEach((section) => {
-        const element = sectionsRef.current[section.id];
-        if (element) {
-          heights[section.id] = element.offsetHeight;
-        }
-      });
-      // Only update if we have measurements
-      if (Object.keys(heights).length > 0) {
-        setSectionHeights(prev => ({ ...prev, ...heights }));
-      }
-    };
-
-    // Measure after images load
-    measureHeights();
-    
-    // Re-measure on window resize
-    window.addEventListener("resize", measureHeights);
-    
-    // Re-measure after a delay to account for image loading
-    const timer = setTimeout(measureHeights, 1000);
-
-    return () => {
-      window.removeEventListener("resize", measureHeights);
-      clearTimeout(timer);
-    };
-  }, [sectionsToRender]);
+  // Convert case study sections format if provided, otherwise use sections as-is or defaults
+  const sectionsToRender = useMemo(() => {
+    // If sections is an object (case study format), convert it
+    if (sections && typeof sections === 'object' && !Array.isArray(sections) && tableOfContents) {
+      return convertCaseStudySections(sections, tableOfContents) || defaultSections;
+    }
+    // If sections is already an array, use it directly
+    if (Array.isArray(sections)) {
+      return sections;
+    }
+    // Otherwise use defaults
+    return defaultSections;
+  }, [sections, tableOfContents, defaultSections]);
 
   // Track which section is currently in view
   useEffect(() => {
-    const handleScroll = () => {
-      const resultsSection = sectionsRef.current["solution"];
-      const designSection = sectionsRef.current["design"];
-      
-      if (!resultsSection || !designSection) return;
+    if (!sectionsToRender.length) return;
 
-      const resultsRect = resultsSection.getBoundingClientRect();
-      const designRect = designSection.getBoundingClientRect();
-      
-      // Check if Results & Impact section is significantly in view
-      // Only switch from Design Process when Results & Impact is well into viewport
-      if (resultsRect.top < window.innerHeight * 0.3 && resultsRect.bottom > window.innerHeight * 0.1) {
-        setActiveSection("solution");
-      } 
-      // Check if Design Process section is still visible (including Mobile Wireframes at the bottom)
-      else if (designRect.bottom > window.innerHeight * 0.2) {
-        setActiveSection("design");
-      }
-      // Otherwise, check other sections
-      else {
-        sectionsToRender.forEach((section) => {
-          if (section.id === "solution" || section.id === "design") return; // Already handled above
-          
-          const element = sectionsRef.current[section.id];
-          if (!element) return;
-          
-          const rect = element.getBoundingClientRect();
-          // Section is active if its top is in the upper portion of viewport
-          if (rect.top <= window.innerHeight * 0.4 && rect.bottom > window.innerHeight * 0.2) {
-            setActiveSection(section.id);
-          }
-        });
+    let ticking = false;
+
+    const updateActiveSection = () => {
+      const viewportAnchor = window.innerHeight * 0.33;
+      let closestSection = sectionsToRender[0]?.id;
+      let closestDistance = Infinity;
+
+      sectionsToRender.forEach((section) => {
+        const element = sectionsRef.current[section.id];
+        if (!element) return;
+
+        const rect = element.getBoundingClientRect();
+        // Ignore sections that are completely out of view
+        if (rect.bottom <= 0 || rect.top >= window.innerHeight) {
+          return;
+        }
+
+        const distance = Math.abs(rect.top - viewportAnchor);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestSection = section.id;
+        }
+      });
+
+      setActiveSection((current) => (current === closestSection ? current : closestSection));
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateActiveSection);
+        ticking = true;
       }
     };
 
-    // Initial check
-    handleScroll();
-    
-    // Listen to scroll events
+    // Initial measurement
+    updateActiveSection();
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleScroll, { passive: true });
 
@@ -418,88 +643,94 @@ export default function ProjectContentSections({ sections }) {
     };
   }, [sectionsToRender]);
 
+  const activeIndex = sectionsToRender.findIndex((s) => s.id === activeSection);
+
   return (
     <div className="container max-w-[1500px] mx-auto px-8 pb-12">
       <div className="bg-white rounded-3xl p-16">
-        <div className="grid grid-cols-[380px_1fr] gap-20">
-          {/* Left: Titles Column */}
-          <div className="relative">
-            {sectionsToRender.map((section, index) => {
-              const isLastSection = index === sectionsToRender.length - 1;
-              const isActive = activeSection === section.id;
-              const contentHeight = sectionHeights[section.id];
-              
-              return (
-                <div
-                  key={section.id}
-                  className="relative"
-                  style={{
-                    minHeight: contentHeight ? `${contentHeight}px` : 'calc(100vh + 200px)'
-                  }}
-                >
-                  <div className="sticky top-32 pb-32 overflow-hidden">
-                    <motion.h2
-                      initial={{ 
-                        opacity: 0, 
-                        y: 60,
-                        scale: 0.9,
-                        filter: "blur(10px)",
-                        rotateX: 15
-                      }}
-                      animate={isActive ? { 
-                        opacity: 1, 
-                        y: 0,
-                        scale: 1,
-                        filter: "blur(0px)",
-                        rotateX: 0
-                      } : {
-                        opacity: isLastSection ? 0 : 1,
-                        y: isLastSection ? 60 : 0,
-                        scale: isLastSection ? 0.9 : 1,
-                        filter: isLastSection ? "blur(10px)" : "blur(0px)",
-                        rotateX: isLastSection ? 15 : 0
-                      }}
-                      transition={{ 
-                        duration: 0.8,
-                        ease: [0.16, 1, 0.3, 1],
-                        opacity: { duration: 0.6 },
-                        scale: { 
-                          type: "spring",
-                          damping: 20,
-                          stiffness: 100
-                        }
-                      }}
-                      className="text-[25px] font-sans font-semibold text-[#959494] leading-tight"
-                      style={{ 
-                        transformPerspective: 1000,
-                        transformStyle: "preserve-3d"
-                      }}
-                    >
-                      {section.title}
-                    </motion.h2>
-                  </div>
+        {sectionsToRender.map((section, index) => {
+          const isActive = activeSection === section.id;
+          const distanceFromActive = activeIndex === -1 ? Infinity : Math.abs(index - activeIndex);
+          return (
+            <div
+              key={section.id}
+              className="grid grid-cols-[380px_1fr] gap-20 mb-32 last:mb-0"
+            >
+              <div className="relative">
+                <div className="sticky top-32 pb-32 overflow-hidden">
+                  <motion.h2
+                    initial={{
+                      opacity: 0,
+                      y: 60,
+                      scale: 0.9,
+                      filter: "blur(10px)",
+                      rotateX: 15
+                    }}
+                    animate={
+                      isActive
+                        ? {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            filter: "blur(0px)",
+                            rotateX: 0
+                          }
+                        : distanceFromActive === 1
+                        ? {
+                            opacity: 0.85,
+                            y: 8,
+                            scale: 0.985,
+                            filter: "blur(0px)",
+                            rotateX: 3
+                          }
+                        : distanceFromActive === 2
+                        ? {
+                            opacity: 0.55,
+                            y: 20,
+                            scale: 0.97,
+                            filter: "blur(3px)",
+                            rotateX: 8
+                          }
+                        : {
+                            opacity: 0.25,
+                            y: 40,
+                            scale: 0.94,
+                            filter: "blur(10px)",
+                            rotateX: 14
+                          }
+                    }
+                    transition={{
+                      duration: 0.8,
+                      ease: [0.16, 1, 0.3, 1],
+                      opacity: { duration: 0.6 },
+                      scale: {
+                        type: "spring",
+                        damping: 20,
+                        stiffness: 100
+                      }
+                    }}
+                    className="text-[25px] font-sans font-semibold text-[#959494] leading-tight"
+                    style={{
+                      transformPerspective: 1000,
+                      transformStyle: "preserve-3d"
+                    }}
+                  >
+                    {section.title}
+                  </motion.h2>
                 </div>
-              );
-            })}
-          </div>
+              </div>
 
-          {/* Right: Content Column */}
-          <div>
-            {sectionsToRender.map((section, index) => (
               <section
-                key={section.id}
                 id={section.id}
                 ref={(el) => (sectionsRef.current[section.id] = el)}
-                className="mb-32 last:mb-0 pt-5"
+                className="pt-5"
               >
                 {section.content}
               </section>
-            ))}
-          </div>
-        </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 }
-
-
