@@ -14,11 +14,23 @@ const TOOL_ICONS = {
 
 export default function ProjectDetailPage({ params }) {
   const project = PROJECTS.find((p) => p.id === params.id);
-  const caseStudy = PROJECT_CASE_STUDIES[params.id];
+  const caseStudy = PROJECT_CASE_STUDIES[params.id] ?? PROJECT_CASE_STUDIES.emdep;
 
   if (!project) {
     return <div>Project not found</div>;
   }
+
+  const heroBanner = caseStudy?.hero?.banner ?? project.image;
+  const heroSecondary = caseStudy?.hero?.secondary ?? project.image;
+  const heroTitle = caseStudy?.hero?.title ?? project.title;
+  const heroDescription = caseStudy?.hero?.description ?? project.subtitle;
+
+  const detailEntries = [
+    { label: "Date", value: caseStudy?.details?.date },
+    { label: "Timeline", value: caseStudy?.details?.timeline },
+    { label: "Role", value: caseStudy?.details?.role },
+    { label: "Deliverables", value: caseStudy?.details?.deliverables },
+  ].filter((entry) => Boolean(entry.value));
 
   return (
     <main className="bg-[#F2F3EE] min-h-screen">
@@ -26,7 +38,7 @@ export default function ProjectDetailPage({ params }) {
       <div className="container max-w-[1500px] mx-auto px-8 pt-32 pb-8">
         <div className="relative w-full h-[500px] rounded-3xl overflow-hidden">
           <Image
-            src="/images/emdep-mockup1.png"
+            src={heroBanner}
             alt={project.title}
             fill
             className="object-cover"
@@ -41,38 +53,33 @@ export default function ProjectDetailPage({ params }) {
             {/* Left: Title and Details */}
             <div>
               <h1 className="font-heading text-[50px] font-semibold text-black mb-4 leading-tight">
-                Em Dep Aesthetics
+                {heroTitle}
               </h1>
               <p className="text-gray-600 text-[25px] font-sans font-semibold leading-relaxed mb-12">
-                Em Dep Aesthetics is a Vancouver based beauty studio specialized in professional cosmetic and skincare services.
+                {heroDescription}
               </p>
 
               {/* Project Details Grid */}
               <div className="grid grid-cols-2 gap-x-8 gap-y-8 mb-8">
-                {/* Date */}
-                <div>
-                  <p className="text-[20px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">Date</p>
-                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">Sept 2024 - Nov 2024</p>
-                </div>
-
-                {/* Timeline */}
-                <div>
-                  <p className="text-[20px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">Timeline</p>
-                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">3 months</p>
-                </div>
-
-                {/* Role */}
-                <div>
-                  <p className="text-[20px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">Role</p>
-                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">Brand & Web Designer</p>
-                </div>
-
-                {/* Deliverables */}
-                <div>
-                  <p className="text-[20px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">Deliverables</p>
-                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">Brand Identity</p>
-                  <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">Responsive Website</p>
-                </div>
+                {detailEntries.map((entry) => (
+                  <div key={entry.label}>
+                    <p className="text-[20px] text-[#4A7C59] font-heading font-bold mb-2 leading-tight">{entry.label}</p>
+                    {Array.isArray(entry.value) ? (
+                      entry.value.map((item) => (
+                        <p
+                          key={`${entry.label}-${item}`}
+                          className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed"
+                        >
+                          {item}
+                        </p>
+                      ))
+                    ) : (
+                      <p className="text-[25px] text-gray-700 font-sans font-semibold leading-relaxed">
+                        {entry.value}
+                      </p>
+                    )}
+                  </div>
+                ))}
               </div>
 
               {/* Tool Icons */}
@@ -106,7 +113,7 @@ export default function ProjectDetailPage({ params }) {
             {/* Right: Image */}
             <div className="relative w-full h-[550px] rounded-2xl overflow-hidden">
               <Image
-                src="/images/emdep-mockup2.png"
+                src={heroSecondary}
                 alt="Project preview"
                 fill
                 className="object-cover"
@@ -127,29 +134,31 @@ export default function ProjectDetailPage({ params }) {
           {/* Right: Numbered List */}
           <div>
             <div className="space-y-0">
-              <div className="flex items-center gap-6 py-6 border-t border-b border-gray-600">
-                <span className="text-[25px] text-[#4A7C59] font-heading font-medium">01</span>
-                <a href="#problem" className="text-[25px] text-gray-700 font-semibold hover:text-black">Problem & Research</a>
-              </div>
-              <div className="flex items-center gap-6 py-6 border-b border-gray-600">
-                <span className="text-[25px] text-[#4A7C59] font-heading font-medium">02</span>
-<a href="#insight" className="text-[25px] text-gray-700 font-semibold hover:text-black">Goals</a>
-              </div>
-              <div className="flex items-center gap-6 py-6 border-b border-gray-600">
-                <span className="text-[25px] text-[#4A7C59] font-heading font-medium">03</span>
-                <a href="#design" className="text-[25px] text-gray-700 font-semibold hover:text-black">Design Process</a>
-              </div>
-              <div className="flex items-center gap-6 py-6 border-b border-gray-600">
-                <span className="text-[25px] text-[#4A7C59] font-heading font-medium">04</span>
-                <a href="#solution" className="text-[25px] text-gray-700 font-semibold hover:text-black">Results & Impact</a>
-              </div>
+              {(caseStudy?.tableOfContents ?? []).map((item, index) => {
+                const borderClass = index === 0 ? "border-t border-b" : "border-b";
+                const number = item.number ?? `${index + 1}`.padStart(2, "0");
+                return (
+                  <div
+                    key={item.id ?? index}
+                    className={`flex items-center gap-6 py-6 ${borderClass} border-gray-600`}
+                  >
+                    <span className="text-[25px] text-[#4A7C59] font-heading font-medium">{number}</span>
+                    <a
+                      href={`#${item.id}`}
+                      className="text-[25px] text-gray-700 font-semibold hover:text-black"
+                    >
+                      {item.title}
+                    </a>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
       </div>
 
       {/* Content Sections with Sticky Titles */}
-      <ProjectContentSections />
+      <ProjectContentSections sections={caseStudy?.sections} />
 
       {/* View More Projects */}
       <div className="py-12">

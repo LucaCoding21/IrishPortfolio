@@ -1,228 +1,123 @@
-# How to Add New Projects - Super Easy Guide
+# How to Add New Projects (Updated Plug & Play Flow)
 
-This portfolio is designed to make adding new project case studies incredibly simple. You just need to edit **ONE file** with your content!
+The portfolio now treats every case study as structured data. Layout + styling stay identical to the Em Dep build—you only swap copy and media.
 
-## Quick Start - Add a New Project in 3 Steps
+## Quick Checklist
 
-### Step 1: Add Basic Project Info to `src/lib/projects.js`
+1. **Add the project card** to the `PROJECTS` array in `src/lib/projects.js`.
+2. **Create the case study entry** inside `PROJECT_CASE_STUDIES` with your content blocks.
+3. **Export assets** into `public/images` (or update the paths) so every referenced file exists.
+4. **Test `/projects/your-id`** to confirm anchors, media, and lightboxes work.
 
-Find the `PROJECTS` array and add your project:
+---
 
-```javascript
+## Step 1 – Project Card Data
+
+Each card powers the homepage grid and static route generation. Add an object that mirrors the existing ones:
+
+```js
 {
-  id: "your-project-id",  // Must be unique and URL-friendly
-  title: "Your Project Name",
-  subtitle: "Your Role • Company",
-  thumb: "/images/your-thumbnail.png",  // Grid thumbnail image
-  image: "/images/your-preview.png",    // Preview image
+  id: "your-project-id",           // URL slug + lookup key (keep it lowercase + hyphenated)
+  title: "Project Name",
+  subtitle: "Role • Company",
+  thumb: "/images/your-thumb.png", // optional thumbnail
+  image: "/images/your-cover.png", // used for grid + hero fallback
   tags: ["Tag 1", "Tag 2"],
 }
 ```
 
-### Step 2: Add Case Study Data to `PROJECT_CASE_STUDIES`
+> Whatever `id` you choose here must match the key you add to `PROJECT_CASE_STUDIES`.
 
-In the same file (`src/lib/projects.js`), add your case study data:
+---
 
-```javascript
-"your-project-id": {
-  // Hero Section (Top of page)
+## Step 2 – Case Study Payload
+
+Each entry controls the entire detail page: hero, metadata, table of contents, and all sections.
+
+```js
+PROJECT_CASE_STUDIES["your-project-id"] = {
   hero: {
-    image: "/images/your-hero-image.png",
+    banner: "/images/your-hero.png",      // top hero image
+    secondary: "/images/your-mockup.png", // right column mockup
     title: "Your Project Title",
-    description: "Brief description of the project...",
+    description: "One-sentence overview",
   },
-
-  // Project Details (Metadata box)
   details: {
-    date: "Month Year - Month Year",
-    timeline: "X months",
-    role: "Your Role Here",
-    deliverables: ["Deliverable 1", "Deliverable 2"],
-    tools: ["Figma", "Photoshop", etc...],
+    date: "Jan 2025 - Mar 2025",
+    timeline: "10 weeks",
+    role: "Product Designer",
+    deliverables: ["Brand System", "Responsive Website"],
+    tools: ["Figma", "Photoshop"],
   },
-
-  // Preview Image (Shown in details card)
-  previewImage: "/images/your-preview.png",
-
-  // Table of Contents (Customize sections)
   tableOfContents: [
     { number: "01", title: "Problem & Research", id: "problem" },
-    { number: "02", title: "Insight & Goals", id: "insight" },
+    { number: "02", title: "Goals", id: "insight" },
     { number: "03", title: "Design Process", id: "design" },
-    { number: "04", title: "Final Solution", id: "solution" },
+    { number: "04", title: "Results & Impact", id: "solution" },
   ],
+  sections: [
+    // Detailed blocks live here (see below)
+  ],
+};
+```
 
-  // Case Study Sections - THIS IS WHERE YOUR CONTENT GOES!
-  sections: {
-    // Section 1: Problem
-    problem: {
-      heading: "Problem",
-      text: "Your problem statement...",
-      image: "/images/problem-image.png",
-    },
+### Section Objects
 
-    // Section 2: Research
-    research: {
-      heading: "Research",
-      subheading: "Competitive Analysis & Interview",  // Optional green subheading
-      paragraphs: [
-        "First paragraph of research...",
-        "Second paragraph..."
-      ],
-      image: "/images/research-image.png",
-    },
+Every section keeps the sticky headline + content pairing used on Em Dep:
 
-    // Section 3: Key Insights
-    insights: {
-      heading: "Key Insights",
-      text: "Your insights...",
-      image: "/images/insights-image.png",
-    },
+```js
+{
+  id: "problem",               // must match tableOfContents id
+  title: "Problem & Research", // sticky left title
+  blocks: [ /* ordered blocks */ ],
+}
+```
 
-    // Section 4: Goals (with bullet list)
-    goals: {
-      heading: "Goals",
-      list: [
-        "Goal number 1",
-        "Goal number 2",
-        "Goal number 3"
-      ],
-    },
+### Block Types
 
-    // Section 5: Inspirations (with 2 images side by side)
-    inspirations: {
-      heading: "Inspirations",
-      text: "Your inspiration text...",
-      images: ["/images/inspo-1.png", "/images/inspo-2.png"],
-    },
+| Type | What it does | Key fields |
+|------|--------------|------------|
+| `text` | Copies the typography used throughout Em Dep. Can optionally render paragraphs, bullet lists, and an image/lightbox stacked underneath. | `heading`, `headingVariant` (`xl`, `accent`, `default`), `subheading`, `paragraphs`, `list`, `image`, `spacing` |
+| `image` | Standalone full-width image (with optional lightbox). | `src`, `alt`, `width`, `height`, `lightbox`, `spacing` |
+| `imageGrid` | Renders the two-up / stacked grids (mobile view, wireframes, etc.). | `heading`, `headingVariant`, `columns` (`1`, `2`, `3`), `gapClass`, `images[]` |
+| `placeholder` | Keeps the desktop video placeholder styling. | `heading`, `headingVariant`, `label`, `heightClass`, `spacing` |
 
-    // Section 6: Logo & Typography
-    logoTypography: {
-      heading: "Logo & Typography",
-      text: "Your logo/typography description...",
-      image: "/images/logo-typo.png",
-    },
+#### Example Block
 
-    // Section 7: Color Palette
-    colorPalette: {
-      heading: "Color Palette",
-      text: "Your color palette description...",
-      image: "/images/colors.png",
-    },
-
-    // Section 8: Final Design (with 2 images stacked)
-    finalDesign: {
-      heading: "Final Design",
-      text: "Your final design description...",
-      images: ["/images/final-1.png", "/images/final-2.png"],
-    },
+```js
+{
+  type: "text",
+  heading: "Typography",
+  headingVariant: "accent",
+  paragraphs: ["Explain why you chose these fonts."],
+  image: {
+    src: "/images/your-typography.png",
+    alt: "Typography preview",
+    width: 2385,
+    height: 3597,
   },
+  spacing: "mt-12",
 }
 ```
 
-### Step 3: That's It!
+> Tip: Copy the Em Dep section array, paste it under your new ID, and replace the copy. That guarantees you keep every spacing class + block order.
 
-Your new project will automatically:
+---
 
-- ✅ Show up on the homepage grid
-- ✅ Have its own detail page at `/projects/your-project-id`
-- ✅ Use the same beautiful design template
-- ✅ Include sticky section navigation
-- ✅ Have premium animations
+## Step 3 – Assets + QA
 
-## Content Options Reference
+1. Export PNG/JPG assets into `/public/images` (or adjust the paths).
+2. Run `npm run dev` and visit `/projects/your-project-id`.
+3. Scroll the whole page and verify:
+   - Hero + mockup images render.
+   - Table of contents jumps hit the right anchors.
+   - Lightbox images open.
+   - Placeholder blocks got replaced (or intentionally left as-is).
 
-### Section Types You Can Use:
+---
 
-#### Simple Section (text + image)
+## Extras & Utilities
 
-```javascript
-sectionName: {
-  heading: "Heading Here",
-  text: "Your text content...",
-  image: "/images/your-image.png",
-}
-```
-
-#### Section with Subheading (green)
-
-```javascript
-sectionName: {
-  heading: "Main Heading",
-  subheading: "Green Subheading",  // This will be green!
-  paragraphs: ["Paragraph 1...", "Paragraph 2..."],
-  image: "/images/your-image.png",
-}
-```
-
-#### Section with Bullet List
-
-```javascript
-sectionName: {
-  heading: "Heading",
-  list: [
-    "Bullet point 1",
-    "Bullet point 2"
-  ],
-}
-```
-
-#### Section with Multiple Images (side by side)
-
-```javascript
-sectionName: {
-  heading: "Heading",
-  text: "Description...",
-  images: ["/images/img1.png", "/images/img2.png"],  // 2 images = side by side
-}
-```
-
-#### Section with Multiple Images (stacked)
-
-```javascript
-sectionName: {
-  heading: "Heading",
-  text: "Description...",
-  images: ["/images/img1.png", "/images/img2.png"],  // Will stack vertically
-}
-```
-
-## Customizing Table of Contents
-
-You can have 2-6 sections. Just adjust the `tableOfContents` array:
-
-```javascript
-tableOfContents: [
-  { number: "01", title: "Your Section Title", id: "problem" },
-  { number: "02", title: "Another Section", id: "research" },
-  // Add more as needed...
-],
-```
-
-The `id` should match the section key in your `sections` object!
-
-## Typography Reference
-
-The template automatically uses:
-
-- **Sticky Titles**: Darker Grotesque, 25px, #959494
-- **Section Headings**: Figtree, 25px, Black
-- **Green Subheadings**: Figtree, 25px, #4A7C59
-- **Body Text**: Darker Grotesque, 25px, Black
-
-Everything is already styled perfectly!
-
-## Tips
-
-1. **Images**: Put all your images in `/public/images/` folder
-2. **Image paths**: Always start with `/images/...`
-3. **Consistency**: Try to keep similar structure across all 4 projects
-4. **IDs**: Use lowercase with hyphens (e.g., "my-project-name")
-5. **Copy Template**: Use the "project-2" template as a starting point
-
-## Need Help?
-
-The current working example is `"emdep"` in `PROJECT_CASE_STUDIES`. Copy its structure for your new projects!
-
-
-
+- `createCaseStudyTemplate("Project Name")` (in `src/lib/projects.js`) returns a fully structured placeholder if you want to start from a blank slate.
+- `CASE_STUDY_SECTION_TEMPLATE` exports the raw block shape so you can inspect it programmatically.
+- Keep IDs consistent (`problem`, `insight`, `design`, `solution`) unless you also update the table of contents and anchor links.

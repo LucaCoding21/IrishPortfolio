@@ -602,14 +602,14 @@ src/
    - Design Process section is much longer than other sections (multiple subsections with images)
    - Old approach: All title containers got generic `calc(100vh + 200px)` height
    - This caused "Design Process" sticky title to scroll away before content ended
-   
+  
 3. **Solution Implemented**
    - Added `sectionHeights` state to track actual content section heights
    - Created useEffect to measure each content section's offsetHeight
    - Applied measured heights to corresponding title containers on left
    - Each title container now matches its content section height exactly
    - Re-measures on window resize and after image load delay
-   
+  
 4. **Result**
    - "Design Process" sticky title stays visible throughout ALL Design Process content
    - Title persists through: My Process, Typography, Color Palette, Logo, Website Design, Desktop/Mobile views, and all Wireframes
@@ -622,6 +622,16 @@ src/
    - Falls back to `calc(100vh + 200px)` before measurement completes
    - Measures after 1-second delay to account for image loading
    - Simple, performant solution that scales to any content length
+
+---
+
+## November 10, 2025
+
+### Added Foundit Project Entry ✓
+
+- Created Project 2 `foundit` card using `/images/foundit-cover.jpg` for the cover image
+- Initialized Foundit case study with shared template, linking `/images/foundit-cover.jpg` as the banner and `/images/foundit-photo.png` as the secondary mockup
+- Documented change in `/instructions/PROJECT_UPDATES.md` for future AI context
 
 ---
 
@@ -710,4 +720,4 @@ src/
 
 ---
 
-_Last updated: October 15, 2025_
+_Last updated: November 10, 2025_
