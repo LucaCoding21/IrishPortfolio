@@ -8,14 +8,27 @@ import ImageLightbox from "@/components/ui/ImageLightbox";
 function convertCaseStudySections(caseStudySections, tableOfContents) {
   if (!caseStudySections || !tableOfContents) return null;
   
+  // Check if research is a separate section in table of contents
+  const hasSeparateResearch = tableOfContents.some(item => item.id === "research");
+  
   return tableOfContents.map((tocItem) => {
     const sectionId = tocItem.id;
-    const sectionData = caseStudySections[sectionId];
-    if (!sectionData) return null;
+    const isAggregateSection = sectionId === "design" || sectionId === "solution";
+    const isGoalsSection = sectionId === "insight" || sectionId === "goals";
+
+    let sectionData = caseStudySections[sectionId];
+
+    if (isGoalsSection && !sectionData) {
+      sectionData = caseStudySections.goals;
+    }
+
+    if (!sectionData && !isAggregateSection) {
+      return null;
+    }
 
     let content = null;
 
-    // Problem section (can include problem + research)
+    // Problem section (can include problem + research, unless research is separate)
     if (sectionId === "problem") {
       content = (
         <>
@@ -40,7 +53,7 @@ function convertCaseStudySections(caseStudySections, tableOfContents) {
               )}
             </div>
           )}
-          {caseStudySections.research && (
+          {caseStudySections.research && !hasSeparateResearch && (
             <div className="mt-12">
               <h3 className="text-[40px] font-heading font-semibold text-black mb-4">{caseStudySections.research.heading}</h3>
               {caseStudySections.research.subheading && (
@@ -73,6 +86,16 @@ function convertCaseStudySections(caseStudySections, tableOfContents) {
       content = (
         <>
           <h3 className="text-[40px] font-heading font-semibold text-black mb-8">{goalsData.heading || "Goals"}</h3>
+          {goalsData.subheading && (
+            <h4 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-4">
+              {goalsData.subheading}
+            </h4>
+          )}
+          {goalsData.description && (
+            <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-6">
+              {goalsData.description}
+            </p>
+          )}
           {goalsData.list && (
             <ul className="space-y-3 text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed">
               {goalsData.list.map((goal, i) => (
@@ -82,6 +105,41 @@ function convertCaseStudySections(caseStudySections, tableOfContents) {
                 </li>
               ))}
             </ul>
+          )}
+          {goalsData.groups?.map((group, index) => (
+            <div key={index} className={index === 0 ? "mt-8" : "mt-10"}>
+              {group.title && (
+                <h4 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-3">
+                  {group.title}
+                </h4>
+              )}
+              {group.description && (
+                <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-4">
+                  {group.description}
+                </p>
+              )}
+              {group.items && (
+                <ul className="space-y-3 text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed">
+                  {group.items.map((item, itemIndex) => (
+                    <li key={itemIndex} className="flex items-start">
+                      <span className="mr-3">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+          {goalsData.image && (
+            <div className="relative w-full h-auto rounded-2xl overflow-hidden bg-gray-100 mt-10">
+              <ImageLightbox
+                src={goalsData.image}
+                alt={goalsData.heading || goalsData.subheading || "Goals visuals"}
+                width={1296}
+                height={870}
+                className="w-full h-auto rounded-2xl"
+              />
+            </div>
           )}
         </>
       );
@@ -208,6 +266,40 @@ function convertCaseStudySections(caseStudySections, tableOfContents) {
                   ))}
                 </div>
               )}
+            </div>
+          )}
+        </>
+      );
+    }
+    // Research section (standalone)
+    else if (sectionId === "research") {
+      content = (
+        <>
+          {sectionData.heading && (
+            <h3 className="text-[40px] font-heading font-semibold text-black mb-4">{sectionData.heading}</h3>
+          )}
+          {sectionData.subheading && (
+            <h4 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-3">{sectionData.subheading}</h4>
+          )}
+          {sectionData.paragraphs?.map((para, i) => (
+            <p key={i} className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-6">
+              {para}
+            </p>
+          ))}
+          {sectionData.text && (
+            <p className="text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed mb-8">
+              {sectionData.text}
+            </p>
+          )}
+          {sectionData.image && (
+            <div className="relative w-full h-auto rounded-2xl overflow-hidden bg-gray-100 mt-6">
+              <ImageLightbox
+                src={sectionData.image}
+                alt={sectionData.heading || "Section image"}
+                width={1296}
+                height={870}
+                className="w-full h-auto rounded-2xl"
+              />
             </div>
           )}
         </>

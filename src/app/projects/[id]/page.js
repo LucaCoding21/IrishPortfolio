@@ -20,6 +20,11 @@ export default function ProjectDetailPage({ params }) {
     return <div>Project not found</div>;
   }
 
+  // Handle case where case study data might be incomplete
+  if (!caseStudy) {
+    return <div>Case study data not found for this project</div>;
+  }
+
   return (
     <main className="bg-[#F2F3EE] min-h-screen">
       {/* Hero Image */}

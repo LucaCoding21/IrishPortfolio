@@ -138,18 +138,40 @@ export const PROJECT_CASE_STUDIES = {
       deliverables: ["Branding", "High-Fidelity Wireframes", "Interactive Prototype"],
       tools: ["Figma", "Photoshop", "Illustrator"],
     },
-    previewImage: "/images/foundit-cover.jpg",
+    previewImage: "/images/foundit-photo.png",
     tableOfContents: [
-      { number: "01", title: "Problem & Research", id: "problem" },
-      { number: "02", title: "Goals", id: "insight" },
-      { number: "03", title: "Design Process", id: "design" },
-      { number: "04", title: "Final Solution", id: "solution" },
+      { number: "01", title: "Problem", id: "problem" },
+      { number: "02", title: "Goals", id: "goals" },
+      { number: "03", title: "Research", id: "research" },
+      { number: "04", title: "Design Process", id: "design" },
+      { number: "05", title: "Final Solution", id: "solution" },
     ],
     sections: {
       problem: {
         heading: "Problem",
         text: "Students and staff frequently lose items on campus, and traditional lost and found systems are inefficient and time-consuming. There's no easy way to match lost items with their owners using visual recognition.",
-        image: "/images/foundit-photo.png",
+      },
+      goals: {
+        heading: "Goals",
+        groups: [
+          {
+            title: "User Goals",
+            items: [
+              "Submit lost items in under a minute",
+              "Search easily by filter, location, and item",
+              "Get notified immediately when there\'s a match",
+            ],
+          },
+          {
+            title: "Business Goals",
+            items: [
+              "Increase online visibility for lost-and-found",
+              "Reduce manual follow-ups for campus staff",
+              "Stand out with a trustworthy, modern experience",
+            ],
+          },
+        ],
+        image: "/images/foundit-goals.png",
       },
       research: {
         heading: "Research",
@@ -164,15 +186,6 @@ export const PROJECT_CASE_STUDIES = {
         heading: "Key Insights",
         text: "Users need a quick, visual way to search for lost items. They want to upload photos of lost items and have the system match them automatically. Trust and ease of use are critical for adoption.",
         image: "/images/foundit-research.png",
-      },
-      goals: {
-        heading: "Goals",
-        list: [
-          "Create an intuitive mobile-first platform for reporting and finding lost items",
-          "Implement AI image recognition for automatic item matching",
-          "Design a clean, trustworthy interface that encourages user participation",
-          "Ensure the platform works seamlessly across all devices",
-        ],
       },
       inspirations: {
         heading: "Inspirations",

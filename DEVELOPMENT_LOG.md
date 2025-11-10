@@ -526,6 +526,32 @@ src/
    - Fill in content and images
    - Automatically works with premium animations
 
+---
+
+## November 7, 2025
+
+### FoundIt Case Study Content Updates ✓
+
+1. **Hero & Preview Images**
+   - Set FoundIt hero image to `public/images/foundit-cover.jpg`
+   - Updated preview image to `public/images/foundit-photo.png`
+
+2. **Problem & Goals Reordering**
+   - Removed redundant image from Problem section
+   - Moved Goals section to appear immediately after Problem in FoundIt case study data
+
+3. **Table of Contents & Section Handling**
+   - Updated FoundIt table of contents order to: Problem, Goals, Research, Design Process, Final Solution
+   - Adjusted `ProjectContentSections` helper to treat Research as standalone when listed in table of contents
+   - Added dedicated rendering branch for Research sections (handles subheading, paragraph list, and optional image)
+
+4. **Assets**
+   - Copied `foundit-cover.jpg` and `foundit-photo.png` from `assets/FoundIt/` into `public/images/`
+
+5. **Goals Section Enhancements**
+   - Added support for grouped goal lists with optional descriptions
+   - Enabled optional goal imagery via `goals.image`
+
 ### Branding Updates ✓
 
 **Replaced text logo with actual logo image:**
@@ -710,4 +736,4 @@ src/
 
 ---
 
-_Last updated: October 15, 2025_
+_Last updated: November 7, 2025_
