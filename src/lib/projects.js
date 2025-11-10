@@ -618,6 +618,282 @@ const EMDEP_CASE_STUDY = {
   ],
 };
 
+const FOUNDIT_TABLE_OF_CONTENTS = [
+  { number: "01", title: "Problem", id: "problem" },
+  { number: "02", title: "Goals", id: "goals" },
+  { number: "03", title: "Research & Design Process", id: "research" },
+  { number: "04", title: "Final Solution", id: "solution" },
+];
+
+const [
+  founditBaseProblemResearchSection,
+  ,
+  founditBaseDesignSection,
+  founditBaseSolutionSection,
+] = createSectionTemplate("Foundit");
+
+const [founditBaseProblemBlock, founditBaseResearchBlock] =
+  founditBaseProblemResearchSection.blocks;
+
+const founditDesignBlocks = [
+  {
+    ...founditBaseDesignSection.blocks[0],
+    heading: "Brand Identity Design",
+    headingVariant: "accent",
+    paragraphs: [
+      "The Foundit brand was designed to feel trustworthy and approachable which is perfect for helping students and staff reconnect with their belongings. The system combines a simple logo, clear typography and a calm colour palette.",
+    ],
+  },
+  {
+    type: "image",
+    src: "/images/foundit-design.png",
+    alt: "Foundit brand identity overview",
+    width: 1590,
+    height: 3284,
+    spacing: "mt-12",
+    lightbox: true,
+  },
+  {
+    type: "text",
+    heading: "User Personas & User Flows",
+    headingVariant: "accent",
+    paragraphs: [
+      "After identifying my user personas by using an online tool and through the interviews, I mapped out the user flows for both students and staff to help design the features that mattered most:",
+    ],
+    list: [
+      "Quick reporting for students",
+      "Organized tracking and verification tools for security staff",
+    ],
+    spacing: "mt-12",
+  },
+  {
+    type: "image",
+    src: "/images/foundit-persona.png",
+    alt: "Foundit user personas",
+    width: 2379,
+    height: 1653,
+    spacing: "mt-12",
+    lightbox: true,
+  },
+  {
+    type: "image",
+    src: "/images/flow1.png",
+    alt: "Security guard flow",
+    width: 2385,
+    height: 2724,
+    spacing: "mt-12",
+    lightbox: true,
+  },
+  {
+    type: "image",
+    src: "/images/flow2.png",
+    alt: "Student flow",
+    width: 2385,
+    height: 2724,
+    spacing: "mt-12",
+    lightbox: true,
+  },
+  {
+    type: "text",
+    heading: "Wireframes",
+    headingVariant: "accent",
+    paragraphs: [
+      "I designed low-fidelity wireframes to outline main interactions and structure. It was used to help reduct friction to ensure non technical users such as staffs can use the app effortlessly.",
+    ],
+    spacing: "mt-12",
+  },
+  {
+    type: "text",
+    heading: "Admin",
+    headingVariant: "accent",
+    spacing: "mt-12",
+  },
+  {
+    type: "image",
+    src: "/images/admin-wireframe.png",
+    alt: "Admin wireframes",
+    width: 1590,
+    height: 4774,
+    spacing: "mt-6",
+    lightbox: true,
+  },
+  {
+    type: "text",
+    heading: "Student",
+    headingVariant: "accent",
+    spacing: "mt-12",
+  },
+  {
+    type: "image",
+    src: "/images/student-wireframe.png",
+    alt: "Student wireframes",
+    width: 2385,
+    height: 6078,
+    spacing: "mt-6",
+    lightbox: true,
+  },
+  {
+    type: "text",
+    paragraphs: [
+      "We integrated AI assistance to speed up submissions for both users:",
+    ],
+    list: [
+      "it could autofill item details from photos or text for students and suggest matching reports for staff to reduce manual verification.",
+    ],
+    spacing: "mt-12",
+  },
+  {
+    type: "text",
+    paragraphs: [
+      "Through testing, I also condensed the multi step form into a single page and built an admin dashboard for security guards to manage claims, verify ownership, and mark items as returned.",
+    ],
+    spacing: "mt-8",
+  },
+];
+
+const founditFinalSolutionBlocks = [
+  {
+    ...founditBaseSolutionSection.blocks[0],
+    heading: "Final Solution",
+    paragraphs: [
+      "Foundit transformed the outdated lost and found process into a modern web app for universities. Once it relied on handwritten logs and calls to an intuitive online platform tool that makes reporting and recovering lost items faster and easier.",
+    ],
+  },
+  {
+    type: "text",
+    heading: "Key Improvements",
+    headingVariant: "accent",
+    list: [
+      "Handwritten logs → Digital reporting dashboard",
+      "Email-based claims → Structured tracking interface",
+      "Unclear ownership → Photo-based verification",
+    ],
+    spacing: "mt-12",
+  },
+  {
+    type: "text",
+    heading: "Deliverables includes:",
+    headingVariant: "accent",
+    paragraphs: [
+      "Despite the 24-hour timeframe, our team designed and coded a working prototype",
+    ],
+    list: [
+      "UI Screens: Reporting form, search results, and staff dashboard",
+      "Design System: Color palette, typography, logo, and reusable components",
+      "High-Fidelity Prototype: Complete user journey for both student and staff roles",
+    ],
+    spacing: "mt-12",
+  },
+  {
+    type: "text",
+    heading: "Reflection",
+    headingVariant: "accent",
+    paragraphs: [
+      "Through this project, I learned how to speed up the research process using AI tools while still valuing real world insights.",
+      "I also learned how to communicate effectively with my team and identify what helps streamline the design process to complete the project on time.",
+      "Other than that, I also learned that it is important to fuel yourself with healthy snacks and food in order to work an overnight hackathon. Staying awake for more than 24 hours that day made me realize that hackathons are not that easy, but was still a fun event to experience with my team.",
+    ],
+    spacing: "mt-12",
+  },
+  ...founditBaseSolutionSection.blocks.slice(1),
+];
+
+const FOUNDIT_RESEARCH_DESIGN_SECTION = {
+  id: "research",
+  title: "Research & Design Process",
+  blocks: [
+    {
+      ...founditBaseResearchBlock,
+      subheading: undefined,
+      paragraphs: [
+        "With the tight hackathon timeline, I used a combination of an AI assisted research and real interviews to gather insights efficiently.",
+      ],
+      spacing: undefined,
+    },
+    {
+      type: "image",
+      src: "/images/foundit-research.png",
+      alt: "Foundit research overview",
+      width: 1620,
+      height: 900,
+      spacing: "mt-12",
+      lightbox: true,
+    },
+    {
+      type: "text",
+      paragraphs: [
+        "The AI tool used online data to compile on existing lost and found systems, market gaps, user personas, and user flows. This helped speed up the research phase and outline the core pain points.",
+        "My team interviewed campus security and custodians who manage the lost and found process. We discovered issues like inconsistent tracking, inefficient listings, and time wasted verifying ownership. Calling the office for lost items also proved ineffective, often causing delays and miscommunication.",
+      ],
+      spacing: "mt-12",
+    },
+    ...founditDesignBlocks,
+  ],
+};
+
+const FOUNDIT_SECTIONS = [
+  {
+    id: "problem",
+    title: "Problem",
+    blocks: [
+      {
+        ...founditBaseProblemBlock,
+        paragraphs: [
+          "Students often lose personal items like IDs, headphones, and wallets, but the recovery process is slow and unorganized. Without a system, most reports go unanswered, and valuable time is wasted.",
+        ],
+        image: {
+          src: "/images/foundit-goals.png",
+          alt: "Foundit goals overview",
+          width: 2385,
+          height: 744,
+          lightbox: true,
+          spacing: "mt-12",
+        },
+      },
+    ],
+  },
+  {
+    id: "goals",
+    title: "Goals",
+    blocks: [
+      {
+        type: "text",
+        heading: "Goal",
+        headingVariant: "xl",
+      },
+      {
+        type: "text",
+        heading: "Student Goals",
+        headingVariant: "accent",
+        list: [
+          "Submit lost items in under a minute",
+          "Search easily by filter, location and item",
+          "Get notified immediately if there’s a match",
+        ],
+      },
+      {
+        type: "text",
+        heading: "Campus Security goals",
+        headingVariant: "accent",
+        list: [
+          "Reduce manual sorting",
+          "Organize lost items",
+          "Improve response time and satisfaction",
+        ],
+        spacing: "mt-12",
+      },
+    ],
+  },
+  {
+    ...FOUNDIT_RESEARCH_DESIGN_SECTION,
+  },
+  {
+    ...founditBaseSolutionSection,
+    title: "Final Solution",
+    blocks: founditFinalSolutionBlocks,
+  },
+];
+
 export const PROJECT_CASE_STUDIES = {
   emdep: EMDEP_CASE_STUDY,
   foundit: createCaseStudyTemplate("Foundit", {
@@ -626,6 +902,8 @@ export const PROJECT_CASE_STUDIES = {
       secondary: "/images/foundit-photo.png",
       description: "A digital lost & found for campuses.",
     },
+    tableOfContents: FOUNDIT_TABLE_OF_CONTENTS,
+    sections: FOUNDIT_SECTIONS,
   }),
   "project-3": createCaseStudyTemplate("Project 3"),
   "project-4": createCaseStudyTemplate("Project 4"),
