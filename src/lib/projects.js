@@ -8,14 +8,6 @@ export const PROJECTS = [
     tags: ["Em Dep Aesthetics", "Brand & Web Developer"],
   },
   {
-    id: "foundit",
-    title: "FoundIt",
-    subtitle: "FoundIt • Product Designer",
-    thumb: "/images/foundit-cover.jpg",
-    image: "/images/foundit-cover.jpg",
-    tags: ["FoundIt", "Product Designer"],
-  },
-  {
     id: "project-2",
     title: "Project 2",
     subtitle: "Foundti • Product Designer",
@@ -124,12 +116,12 @@ export const PROJECT_CASE_STUDIES = {
     },
   },
   
-  // FoundIt project
-  "foundit": {
+  // Template for new projects - just copy and fill in!
+  "FoundIt": {
     hero: {
-      image: "/images/foundit-cover.jpg",
+      image: "/images/hero-bg.png",
       title: "FoundIt",
-      description: "FoundIt is a digital lost and found platform that uses AI image recognition to help students and staff recover items.",
+      description: "Foundit is a digital lost and found platform that uses AI image recognition to help students and staff recover items.",
     },
     details: {
       date: "October 4 - October 5 2025",
@@ -138,75 +130,20 @@ export const PROJECT_CASE_STUDIES = {
       deliverables: ["Branding", "High-Fidelity Wireframes", "Interactive Prototype"],
       tools: ["Figma", "Photoshop", "Illustrator"],
     },
-    previewImage: "/images/foundit-photo.png",
+    previewImage: "assets/FoundIt/foundit-cover.jpg",
     tableOfContents: [
-      { number: "01", title: "Problem", id: "problem" },
-      { number: "02", title: "Goals", id: "goals" },
-      { number: "03", title: "Research", id: "research" },
-      { number: "04", title: "Design Process", id: "design" },
-      { number: "05", title: "Final Solution", id: "solution" },
+      { number: "01", title: "Problem & Research", id: "problem" },
+      { number: "02", title: "Insight & Goals", id: "insight" },
+      { number: "03", title: "Design Process", id: "design" },
+      { number: "04", title: "Final Solution", id: "solution" },
     ],
     sections: {
       problem: {
         heading: "Problem",
-        text: "Students and staff frequently lose items on campus, and traditional lost and found systems are inefficient and time-consuming. There's no easy way to match lost items with their owners using visual recognition.",
+        text: "Your problem statement here...",
+        image: "/images/hero-bg.png",
       },
-      goals: {
-        heading: "Goals",
-        groups: [
-          {
-            title: "User Goals",
-            items: [
-              "Submit lost items in under a minute",
-              "Search easily by filter, location, and item",
-              "Get notified immediately when there\'s a match",
-            ],
-          },
-          {
-            title: "Business Goals",
-            items: [
-              "Increase online visibility for lost-and-found",
-              "Reduce manual follow-ups for campus staff",
-              "Stand out with a trustworthy, modern experience",
-            ],
-          },
-        ],
-        image: "/images/foundit-goals.png",
-      },
-      research: {
-        heading: "Research",
-        subheading: "User Interviews & Market Analysis",
-        paragraphs: [
-          "I conducted interviews with students and staff to understand their pain points with current lost and found systems. Most reported frustration with having to physically visit multiple locations to search for items.",
-          "Market research revealed that AI image recognition technology could significantly improve the matching process and reduce the time to recover lost items.",
-        ],
-        image: "/images/foundit-research.png",
-      },
-      insights: {
-        heading: "Key Insights",
-        text: "Users need a quick, visual way to search for lost items. They want to upload photos of lost items and have the system match them automatically. Trust and ease of use are critical for adoption.",
-        image: "/images/foundit-research.png",
-      },
-      inspirations: {
-        heading: "Inspirations",
-        text: "I drew inspiration from modern marketplace apps, social media platforms, and AI-powered search interfaces. The goal was to create a design that feels familiar yet innovative.",
-        images: ["/images/foundit-research.png", "/images/foundit-goals.png"],
-      },
-      logoTypography: {
-        heading: "Logo & Typography",
-        text: "The FoundIt logo uses a modern, friendly sans-serif typeface that conveys approachability and innovation. The design emphasizes clarity and trustworthiness.",
-        image: "/images/foundit-goals.png",
-      },
-      colorPalette: {
-        heading: "Color Palette",
-        text: "The color palette combines vibrant, energetic colors with calming neutrals to create a sense of optimism and trust. The primary colors help items stand out while maintaining visual hierarchy.",
-        image: "/images/foundit-goals.png",
-      },
-      finalDesign: {
-        heading: "Final Design",
-        text: "The final design successfully combines AI technology with an intuitive user interface. Users can easily report lost items, search using photos, and connect with item owners through a streamlined process.",
-        images: ["/images/foundit-cover.jpg", "/images/foundit-photo.png"],
-      },
+      // Add more sections as needed...
     },
   },
   
