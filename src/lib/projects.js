@@ -16,12 +16,12 @@ export const PROJECTS = [
     tags: ["Foundit", "Product Designer"],
   },
   {
-    id: "project-3",
-    title: "Project 3",
-    subtitle: "Foundti • Product Designer",
+    id: "fitcheck",
+    title: "FitCheck",
+    subtitle: "Personal Outfit Planning Platform",
     thumb: "/images/hero-bg.png",
     image: "/images/hero-bg.png",
-    tags: ["Foundti", "Product Designer"],
+    tags: ["FitCheck", "Product Designer"],
   },
   {
     id: "project-4",
@@ -905,7 +905,280 @@ export const PROJECT_CASE_STUDIES = {
     tableOfContents: FOUNDIT_TABLE_OF_CONTENTS,
     sections: FOUNDIT_SECTIONS,
   }),
-  "project-3": createCaseStudyTemplate("Project 3"),
+  "fitcheck": createCaseStudyTemplate("FitCheck", {
+    hero: {
+      banner: "/images/fitcheck/FitcheckCover.png",
+      secondary: "/images/fitcheck/FitCheck-preview.png",
+      description:
+        "FitCheck is a social app where friends post daily outfits and rate each other anonymously for fun competition.",
+    },
+    details: {
+      date: "June - September 2025",
+      timeline: "3 months",
+      role: "Product Designer",
+      deliverables: ["Branding", "High-Fidelity Wireframes","App Store Screens"],
+      tools: ["Figma", "Photoshop", "Illustrator"],
+    },
+    tableOfContents: DEFAULT_TABLE_OF_CONTENTS.map((item) => {
+      if (item.id === "problem") {
+        return { ...item, title: "Problem" };
+      }
+      if (item.id === "solution") {
+        return { ...item, title: "Final Solution" };
+      }
+      return item;
+    }),
+    sections: createSectionTemplate("FitCheck").map((section) => {
+      if (section.id === "problem") {
+        const [problemBlock = {}, ...restBlocks] = section.blocks ?? [];
+        const filteredRestBlocks = restBlocks.filter((block) => block.heading !== "Research");
+        return {
+          ...section,
+          title: "Problem",
+          blocks: [
+            {
+              type: "text",
+              heading: problemBlock.heading ?? "Problem",
+              headingVariant: problemBlock.headingVariant ?? "xl",
+              paragraphs: [
+                "As we get older, we naturally drift apart from close friends because of busy schedules. To counter this, we wanted to use social media to solve this problem however, the traditional social media is filled with:",
+              ],
+              spacing: "mb-8",
+            },
+            {
+              type: "text",
+              list: [
+                "Influencers and not real friends",
+                "Pressure to look perfect",
+                "Algorithms which buries connections with friends",
+              ],
+              spacing: "mt-8 mb-8",
+            },
+            {
+              type: "text",
+              paragraphs: [
+                "Therefore, fashion became our solution. We wanted a simple way for friends to stay present in each other’s daily lives. It’s not about showing off, its about keeping the friendship alive with one outfit at a time.",
+              ],
+              spacing: "mt-8 mb-8",
+            },
+            ...filteredRestBlocks,
+          ],
+        };
+      }
+      if (section.id === "insight") {
+        return {
+          ...section,
+          title: "Goals",
+          blocks: [
+            {
+              type: "text",
+              heading: "Goal",
+              headingVariant: "xl",
+              paragraphs: ["Build a space where:"],
+              spacing: "mb-8",
+            },
+            {
+              type: "text",
+              list: [
+                "Posting is low pressure and fun",
+                "Friends feel seen through engagements",
+                "Create micro interaction sparks",
+              ],
+              spacing: "mb-8",
+            },
+            {
+              type: "image",
+              src: "/images/fitcheck/goals-tools.png",
+              alt: "FitCheck goals overview",
+              width: 1586,
+              height: 610,
+              spacing: "mt-4 mb-8",
+            },
+          ],
+        };
+      }
+      if (section.id === "design") {
+        return {
+          ...section,
+          title: "Design Process",
+          blocks: [
+            {
+              type: "text",
+              heading: "Research & Insights",
+              headingVariant: "xl",
+              paragraphs: [
+                "To understand how people share fashion and connect online, I conducted user interviews with 12 participants aged 17–25, all of whom actively use social platforms like Instagram, BeReal, and Pinterest. I asked about their posting habits, how they interact with friends content, and what prevents them from posting regularly.",
+              ],
+              spacing: "mb-8",
+            },
+            {
+              type: "text",
+              paragraphs: [
+                "A few examples are shown below. This data is important because we wanted FitCheck to feel welcoming and ensure friends can easily post they’re daily outfit without fear of judgement.",
+              ],
+              spacing: "mb-8",
+            },
+            {
+              type: "image",
+              src: "/images/fitcheck/Research-post.png",
+              alt: "Research interview takeaways",
+              width: 2385,
+              height: 1659,
+              spacing: "mt-4 mb-8",
+            },
+            {
+              type: "text",
+              paragraphs: [
+                "Posting shouldn’t feel performative. It should feel fun and low pressure.",
+              ],
+              spacing: "mt-8",
+            },
+            {
+              type: "text",
+              heading: "Design Experiment #1: Reducing Posting Pressure",
+              headingVariant: "accent",
+              paragraphs: [
+                "To help users feel comfortable posting every day, we introduced posting vibes: Chill, Main, and Prompt. This system reduces the pressure to post a “perfect” fit by giving users permission to share outfits that reflect different moods and levels of effort:",
+              ],
+              spacing: "mt-12",
+            },
+            {
+              type: "text",
+              list: [
+                "Chill: Everyday looks like sweats, gym clothes, or something quick before class",
+                "Main: The fits you feel proud of and want to show off a little",
+                "Prompt: A playful nudge for days when you need inspiration or want to try something new",
+              ],
+              spacing: "mt-6 mb-8",
+            },
+            {
+              type: "image",
+              src: "/images/fitcheck/design-screen1.png",
+              alt: "Posting vibes design exploration",
+              width: 1589,
+              height: 1444,
+              spacing: "mt-8 mb-8",
+            },
+            {
+              type: "text",
+              paragraphs: [
+                "Through interviews and usability testing, we validated this idea. Users felt more comfortable posting and were more motivated to show up daily.",
+              ],
+              spacing: "mt-6 mb-8",
+            },
+            {
+              type: "text",
+              heading: "Design Experiment #2: Stickers over likes",
+              headingVariant: "accent",
+              paragraphs: [
+                "With FitCheck, our goal was to make friends feel seen using interactions that are personal and expressive. Instead of relying on the traditional ‘like’ or ‘heart’ buttons, we introduced stickers as a way for friends to react to each other’s fits.",
+                "These stickers let users express genuine emotions in a playful way. By removing visible counts and numbers, we encouraged a fun, no pressure engagement that felt more like an inside joke between friends rather than a public performance.",
+              ],
+              spacing: "mt-12 mb-8",
+            },
+            {
+              type: "image",
+              src: "/images/fitcheck/design-screen2.png",
+              alt: "Sticker reactions exploration",
+              width: 1586,
+              height: 1404,
+              spacing: "mt-8 mb-8",
+            },
+            {
+              type: "text",
+              paragraphs: [
+                "I sketched multiple iterations to explore how reactions could feel positive and expressive, I then refined the final four designs in Adobe Illustrator ensuring that it also aligns with FitChecks visual identity.",
+              ],
+              spacing: "mt-6 mb-8",
+            },
+            {
+              type: "image",
+              src: "/images/fitcheck/design-screen3.png",
+              alt: "Final FitCheck design mockups",
+              width: 1580,
+              height: 1872,
+              spacing: "mt-8 mb-6",
+            },
+            {
+              type: "text",
+              paragraphs: [
+                "Once the core features and visuals were finalized, we combined them into the final design.",
+              ],
+              spacing: "mt-4 mb-8",
+            },
+          ],
+        };
+      }
+      if (section.id === "solution") {
+        const [, ...restBlocks] = section.blocks ?? [];
+        return {
+          ...section,
+          title: "Final Solution",
+          blocks: [
+            {
+              type: "text",
+              heading: "Final Design + MVP Iterations",
+              headingVariant: "xl",
+              paragraphs: [
+                "After several rounds of feedback and iteration, the final design focuses on creating a fun way for friends to stay connected through their daily outfits.",
+              ],
+              spacing: "mb-12",
+            },
+            {
+              type: "text",
+              heading: "High-Fidelity MVP",
+              headingVariant: "accent",
+              paragraphs: [
+                "I built the final design on Figma while highlighting a clean and expressive interface on:",
+              ],
+              spacing: "mb-8",
+            },
+            {
+              type: "text",
+              paragraphs: [
+                "Post: Snap a photo, choose a vibe and share instantly",
+              ],
+              highlightedLabel: "Post:",
+              spacing: "mb-6",
+            },
+            {
+              type: "text",
+              paragraphs: [
+                "Feed: See your friends daily outfits",
+              ],
+              highlightedLabel: "Feed:",
+              spacing: "mb-6",
+            },
+            {
+              type: "text",
+              paragraphs: [
+                "Reactions: Choose stickers to react on friends post",
+              ],
+              highlightedLabel: "Reactions:",
+              spacing: "mb-6",
+            },
+            {
+              type: "text",
+              paragraphs: [
+                "Rating: Friends rate each fit with fun, anonymous stars",
+              ],
+              highlightedLabel: "Rating:",
+              spacing: "mb-6",
+            },
+            {
+              type: "text",
+              paragraphs: [
+                "Profile & Archive: Visit gallery full of past fits and track consistency",
+              ],
+              highlightedLabel: "Profile & Archive:",
+              spacing: "mb-6",
+            },
+          ],
+        };
+      }
+      return section;
+    }),
+  }),
   "project-4": createCaseStudyTemplate("Project 4"),
 };
 

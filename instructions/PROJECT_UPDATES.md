@@ -1,6 +1,35 @@
 ## Project Updates
 
+- Added project entry for `FitCheck` using the shared template with placeholder copy so the layout matches existing case studies without touching `emdep` or `foundit`.
+- Updated FitCheck case study hero banner to use `/images/fitcheck/FitcheckCover.png`.
+- Updated FitCheck secondary hero image to `/images/fitcheck/FitCheck-preview.png`.
 - Added project entry for `Foundit` (Project 2) using `/images/foundit-cover.jpg` as the cover and `/images/foundit-photo.png` as the secondary hero image. Case study currently uses the default template and awaits detailed content.
+- Replaced FitCheck problem copy with social media context, bullet list, and new concluding paragraph.
+- Updated FitCheck table of contents label to `Final Solution` to match the section name.
+- Added spacing classes to FitCheck problem paragraphs and list for breathing room.
+- Removed default Research block from FitCheck problem section.
+- Rebuilt FitCheck goals section with low-pressure social paragraph, bullet list, and goals-tools image.
+- Added FitCheck “Research & Insights” block with interview summary, supporting copy, research-post image, and low-pressure takeaway.
+- Added FitCheck design experiment section with posting vibes copy, bullet list, and design-screen1 mockup.
+- Tweaked FitCheck design experiment spacing so the list breathes before the mockup.
+- Added validation sentence to FitCheck design experiment after the mockup to highlight user feedback.
+- Adjusted spacing below FitCheck validation sentence to match the new layout.
+- Added FitCheck design experiment #2 detailing sticker reactions, supporting copy, and design-screen2 mockup.
+- Added consistent top/bottom spacing to FitCheck research and design images.
+- Added extra spacing between FitCheck design experiment #2 copy and the mockup.
+- Added FitCheck final design image and wrap-up sentence after design experiments.
+- Removed leftover default blocks after FitCheck final design summary to keep the section focused.
+- Rewrote FitCheck final section with MVP-focused copy and styled Post callout.
+- Renamed FitCheck solution sticky title back to `Final Solution`.
+- Added FitCheck MVP feature callouts (Post/Feed/Reactions/Rating/Profile & Archive) beneath the summary.
+- Removed inline span tags from FitCheck MVP callouts so plain text renders.
+- Restyled FitCheck MVP callouts as accent subheadings for green Figtree labels.
+- Reverted FitCheck MVP callouts to inline green labels with highlighted spans.
+- Adjusted inline MVP label styling to use Figtree font instead of heading weight.
+- Trimmed FitCheck final section after Profile & Archive callout (removed inherited rest blocks).
+- Updated ProjectContentSections renderer to support inline highlighted labels for FitCheck MVP callouts.
+- Tuned FitCheck problem spacing to 20px (`mt-5`) between copy and bullet list for better rhythm.
+- Renamed FitCheck table of contents first item to `Problem` and aligned the section title.
 - Updated `Foundit` problem statement to: "Students often lose personal items like IDs, headphones, and wallets, but the recovery process is slow and unorganized. Without a system, most reports go unanswered, and valuable time is wasted."
 - Reordered the `Foundit` case study sections to Problem → Goals → Research & Design Process → Results & Impact and replaced the goals content with the Student/Campus Security lists from the reference mock (matching screenshot layout with two green subheadings).
 - Cleared the Foundit research subtitle/copy and replaced it with: “With the tight hackathon timeline, I used a combination of an AI assisted research and real interviews to gather insights efficiently.”

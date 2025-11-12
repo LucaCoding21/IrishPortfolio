@@ -60,14 +60,27 @@ const renderTextBlock = (block, index) => {
           {block.subheading}
         </h4>
       )}
-      {(block.paragraphs ?? []).map((paragraph, idx, arr) => (
-        <p
-          key={idx}
-          className={`${PARAGRAPH_CLASS}${idx !== arr.length - 1 ? " mb-8" : ""}`}
-        >
-          {paragraph}
-        </p>
-      ))}
+      {(block.paragraphs ?? []).map((paragraph, idx, arr) => {
+        if (idx === 0 && block.highlightedLabel) {
+          const label = block.highlightedLabel;
+          const rest = paragraph.replace(label, "").trimStart();
+          return (
+            <p key={idx} className={`${PARAGRAPH_CLASS}${idx !== arr.length - 1 ? " mb-8" : ""}`}>
+              <span className="text-[#3A7B36] font-sans text-[25px] font-semibold mr-2">
+                {label}
+              </span>
+              <span className="text-[#6C6C6C] font-sans font-semibold text-[25px] leading-relaxed">
+                {rest}
+              </span>
+            </p>
+          );
+        }
+        return (
+          <p key={idx} className={`${PARAGRAPH_CLASS}${idx !== arr.length - 1 ? " mb-8" : ""}`}>
+            {paragraph}
+          </p>
+        );
+      })}
       {block.list && (
         <ul className="space-y-3 text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed">
           {block.list.map((item) => (
