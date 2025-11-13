@@ -7,6 +7,7 @@ import ProjectCard from "./ProjectCard";
 export default function Projects() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const featuredProjects = PROJECTS.slice(0, 3);
 
   return (
     <section id="projects" ref={ref} className="min-h-screen pt-[150px] pb-20 bg-white text-black snap-start snap-always">
@@ -32,9 +33,9 @@ export default function Projects() {
           </motion.p>
         </div>
 
-        {/* 2x2 Grid with staggered cards */}
-        <div className="grid grid-cols-2 gap-6">
-          {PROJECTS.map((project, index) => (
+        {/* Featured layout tailored for three projects */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 auto-rows-[1fr]">
+          {featuredProjects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 40, scale: 0.95 }}
@@ -44,8 +45,9 @@ export default function Projects() {
                 delay: 0.2 + (index * 0.1),
                 ease: [0.25, 0.1, 0.25, 1]
               }}
+              className={index === 0 ? "lg:col-span-2" : ""}
             >
-              <ProjectCard project={project} />
+              <ProjectCard project={project} variant={index === 0 ? "featured" : "standard"} />
             </motion.div>
           ))}
         </div>
@@ -53,4 +55,3 @@ export default function Projects() {
     </section>
   );
 }
-

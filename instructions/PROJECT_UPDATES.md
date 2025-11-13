@@ -27,6 +27,11 @@
 - Reverted FitCheck MVP callouts to inline green labels with highlighted spans.
 - Adjusted inline MVP label styling to use Figtree font instead of heading weight.
 - Trimmed FitCheck final section after Profile & Archive callout (removed inherited rest blocks).
+- Added design-screen4.png image under High-Fidelity MVP section in FitCheck final solution.
+- Moved design-screen4.png image to appear after all MVP feature callouts in FitCheck final solution.
+- Added FitCheck Results section with pilot metrics, user feedback list, and next phase paragraphs.
+- Added FitCheck Reflection section with project overview, testing challenges, and learnings paragraphs.
+- Updated View More Projects section to use project-specific view cover images (viewmore-emdep.png, FitCheck-viewCover.png, foundit-viewcover.png).
 - Updated ProjectContentSections renderer to support inline highlighted labels for FitCheck MVP callouts.
 - Tuned FitCheck problem spacing to 20px (`mt-5`) between copy and bullet list for better rhythm.
 - Renamed FitCheck table of contents first item to `Problem` and aligned the section title.

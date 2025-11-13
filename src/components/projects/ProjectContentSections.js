@@ -19,7 +19,7 @@ const renderHeading = (text, variant = "default", className = "") => {
   return <h3 className={`${base} ${className}`.trim()}>{text}</h3>;
 };
 
-const renderImage = (image, key, wrapperClass = "mt-12") => {
+const renderImage = (image, key, wrapperClass = "") => {
   if (!image?.src) return null;
   const className = `relative w-full h-auto rounded-2xl overflow-hidden ${image.className ?? ""}`.trim();
 
@@ -50,8 +50,8 @@ const renderImage = (image, key, wrapperClass = "mt-12") => {
   );
 };
 
-const renderTextBlock = (block, index) => {
-  const spacing = block.spacing ?? "mt-12";
+const renderTextBlock = (block, index, isFirst) => {
+  const spacing = block.spacing ?? (isFirst ? "" : "mt-12");
   return (
     <div key={index} className={`${spacing}`.trim()}>
       {renderHeading(block.heading, block.headingVariant ?? "default")}
@@ -91,12 +91,18 @@ const renderTextBlock = (block, index) => {
           ))}
         </ul>
       )}
-      {renderImage(block.image, `${index}-image`, "mt-12")}
+      {renderImage(
+        block.image,
+        `${index}-image`,
+        block.image
+          ? block.image.spacing ?? block.imageSpacing ?? (isFirst ? "" : "mt-12")
+          : ""
+      )}
     </div>
   );
 };
 
-const renderImageBlock = (block, index) =>
+const renderImageBlock = (block, index, isFirst) =>
   renderImage(
     {
       src: block.src,
@@ -107,11 +113,11 @@ const renderImageBlock = (block, index) =>
       className: block.className,
     },
     index,
-    block.spacing ?? "mt-12"
+    block.spacing ?? (isFirst ? "" : "mt-12")
   );
 
-const renderImageGridBlock = (block, index) => {
-  const spacing = block.spacing ?? "mt-12";
+const renderImageGridBlock = (block, index, isFirst) => {
+  const spacing = block.spacing ?? (isFirst ? "" : "mt-12");
   const columns = block.columns === 1 ? "grid-cols-1" : block.columns === 3 ? "grid-cols-3" : "grid-cols-2";
   const gap = block.gapClass ?? "gap-6";
 
@@ -131,8 +137,8 @@ const renderImageGridBlock = (block, index) => {
   );
 };
 
-const renderPlaceholderBlock = (block, index) => {
-  const spacing = block.spacing ?? "mt-12";
+const renderPlaceholderBlock = (block, index, isFirst) => {
+  const spacing = block.spacing ?? (isFirst ? "" : "mt-12");
   const heightClass = block.heightClass ?? "h-[600px]";
   return (
     <div key={index} className={`${spacing}`.trim()}>
@@ -147,15 +153,16 @@ const renderPlaceholderBlock = (block, index) => {
 };
 
 const renderBlock = (block, index) => {
+  const isFirst = index === 0;
   switch (block.type) {
     case "text":
-      return renderTextBlock(block, index);
+      return renderTextBlock(block, index, isFirst);
     case "image":
-      return renderImageBlock(block, index);
+      return renderImageBlock(block, index, isFirst);
     case "imageGrid":
-      return renderImageGridBlock(block, index);
+      return renderImageGridBlock(block, index, isFirst);
     case "placeholder":
-      return renderPlaceholderBlock(block, index);
+      return renderPlaceholderBlock(block, index, isFirst);
     default:
       return null;
   }
@@ -300,7 +307,7 @@ export default function ProjectContentSections({ sections }) {
               <section
                 id={section.id}
                 ref={(el) => (sectionsRef.current[section.id] = el)}
-                className="pt-5"
+                className="pt-5 scroll-mt-32 md:scroll-mt-48 flex flex-col"
               >
                 {(section.blocks ?? []).map((block, blockIndex) => renderBlock(block, blockIndex))}
               </section>

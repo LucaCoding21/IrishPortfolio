@@ -25,9 +25,9 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Smooth scrolling and selection */
+/* Smooth scrolling for in-page anchors (e.g., Table of Contents) */
 html { 
-  scroll-behavior: auto; /* Instant snapping instead of smooth */
+  scroll-behavior: smooth;
 }
 
 /* Improve scroll snap behavior */
@@ -38,4 +38,3 @@ html {
 ::selection { 
   background: rgba(29, 78, 216, 0.35); 
 }
-

@@ -1,27 +1,27 @@
 export const PROJECTS = [
   {
-    id: "emdep",
-    title: "Em Dep Aesthetics",
-    subtitle: "Brand & Web Developer",
-    thumb: "/images/hero-bg.png",
-    image: "/images/hero-bg.png",
-    tags: ["Em Dep Aesthetics", "Brand & Web Developer"],
+    id: "fitcheck",
+    title: "FitCheck",
+    subtitle: "Personal Outfit Planning Platform",
+    thumb: "/images/FitCheck-viewCover.png",
+    image: "/images/FitCheck-viewCover.png",
+    tags: ["FitCheck", "Product Designer"],
   },
   {
     id: "foundit",
     title: "Foundit",
     subtitle: "Digital lost & found for campuses",
-    thumb: "/images/foundit-cover.jpg",
-    image: "/images/foundit-cover.jpg",
+    thumb: "/images/foundit-viewcover.png",
+    image: "/images/foundit-viewcover.png",
     tags: ["Foundit", "Product Designer"],
   },
   {
-    id: "fitcheck",
-    title: "FitCheck",
-    subtitle: "Personal Outfit Planning Platform",
-    thumb: "/images/hero-bg.png",
-    image: "/images/hero-bg.png",
-    tags: ["FitCheck", "Product Designer"],
+    id: "emdep",
+    title: "Em Dep Aesthetics",
+    subtitle: "Brand & Web Developer",
+    thumb: "/images/emdep-mockup1.png",
+    image: "/images/emdep-mockup1.png",
+    tags: ["Em Dep Aesthetics", "Brand & Web Developer"],
   },
   {
     id: "project-4",
@@ -775,7 +775,7 @@ const founditFinalSolutionBlocks = [
     heading: "Deliverables includes:",
     headingVariant: "accent",
     paragraphs: [
-      "Despite the 24-hour timeframe, our team designed and coded a working prototype",
+      "Despite the 24 hour timeframe, our team designed and coded a working prototype",
     ],
     list: [
       "UI Screens: Reporting form, search results, and staff dashboard",
@@ -795,7 +795,6 @@ const founditFinalSolutionBlocks = [
     ],
     spacing: "mt-12",
   },
-  ...founditBaseSolutionSection.blocks.slice(1),
 ];
 
 const FOUNDIT_RESEARCH_DESIGN_SECTION = {
@@ -841,14 +840,6 @@ const FOUNDIT_SECTIONS = [
         paragraphs: [
           "Students often lose personal items like IDs, headphones, and wallets, but the recovery process is slow and unorganized. Without a system, most reports go unanswered, and valuable time is wasted.",
         ],
-        image: {
-          src: "/images/foundit-goals.png",
-          alt: "Foundit goals overview",
-          width: 2385,
-          height: 744,
-          lightbox: true,
-          spacing: "mt-12",
-        },
       },
     ],
   },
@@ -882,6 +873,15 @@ const FOUNDIT_SECTIONS = [
         ],
         spacing: "mt-12",
       },
+      {
+        type: "image",
+        src: "/images/foundit-goals.png",
+        alt: "Foundit goals overview",
+        width: 2385,
+        height: 744,
+        lightbox: true,
+        spacing: "mt-12",
+      },
     ],
   },
   {
@@ -900,7 +900,18 @@ export const PROJECT_CASE_STUDIES = {
     hero: {
       banner: "/images/foundit-cover.jpg",
       secondary: "/images/foundit-photo.png",
-      description: "A digital lost & found for campuses.",
+      description: "move the tags in the bottom instead and include the glass effect again",
+    },
+    details: {
+      date: "October 4 - 5, 2025",
+      timeline: "24 hours",
+      role: "Product Designer",
+      deliverables: [
+        "Branding",
+        "High-Fidelity Wireframes",
+        "Interactive Prototype",
+      ],
+      tools: ["Figma", "Photoshop", "Illustrator"],
     },
     tableOfContents: FOUNDIT_TABLE_OF_CONTENTS,
     sections: FOUNDIT_SECTIONS,
@@ -1171,7 +1182,72 @@ export const PROJECT_CASE_STUDIES = {
                 "Profile & Archive: Visit gallery full of past fits and track consistency",
               ],
               highlightedLabel: "Profile & Archive:",
-              spacing: "mb-6",
+              spacing: "mb-12",
+            },
+            {
+              type: "text",
+              paragraphs: [
+                "Below are the main MVP screens showing final interfaces.",
+              ],
+              spacing: "mt-12 mb-4",
+            },
+            {
+              type: "image",
+              src: "/images/fitcheck/design-screen4.png",
+              alt: "High-Fidelity MVP design mockups",
+              width: 1586,
+              height: 2868,
+              spacing: "mt-4",
+            },
+            {
+              type: "text",
+              heading: "Results:",
+              headingVariant: "accent",
+              paragraphs: [
+                "FitCheck reached 50+ early users during pilot texting.",
+              ],
+              spacing: "mt-12 mb-8",
+            },
+            {
+              type: "text",
+              list: [
+                "85% posted at least three times a week",
+                "90% said it helped them stay connected with friends",
+                "70% felt less pressure when posting outfits",
+              ],
+              spacing: "mb-8",
+            },
+            {
+              type: "text",
+              paragraphs: [
+                "The combination of fit vibes, stickers, and ratings, turned fashion sharing into a casual, daily routine rather than a performance.",
+                "The next phase will focus on expanding group features, improving reactions, and launching a public beta to collect more user feedback. We're also exploring weekly highlights and group challenges to strengthen connection and make posting even more fun.",
+              ],
+              spacing: "mt-8",
+            },
+            {
+              type: "text",
+              heading: "Reflection:",
+              headingVariant: "accent",
+              paragraphs: [
+                "This was a summer project built by just two people. I led the UI/UX design, handling everything from user research and wireframing to prototyping and visual design, while my teammate focused on development. Together, we built and tested multiple MVPs to bring FitCheck to life.",
+              ],
+              spacing: "mt-12 mb-8",
+            },
+            {
+              type: "text",
+              paragraphs: [
+                "One challenge I faced was finding the right users to test the app. We needed friends who actually cared about fashion and staying connected, not just anyone willing to try it. It taught me how important it is to test with people who truly reflect your target audience.",
+                "Testing with the wrong users showed how easily my team and I could go off track and lose sight of the app's original purpose. It was a reminder that good design decisions come from testing with the right audience",
+              ],
+              spacing: "mb-8",
+            },
+            {
+              type: "text",
+              paragraphs: [
+                "This experience helped me understand the value of defining clear user criteria early and staying focused on feedback that truly represents our intended users.",
+              ],
+              spacing: "mt-12",
             },
           ],
         };

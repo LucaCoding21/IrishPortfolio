@@ -12,6 +12,15 @@ const TOOL_ICONS = {
   WordPress: { src: "/icons/wordpress.svg", alt: "WordPress icon" },
 };
 
+const VIEW_MORE_IMAGES = {
+  emdep: "/images/viewmore-emdep.png",
+  fitcheck: "/images/FitCheck-viewCover.png",
+  foundit: "/images/foundit-viewcover.png",
+};
+
+const TAG_CHIP_CLASS =
+  "px-4 py-2 rounded-full text-sm font-semibold tracking-wide text-white transition shadow-2xl shadow-black/20 border border-white/40 bg-white/15 backdrop-blur-xl";
+
 export default function ProjectDetailPage({ params }) {
   const project = PROJECTS.find((p) => p.id === params.id);
   const caseStudy = PROJECT_CASE_STUDIES[params.id] ?? PROJECT_CASE_STUDIES.emdep;
@@ -164,20 +173,34 @@ export default function ProjectDetailPage({ params }) {
       <div className="py-12">
         <div className="container max-w-[1500px] mx-auto px-8">
           <div className="bg-white rounded-3xl p-12">
-            <h2 className="text-3xl font-semibold text-[#4A7C59] mb-8">View More Projects</h2>
-            <div className="grid grid-cols-3 gap-6">
-              {PROJECTS.filter(p => p.id !== params.id).slice(0, 3).map((proj) => (
-                <Link key={proj.id} href={`/projects/${proj.id}`} className="block">
-                  <div className="relative w-full h-[250px] rounded-2xl overflow-hidden hover:opacity-90 transition">
-                    <Image
-                      src={proj.image}
-                      alt={proj.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                </Link>
-              ))}
+            <h2 className="text-3xl font-semibold text-black mb-8">View More Projects</h2>
+            <div className={`grid grid-cols-1 ${PROJECTS.length - 1 > 1 ? "md:grid-cols-2" : ""} gap-6`}>
+              {PROJECTS.filter((p) => p.id !== params.id)
+                .slice(0, 2)
+                .map((proj) => (
+                  <Link
+                    key={proj.id}
+                    href={`/projects/${proj.id}`}
+                    className="group block rounded-2xl overflow-hidden"
+                  >
+                    <div className="relative w-full h-[260px] overflow-hidden rounded-2xl">
+                      <Image
+                        src={VIEW_MORE_IMAGES[proj.id] || proj.image}
+                        alt={proj.title}
+                        fill
+                        className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent transition" />
+                      <div className="absolute left-4 right-4 bottom-4 flex flex-wrap gap-3">
+                        {proj.tags.slice(0, 2).map((tag) => (
+                          <span key={tag} className={TAG_CHIP_CLASS}>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </Link>
+                ))}
             </div>
           </div>
         </div>
