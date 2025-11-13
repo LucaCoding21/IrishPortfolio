@@ -634,6 +634,8 @@ const [
 
 const [founditBaseProblemBlock, founditBaseResearchBlock] =
   founditBaseProblemResearchSection.blocks;
+const founditProblemBlockNoImage = { ...founditBaseProblemBlock };
+delete founditProblemBlockNoImage.image;
 
 const founditDesignBlocks = [
   {
@@ -836,7 +838,7 @@ const FOUNDIT_SECTIONS = [
     title: "Problem",
     blocks: [
       {
-        ...founditBaseProblemBlock,
+        ...founditProblemBlockNoImage,
         paragraphs: [
           "Students often lose personal items like IDs, headphones, and wallets, but the recovery process is slow and unorganized. Without a system, most reports go unanswered, and valuable time is wasted.",
         ],

@@ -23,13 +23,12 @@ export default function Projects() {
             Focused Projects
           </motion.h2>
           <motion.p
-            className="text-gray-600 max-w-lg text-left leading-relaxed pt-1"
+            className="text-gray-600 max-w-lg text-left leading-relaxed pt-1 text-[20px] font-medium font-sans"
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            Lorem ipsum dolor sit amet consectetur. Pulvinar ut netus morbi sed mattis. 
-            Arcu turpis vitae ut potenti feugiat tellus auctor.
+            Each project reflects a moment of growth. Theres more to create, and more to share!
           </motion.p>
         </div>
 

@@ -39,13 +39,13 @@ export default function LetsChat() {
                 Let&apos;s Chat!
               </motion.h2>
               <motion.p
-                className="text-gray-600 mb-8"
+                className="mb-8 text-[20px] font-medium font-sans"
+                style={{ color: "rgb(75 85 99 / var(--tw-text-opacity, 1))" }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
               >
-                Lorem ipsum dolor sit amet consectetur. Pulvinar ut netus morbi sed mattis. 
-                Arcu turpis vitae ut potenti feugiat tellus auctor.
+                Every connection starts with a conversation. Let’s create something meaningful together!
               </motion.p>
               
               <motion.div
@@ -114,20 +114,7 @@ export default function LetsChat() {
       </div>
 
       {/* Footer at bottom */}
-      <motion.div
-        className="py-8 text-center"
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
-      >
-        <p className="text-sm text-gray-600 flex items-center justify-center gap-2">
-          made with love & care 
-          <svg className="w-4 h-4 text-black" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-          </svg>
-        </p>
-      </motion.div>
+      {/* Removed stray footer note per request */}
     </section>
   );
 }
-

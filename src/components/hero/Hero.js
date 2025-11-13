@@ -114,7 +114,8 @@ export default function Hero() {
         <div className="flex-1 flex items-center">
           <div className="container max-w-[1500px]">
             <motion.h1
-              className="text-5xl font-normal tracking-tight"
+              className="text-[35px] font-normal tracking-tight text-center"
+              style={{ fontFamily: "Figtree, sans-serif" }}
               initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
               animate={{ 
                 opacity: bgLoaded ? 1 : 0, 
@@ -127,7 +128,7 @@ export default function Hero() {
                 ease: [0.25, 0.1, 0.25, 1]
               }}
             >
-              Lorem ipsum dolor sit amet consectetur.
+              Where Perspective Meets Creation
             </motion.h1>
           </div>
         </div>
@@ -213,4 +214,3 @@ export default function Hero() {
     </section>
   );
 }
-

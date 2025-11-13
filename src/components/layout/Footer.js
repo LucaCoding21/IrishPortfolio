@@ -13,12 +13,12 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="border-t border-white/10">
+    <footer className="border-t border-[#4A7C59]/30 bg-white text-[#4A7C59] shadow-soft">
       <div className="container max-w-[1500px] mx-auto px-8 py-8">
         <div className="flex items-center justify-between">
-          <p className="text-sm text-muted flex items-center gap-2">
+          <p className="text-[20px] font-medium text-fg flex items-center gap-2">
             made with love & care
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-[17px] h-[17px]" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
             </svg>
           </p>
@@ -32,7 +32,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="hover:opacity-70 transition-opacity"
               >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-[17px] h-[17px]" fill="currentColor" viewBox="0 0 24 24">
                   <path d={social.path}/>
                 </svg>
               </a>
@@ -41,7 +41,7 @@ export default function Footer() {
               href="mailto:hello@iclaire.com"
               className="hover:opacity-70 transition-opacity"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-[17px] h-[17px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
             </a>
@@ -51,4 +51,3 @@ export default function Footer() {
     </footer>
   );
 }
-

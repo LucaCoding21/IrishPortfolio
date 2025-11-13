@@ -1,6 +1,7 @@
 import Hero from "@/components/hero/Hero";
 import Projects from "@/components/projects/Projects";
 import LetsChat from "@/components/sections/LetsChat";
+import Footer from "@/components/layout/Footer";
 
 export default function HomePage() {
   return (
@@ -13,7 +14,7 @@ export default function HomePage() {
       <div className="snap-start">
         <LetsChat />
       </div>
+      <Footer />
     </main>
   );
 }
-

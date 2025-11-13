@@ -79,7 +79,7 @@ export default function About() {
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
               <h3 className="text-4xl font-semibold mb-4">Let&apos;s Chat!</h3>
               <p className="text-muted max-w-md mb-6">
-                Lorem ipsum dolor sit amet consectetur. Libero nibh amet eu rhoncus cursus.
+                Every connection starts with a conversation. Let’s create something meaningful together!
               </p>
               <div className="flex items-center gap-4">
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-fg transition">
@@ -105,4 +105,3 @@ export default function About() {
     </section>
   );
 }
-
