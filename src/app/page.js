@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 
 export default function HomePage() {
   return (
-    <main className="h-screen overflow-y-scroll snap-y snap-mandatory">
+    <main className="h-screen overflow-y-scroll snap-y snap-mandatory text-[25px]">
       {/* Snap between Hero and Projects only */}
       <Hero />
       <Projects />

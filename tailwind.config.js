@@ -14,7 +14,7 @@ module.exports = {
       colors: {
         bg: "#0B0B0C",
         fg: "#F5F7FA",
-        muted: "#9AA2B1",
+        muted: "#3F3737",
         accent: "#1D4ED8",
       },
       fontFamily: {
@@ -28,4 +28,3 @@ module.exports = {
   },
   plugins: [],
 }
-

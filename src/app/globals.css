@@ -20,6 +20,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @layer utilities {
+  p {
+    color: #3f3737;
+    font-weight: 500;
+  }
+
+  #hero p {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  footer p {
+    color: #4A7C59;
+    font-weight: 600;
+  }
+
+  .text-muted {
+    font-weight: 500;
+  }
+
   .font-heading {
     font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif;
   }

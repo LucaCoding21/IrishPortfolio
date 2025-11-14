@@ -9,9 +9,22 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isOverHero, setIsOverHero] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
-  
-  // Check if we're on a project details page
-  const isProjectPage = pathname?.startsWith('/projects/');
+
+  // Check if we're on a project details page or the About page
+  // These routes share the same solid/scrolling navbar style
+  const isProjectPage = pathname?.startsWith('/projects/') || pathname === '/about';
+
+  const resolveHref = (label) => {
+    if (label === "Works") {
+      return pathname === "/" ? "#projects" : "/#projects";
+    }
+
+    if (label === "About") {
+      return "/about";
+    }
+
+    return "/#contact";
+  };
 
   useEffect(() => {
     // Reset to hero view when pathname changes to homepage
@@ -110,7 +123,7 @@ export default function Navbar() {
             
             <nav className="flex items-center gap-8 text-[20px] font-sans font-semibold text-black">
               {["Works", "About", "Contact"].map((item, i) => {
-                const href = item === "Works" ? "#projects" : `#${item.toLowerCase()}`;
+                const href = resolveHref(item);
                 return (
                   <motion.a
                     key={item}
@@ -182,7 +195,7 @@ export default function Navbar() {
               >
                 <Link 
                   href="/" 
-                  className="font-semibold tracking-tight text-[20px] text-black"
+                  className="font-semibold tracking-tight text-[25px] text-black"
                 >
                   <motion.div 
                     whileHover={{ rotate: 90 }}
@@ -204,7 +217,7 @@ export default function Navbar() {
               
               <nav className="flex items-center gap-8 text-[20px] font-sans font-semibold text-black">
                 {["Works", "About", "Contact"].map((item, i) => {
-                  const href = item === "Works" ? "/#projects" : `/#${item.toLowerCase()}`;
+                  const href = resolveHref(item);
                   return (
                     <motion.a
                       key={item}
@@ -263,7 +276,7 @@ export default function Navbar() {
                 
                 <nav className="flex items-center gap-8 text-[20px] font-sans font-semibold text-fg">
                   {["Works", "About", "Contact"].map((item, i) => {
-                    const href = item === "Works" ? "#projects" : `#${item.toLowerCase()}`;
+                    const href = resolveHref(item);
                     return (
                       <motion.a
                         key={item}
@@ -286,4 +299,3 @@ export default function Navbar() {
     </AnimatePresence>
   );
 }
-

@@ -11,7 +11,7 @@ const HEADING_CLASSES = {
   default: "text-[25px] font-heading font-semibold text-black mb-4",
 };
 
-const PARAGRAPH_CLASS = "text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed";
+const PARAGRAPH_CLASS = "text-[#3f3737] text-[25px] font-sans font-medium leading-relaxed";
 
 const renderHeading = (text, variant = "default", className = "") => {
   if (!text) return null;
@@ -69,7 +69,7 @@ const renderTextBlock = (block, index, isFirst) => {
               <span className="text-[#3A7B36] font-sans text-[25px] font-semibold mr-2">
                 {label}
               </span>
-              <span className="text-[#6C6C6C] font-sans font-semibold text-[25px] leading-relaxed">
+              <span className="text-[#3f3737] font-sans font-medium text-[25px] leading-relaxed">
                 {rest}
               </span>
             </p>
@@ -82,7 +82,7 @@ const renderTextBlock = (block, index, isFirst) => {
         );
       })}
       {block.list && (
-        <ul className="space-y-3 text-[#6C6C6C] text-[25px] font-sans font-semibold leading-relaxed">
+        <ul className="space-y-3 text-[#3f3737] text-[25px] font-sans font-medium leading-relaxed">
           {block.list.map((item) => (
             <li key={item} className="flex items-start">
               <span className="mr-3">•</span>
@@ -143,14 +143,14 @@ const renderPlaceholderBlock = (block, index, isFirst) => {
   return (
     <div key={index} className={`${spacing}`.trim()}>
       {renderHeading(block.heading, block.headingVariant ?? "accent")}
-      <div
-        className={`relative w-full ${heightClass} rounded-2xl overflow-hidden bg-gray-100 flex items-center justify-center`}
-      >
-        <div className="text-gray-400 text-lg">{block.label ?? "Placeholder"}</div>
+        <div
+          className={`relative w-full ${heightClass} rounded-2xl overflow-hidden bg-gray-100 flex items-center justify-center`}
+        >
+          <div className="text-[#3f3737] font-medium text-lg">{block.label ?? "Placeholder"}</div>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
 const renderBlock = (block, index) => {
   const isFirst = index === 0;
