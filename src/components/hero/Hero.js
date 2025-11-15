@@ -177,7 +177,7 @@ export default function Hero() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-fg transition-colors"
+                className="h-12 w-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ 
@@ -195,7 +195,7 @@ export default function Hero() {
             <motion.a
               href="mailto:irishclaireparayno@gmail.com"
               aria-label="Email Irish Claire"
-              className="hover:text-fg transition-colors"
+              className="h-12 w-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ 

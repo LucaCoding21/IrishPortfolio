@@ -59,7 +59,7 @@ export default function LetsChat() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:opacity-70 transition-opacity"
+                    className="h-12 w-12 rounded-full border border-[#D7DACD] flex items-center justify-center hover:bg-[#F1F3EC] transition"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                     transition={{
@@ -67,9 +67,8 @@ export default function LetsChat() {
                       delay: 0.3 + (i * 0.05),
                       ease: [0.34, 1.56, 0.64, 1]
                     }}
-                    whileHover={{ scale: 1.1, y: -2 }}
                   >
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d={social.path}/>
                     </svg>
                   </motion.a>
@@ -77,7 +76,7 @@ export default function LetsChat() {
                 <motion.a
                   href="mailto:irishclaireparayno@gmail.com"
                   aria-label="Email Irish Claire"
-                  className="hover:opacity-70 transition-opacity"
+                  className="h-12 w-12 rounded-full border border-[#D7DACD] flex items-center justify-center hover:bg-[#F1F3EC] transition"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                   transition={{
@@ -85,9 +84,8 @@ export default function LetsChat() {
                     delay: 0.4,
                     ease: [0.34, 1.56, 0.64, 1]
                   }}
-                  whileHover={{ scale: 1.1, y: -2 }}
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                   </svg>
                 </motion.a>

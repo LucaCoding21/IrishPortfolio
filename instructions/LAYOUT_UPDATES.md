@@ -9,4 +9,27 @@
 - Added a new `/about` page (`src/app/about/page.js`) that mirrors the reference “About / Behind the Screen / Let’s Chat!” layout, and wired the navbar “About” link to route there.
  - Updated `Navbar.js` so the About page (`/about`) uses the same solid, scroll-reactive navbar style as project detail pages instead of the transparent hero-style navbar.
  - Enlarged the clover image on the `/about` page by increasing its wrapper to `max-w-[680px]` and bumped the main About and Behind the Screen paragraphs to `text-[25px]` to better match the reference typography scale.
+- Re-skinned `/about` to match the latest reference: new hero card with pink clover accent, rounded content card, expanded tools/development grids, refreshed Behind the Screen layout, and a left-aligned Let’s Chat section with circular socials.
+- Removed the small uppercase section labels (“Profile,” “Personal,” “Contact”) from `/about` to keep the layout cleaner like the reference.
+- Added a `box-shadow: 10px 10px 0 rgba(58, 123, 54, 0.25)` to the `/about` bio card to match the referenced green drop shadow.
+- Removed the BCIT credential line from `/about` and removed the border/padding that used to separate the Tools/Development grid since the new layout already provides the necessary spacing.
+- Added `pt-8` above the Tools/Development grid on `/about` to restore breathing room beneath the bio card without reintroducing the BCIT line.
+- Installed `react-icons` and wired the About page’s Tools & Development badges to brand icons from `react-icons/si` (Figma, Adobe suite, ProtoPie, React, Next.js, etc.) so none of the badges render empty states.
+- Switched the `/about` page background from the muted off-white to pure white to match the latest reference screenshot.
+- Removed the forced green tint on the new `react-icons` brand badges so each icon renders in its original brand color.
+- Simplified the `/about` tool/dev lists: removed ProtoPie & FigJam, added WordPress/HTML/CSS/JavaScript/React (basic), and swapped Framer/Webflow/Next.js/Figma to Web for the new stack.
+- Added extra top padding (`pt-40`) to the `/about` hero section to create breathing room between the navbar and the “Claire” heading.
+- Removed the inner dashed photo placeholder container from the `/about` hero image card; the gradient block now stands alone until a real photo is added.
+- Constrained every `/about` section wrapper to `max-w-[1400px]` and centered content (`mx-auto`) with text centered on mobile and left-aligned on desktop to match the reference layout.
+- Removed the pink blurred blob (`absolute -top-12 ... bg-[#F7DED9]`) behind the placeholder portrait so the hero image shows only the white gradient card.
+- Centered the `/about` “Let’s Chat” section by switching to a vertical layout (single column, centered text/buttons) with the clover image centered beneath the intro copy.
+- Ensured the clover image inside the `/about` Let’s Chat section stays centered by constraining its wrapper with `mx-auto`.
+- Adjusted the Let’s Chat clover SVG viewBox to `0 0 500 500` for consistent scaling.
+- Matched homepage social icon styling to the About page: hero icons now sit inside bordered circular buttons (`border-white/30`), and the global footer icons use bordered circles in the brand green.
+- Extended the bordered icon treatment to the homepage Let’s Chat section (`h-12 w-12 rounded-full border border-[#D7DACD]` with subtle hover fill) so all contact CTAs share the same design language.
+- Disabled the hover scale animation on the homepage Let’s Chat icons so they match the About page buttons exactly (same size, border, and hover color).
+- Added the shared `Footer` component to `/about/page.js` so the About page now displays the same footer as the homepage.
+- Wrapped the homepage `<Footer />` in its own `snap-start` container so it participates in scroll snapping just like the Let’s Chat section (fixing cases where the footer wasn’t visible).
+- Rebuilt `/contact` to match the new reference hero (wave mask photo on the right, simple copy + bordered social buttons on the left) and updated the navbar logic so `/contact` uses the same solid style as `/about`/project pages.
+- Swapped the `/contact` hero mask from the wave silhouette to the same clover shape used throughout the site, and aligned its viewBox/circle positions (`0 0 500 500`) with the About section for perfect symmetry.
 

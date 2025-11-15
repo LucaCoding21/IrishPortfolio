@@ -14,7 +14,9 @@ export default function HomePage() {
       <div className="snap-start">
         <LetsChat />
       </div>
-      <Footer />
+      <div className="snap-start">
+        <Footer />
+      </div>
     </main>
   );
 }

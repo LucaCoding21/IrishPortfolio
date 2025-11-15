@@ -12,7 +12,8 @@ export default function Navbar() {
 
   // Check if we're on a project details page or the About page
   // These routes share the same solid/scrolling navbar style
-  const isProjectPage = pathname?.startsWith('/projects/') || pathname === '/about';
+  const isProjectPage =
+    pathname?.startsWith("/projects/") || pathname === "/about" || pathname === "/contact";
 
   const resolveHref = (label) => {
     if (label === "Works") {
@@ -23,7 +24,7 @@ export default function Navbar() {
       return "/about";
     }
 
-    return "/#contact";
+    return "/contact";
   };
 
   useEffect(() => {

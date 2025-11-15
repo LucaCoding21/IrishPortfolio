@@ -30,7 +30,7 @@ export default function Footer() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:opacity-70 transition-opacity"
+                className="h-12 w-12 rounded-full border border-[#4A7C59]/40 flex items-center justify-center hover:bg-[#4A7C59]/5 transition-opacity"
               >
             <svg className="w-[17px] h-[17px]" fill="currentColor" viewBox="0 0 24 24">
                   <path d={social.path}/>
@@ -40,7 +40,7 @@ export default function Footer() {
             <a
               href="mailto:irishclaireparayno@gmail.com"
               aria-label="Email Irish Claire"
-              className="hover:opacity-70 transition-opacity"
+              className="h-12 w-12 rounded-full border border-[#4A7C59]/40 flex items-center justify-center hover:bg-[#4A7C59]/5 transition-opacity"
             >
               <svg className="w-[17px] h-[17px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
