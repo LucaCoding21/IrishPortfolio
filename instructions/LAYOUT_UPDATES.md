@@ -33,3 +33,50 @@
 - Rebuilt `/contact` to match the new reference hero (wave mask photo on the right, simple copy + bordered social buttons on the left) and updated the navbar logic so `/contact` uses the same solid style as `/about`/project pages.
 - Swapped the `/contact` hero mask from the wave silhouette to the same clover shape used throughout the site, and aligned its viewBox/circle positions (`0 0 500 500`) with the About section for perfect symmetry.
 
+## Mobile Responsiveness Overhaul
+
+Implemented comprehensive mobile optimizations across all pages to ensure content is never cut off and the UI/UX follows the site's theme:
+
+### Homepage
+- **Hero**: Scaled heading 35px→24px mobile, stacked footer elements vertically, reduced icon sizes to 10px mobile/12px desktop, adjusted padding to px-4 on mobile
+- **Projects**: Vertical header stack on mobile, heading 5xl→3xl, description 25px→18px, added responsive padding throughout
+- **Let's Chat**: Single-column layout on mobile with centered content, heading 5xl→3xl, paragraph 25px→18px, constrained clover to 400px mobile width
+
+### Footer
+- Stacked layout on mobile (centered), reduced text 20px→16px, icons 17px→14px, adjusted spacing for compact view
+
+### About Page  
+- Top padding pt-40→pt-24 mobile, portrait card scaled 420px→300px mobile, all headings/text responsive (Claire: 48px→36px, bio: 22px→18px, Tools/Dev labels: 18px→14px, badges: 17px→14px)
+- Behind the Screen heading 38px→28px, paragraph 25px→18px, photo cards with tighter spacing
+- Let's Chat heading 38px→28px, paragraph 20px→18px, clover 420px→320px mobile
+
+### Contact Page
+- Top padding pt-40→pt-24 mobile, heading 48px→36px, paragraph 20px→18px, clover image 520px→340px mobile, icons 12px→10px, tighter spacing throughout
+
+### Project Detail Pages
+- Hero image 500px→280px height mobile, detail card padding p-12→p-6, title 50px→32px, description 25px→18px
+- Detail labels 25px→18px, values 25px→16px, single-column grid on mobile
+- Table of Contents heading 50px→32px, list items 25px→18px, reduced padding
+- View More cards 260px→200px height mobile, tighter spacing
+- Footer text reduced, icons 5px→4px mobile
+
+### ProjectContentSections (Case Study Content)
+- All headings responsive: xl 40px→28px, accent/default 25px→20px mobile
+- Paragraphs 25px→18px mobile, lists same treatment
+- Image grids stack to single column on mobile (grid-cols-2→grid-cols-1)
+- Sticky section titles hidden on mobile (desktop-only with `hidden md:block`)
+- Placeholder blocks 600px→400px mobile
+- Reduced spacing throughout (mb-8→mb-6 mobile, gap-6→gap-4)
+
+All changes maintain the Irish/Celtic theme with proper hierarchy, breathing room, and touch-friendly targets on mobile devices.
+
+### Mobile Hero Enhancement
+- Created `MobileFlowingReveal.js` component for mobile-only organic blur animation
+- Implements flowing blur circle that moves organically in the bottom half of the hero using layered sine waves
+- Ripple effect expands outward from the blur circle, revealing the flower background (`hero-after.png`)
+- Desktop keeps the original triangle cursor-follow effect unchanged
+- Mobile detection at 768px breakpoint automatically switches between desktop triangle and mobile flowing ripple
+- Blur circle uses white transparent glow with Gaussian blur filter for modern tech aesthetic
+- Continuous gentle pulsing animation on both the core circle and ripple for organic, dreamy movement
+- Added tap interaction: pointer/touch events animate the blob toward the tap target with a slick ripple burst, pause the auto-flow for ~1.5s, then ease the blob back onto its ambient path so there’s no harsh snap when the autopilot resumes.
+

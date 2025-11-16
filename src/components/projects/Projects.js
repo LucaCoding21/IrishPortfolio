@@ -10,12 +10,12 @@ export default function Projects() {
   const featuredProjects = PROJECTS.slice(0, 3);
 
   return (
-    <section id="projects" ref={ref} className="min-h-screen pt-[150px] pb-20 bg-white text-black snap-start snap-always">
-      <div className="container max-w-[1200px] w-full">
+    <section id="projects" ref={ref} className="min-h-screen pt-24 md:pt-[150px] pb-12 md:pb-20 bg-white text-black snap-start snap-always">
+      <div className="container max-w-[1200px] w-full px-4 md:px-8">
         {/* Header with staggered animation */}
-        <div className="flex items-start justify-between gap-20 mb-16">
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 md:gap-20 mb-12 md:mb-16">
           <motion.h2
-            className="text-5xl font-semibold whitespace-nowrap"
+            className="text-3xl md:text-5xl font-semibold"
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
             transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
@@ -23,7 +23,7 @@ export default function Projects() {
             Focused Projects
           </motion.h2>
           <motion.p
-            className="text-[#3f3737] max-w-lg text-left leading-relaxed pt-1 text-[25px] font-medium font-sans"
+            className="text-[#3f3737] max-w-lg text-left leading-relaxed text-[18px] md:text-[25px] font-medium font-sans md:pt-1"
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}

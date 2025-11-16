@@ -25,13 +25,13 @@ export default function LetsChat() {
       <div id="contact" className="absolute" />
       
       {/* Main content */}
-      <div className="flex-1 flex items-center justify-center">
-        <div className="container max-w-[1500px]">
-          <div className="grid grid-cols-2 gap-[10rem] items-center">
+      <div className="flex-1 flex items-center justify-center py-12 md:py-0">
+        <div className="container max-w-[1500px] px-4 md:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-[10rem] items-center">
             {/* Left side - Content with staggered animations */}
-            <div className="ml-2 lg:ml-10">
+            <div className="text-center md:text-left md:ml-2 lg:ml-10">
               <motion.h2
-                className="text-5xl font-semibold mb-6"
+                className="text-3xl md:text-5xl font-semibold mb-4 md:mb-6"
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
@@ -39,16 +39,16 @@ export default function LetsChat() {
                 Let&apos;s Chat!
               </motion.h2>
               <motion.p
-                className="mb-8 text-[25px] font-medium font-sans text-[#3f3737]"
+                className="mb-6 md:mb-8 text-[18px] md:text-[25px] font-medium font-sans text-[#3f3737] max-w-[520px] mx-auto md:mx-0"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
               >
-                Every connection starts with a conversation. Let’s create something meaningful together!
+                Every connection starts with a conversation. Let's create something meaningful together!
               </motion.p>
               
               <motion.div
-                className="flex items-center gap-4"
+                className="flex items-center justify-center md:justify-start gap-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
@@ -94,7 +94,7 @@ export default function LetsChat() {
 
             {/* Right side - Clover shape image with animation */}
             <motion.div
-              className="relative aspect-square max-w-[580px] w-full mx-auto lg:ml-auto"
+              className="relative aspect-square max-w-[400px] md:max-w-[580px] w-full mx-auto lg:ml-auto"
               initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
               animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.9, rotate: -5 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}

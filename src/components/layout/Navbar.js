@@ -86,10 +86,10 @@ export default function Navbar() {
             ease: [0.34, 1.56, 0.64, 1], // Custom easing for bounce effect
             scale: { type: "spring", stiffness: 300, damping: 25 }
           }}
-          className="fixed top-8 left-0 right-0 z-40 flex justify-center px-8"
+          className="fixed top-4 md:top-8 left-0 right-0 z-40 flex justify-center px-4 md:px-8"
         >
           <motion.div 
-            className="bg-white rounded-full shadow-lg px-8 py-4 flex items-center justify-between w-full max-w-[1600px]"
+            className="bg-white rounded-full shadow-lg px-4 md:px-8 py-3 md:py-4 flex items-center justify-between w-full max-w-[1600px]"
             style={{ boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.08), 0 4px 20px rgba(0, 0, 0, 0.12)' }}
           >
             {/* Logo with spin effect */}
@@ -110,7 +110,7 @@ export default function Navbar() {
                     ease: [0.25, 0.1, 0.25, 1]
                   }
                 }}
-                className="w-10 h-10 flex items-center justify-center flex-shrink-0"
+                className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center flex-shrink-0"
               >
                 <Image 
                   src="/Logo.png"
@@ -122,7 +122,7 @@ export default function Navbar() {
               </motion.div>
             </Link>
             
-            <nav className="flex items-center gap-8 text-[20px] font-sans font-semibold text-black">
+            <nav className="flex items-center gap-4 md:gap-8 text-[16px] md:text-[20px] font-sans font-semibold text-black">
               {["Works", "About", "Contact"].map((item, i) => {
                 const href = resolveHref(item);
                 return (
@@ -159,9 +159,9 @@ export default function Navbar() {
         >
           {isProjectPage ? (
             <motion.div 
-              className="container max-w-[1500px] mx-auto px-8"
+              className="container max-w-[1500px] mx-auto px-4 md:px-8"
               animate={{
-                marginTop: isScrolled ? 16 : 0,
+                marginTop: isScrolled ? 12 : 0,
               }}
               transition={{
                 duration: 0.5,
@@ -171,15 +171,15 @@ export default function Navbar() {
               <motion.div 
                 className={`flex items-center justify-between transition-all duration-500 ease-out ${
                   isScrolled 
-                    ? 'bg-white/80 backdrop-blur-md rounded-[60px] px-8 border border-white/20 shadow-lg' 
+                    ? 'bg-white/80 backdrop-blur-md rounded-[60px] px-4 md:px-8 border border-white/20 shadow-lg' 
                     : ''
                 }`}
                 animate={{
                   borderRadius: isScrolled ? 60 : 0,
                   backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.8)' : 'transparent',
                   backdropFilter: isScrolled ? 'blur(12px)' : 'blur(0px)',
-                  paddingTop: isScrolled ? 12 : 24,
-                  paddingBottom: isScrolled ? 12 : 24,
+                  paddingTop: isScrolled ? 10 : 20,
+                  paddingBottom: isScrolled ? 10 : 20,
                   boxShadow: isScrolled 
                     ? '0 -4px 20px rgba(0, 0, 0, 0.08), 0 4px 20px rgba(0, 0, 0, 0.12)' 
                     : 'none',
@@ -210,13 +210,13 @@ export default function Navbar() {
                       alt="iclaire"
                       width={150}
                       height={50}
-                      className="h-12 w-auto object-contain"
+                      className="h-8 md:h-12 w-auto object-contain"
                     />
                   </motion.div>
                 </Link>
               </motion.div>
               
-              <nav className="flex items-center gap-8 text-[20px] font-sans font-semibold text-black">
+              <nav className="flex items-center gap-4 md:gap-8 text-[16px] md:text-[20px] font-sans font-semibold text-black">
                 {["Works", "About", "Contact"].map((item, i) => {
                   const href = resolveHref(item);
                   return (
@@ -260,8 +260,8 @@ export default function Navbar() {
               </motion.div>
             </motion.div>
           ) : (
-            <div className="container max-w-[1500px] mx-auto px-8">
-              <div className="flex items-center justify-between h-16 pt-4">
+            <div className="container max-w-[1500px] mx-auto px-4 md:px-8">
+              <div className="flex items-center justify-between h-14 md:h-16 pt-3 md:pt-4">
                 <motion.div
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
@@ -269,13 +269,13 @@ export default function Navbar() {
                 >
                   <Link 
                     href="/" 
-                    className="font-semibold font-sans tracking-tight text-[22px] text-fg"
+                    className="font-semibold font-sans tracking-tight text-[18px] md:text-[22px] text-fg"
                   >
                     iclaire
                   </Link>
                 </motion.div>
                 
-                <nav className="flex items-center gap-8 text-[20px] font-sans font-semibold text-fg">
+                <nav className="flex items-center gap-4 md:gap-8 text-[16px] md:text-[20px] font-sans font-semibold text-fg">
                   {["Works", "About", "Contact"].map((item, i) => {
                     const href = resolveHref(item);
                     return (

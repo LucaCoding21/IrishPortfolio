@@ -44,72 +44,72 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-[460px,1fr] gap-16 items-center text-center lg:text-left">
             {/* Left accent panel */}
             <div className="relative flex justify-center lg:justify-start">
-              <div className="relative bg-white rounded-[32px] shadow-xl shadow-black/5 border border-black/5 w-full max-w-[420px] aspect-[3/4] overflow-hidden">
+              <div className="relative bg-white rounded-[24px] md:rounded-[32px] shadow-xl shadow-black/5 border border-black/5 w-full max-w-[300px] md:max-w-[420px] aspect-[3/4] overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-white via-[#F8F8F8] to-[#EDEDED]" />
               </div>
             </div>
 
             {/* Right content */}
-            <div className="space-y-8">
+            <div className="space-y-6 md:space-y-8 text-center lg:text-left">
               <div>
-                <h1 className="text-[48px] font-semibold text-black">Claire</h1>
-                <p className="text-[20px] text-[#6F7462] mt-2">
+                <h1 className="text-[36px] md:text-[48px] font-semibold text-black">Claire</h1>
+                <p className="text-[18px] md:text-[20px] text-[#6F7462] mt-2">
                   UI/UX Designer • Product Designer • Web Developer
                 </p>
               </div>
 
               <div
-                className="bg-white border border-[#D7DACD] rounded-3xl px-8 py-6 shadow-sm max-w-[720px]"
+                className="bg-white border border-[#D7DACD] rounded-2xl md:rounded-3xl px-6 md:px-8 py-5 md:py-6 shadow-sm max-w-[720px] mx-auto lg:mx-0"
                 style={{ boxShadow: "10px 10px 0 rgba(58, 123, 54, 0.25)" }}
               >
-                <p className="text-[22px] leading-relaxed text-[#3c3d32]">
+                <p className="text-[18px] md:text-[22px] leading-relaxed text-[#3c3d32]">
                   Hi, my name is Irish! I work with design and a little bit of development
                   in Vancouver, BC. Let me know if anything catches your eye!
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 pt-8">
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-10 pt-6 md:pt-8">
                 <div>
-                  <p className="text-[18px] uppercase tracking-[0.3em] text-[#9AA08F] mb-3">
+                  <p className="text-[14px] md:text-[18px] uppercase tracking-[0.3em] text-[#9AA08F] mb-3">
                     Tools
                   </p>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-3 md:gap-4">
                     {TOOLS.map((tool) => (
                       <div
                         key={tool.label}
-                        className="flex items-center gap-3 border border-[#D7DACD] rounded-2xl px-4 py-3 bg-white"
+                        className="flex items-center gap-2 md:gap-3 border border-[#D7DACD] rounded-xl md:rounded-2xl px-3 md:px-4 py-2 md:py-3 bg-white"
                       >
                         {tool.Icon ? (
-                          <tool.Icon className="w-7 h-7" />
+                          <tool.Icon className="w-5 h-5 md:w-7 md:h-7 flex-shrink-0" />
                         ) : (
-                          <div className="w-7 h-7 rounded-full bg-[#D4E3C2] flex items-center justify-center text-sm font-semibold text-[#4A6140]">
+                          <div className="w-5 h-5 md:w-7 md:h-7 rounded-full bg-[#D4E3C2] flex items-center justify-center text-xs md:text-sm font-semibold text-[#4A6140] flex-shrink-0">
                             {tool.label.charAt(0)}
                           </div>
                         )}
-                        <span className="text-[17px] text-[#2E2F25]">{tool.label}</span>
+                        <span className="text-[14px] md:text-[17px] text-[#2E2F25] truncate">{tool.label}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <p className="text-[18px] uppercase tracking-[0.3em] text-[#9AA08F] mb-3">
+                  <p className="text-[14px] md:text-[18px] uppercase tracking-[0.3em] text-[#9AA08F] mb-3">
                     Development
                   </p>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-3 md:gap-4">
                     {DEVELOPMENT.map((item) => (
                       <div
                         key={item.label}
-                        className="flex items-center gap-3 border border-[#D7DACD] rounded-2xl px-4 py-3 bg-white text-[17px] text-[#2E2F25]"
+                        className="flex items-center gap-2 md:gap-3 border border-[#D7DACD] rounded-xl md:rounded-2xl px-3 md:px-4 py-2 md:py-3 bg-white text-[14px] md:text-[17px] text-[#2E2F25]"
                       >
                         {item.Icon ? (
-                          <item.Icon className="w-7 h-7" />
+                          <item.Icon className="w-5 h-5 md:w-7 md:h-7 flex-shrink-0" />
                         ) : (
-                          <div className="w-7 h-7 rounded-full bg-[#D4E3C2] flex items-center justify-center text-sm font-semibold text-[#4A6140]">
+                          <div className="w-5 h-5 md:w-7 md:h-7 rounded-full bg-[#D4E3C2] flex items-center justify-center text-xs md:text-sm font-semibold text-[#4A6140] flex-shrink-0">
                             {item.label.charAt(0)}
                           </div>
                         )}
-                        <span>{item.label}</span>
+                        <span className="truncate">{item.label}</span>
                       </div>
                     ))}
                   </div>
@@ -136,11 +136,11 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-4 md:gap-6">
               {[0, 1].map((index) => (
                 <div
                   key={index}
-                  className="relative aspect-[3/4] rounded-[36px] overflow-hidden border border-white shadow-lg shadow-black/10"
+                  className="relative aspect-[3/4] rounded-[24px] md:rounded-[36px] overflow-hidden border border-white shadow-lg shadow-black/10"
                 >
                   <Image
                     src="/images/hero-after.png"
@@ -156,18 +156,18 @@ export default function AboutPage() {
       </section>
 
       {/* Let's Chat */}
-      <section id="contact" className="py-24">
-        <div className="mx-auto px-8 max-w-[1400px]">
-          <div className="flex flex-col items-center gap-16 text-center">
+      <section id="contact" className="py-16 md:py-24">
+        <div className="mx-auto px-4 md:px-8 max-w-[1400px]">
+          <div className="flex flex-col items-center gap-10 md:gap-16 text-center">
             <div className="max-w-[640px]">
-              <h2 className="text-[38px] font-semibold text-black mb-6">
+              <h2 className="text-[28px] md:text-[38px] font-semibold text-black mb-4 md:mb-6">
                 Let&apos;s Chat!
               </h2>
-              <p className="text-[20px] leading-relaxed text-[#3c3d32] max-w-[520px] mx-auto lg:mx-0 mb-8">
+              <p className="text-[18px] md:text-[20px] leading-relaxed text-[#3c3d32] max-w-[520px] mx-auto lg:mx-0 mb-6 md:mb-8 px-4">
                 Thanks for stopping by. Feel free to reach out if you want to collaborate,
                 swap ideas, or even just say hi!
               </p>
-              <div className="flex items-center justify-center gap-4">
+              <div className="flex items-center justify-center gap-3 md:gap-4">
                 <a
                   href="https://www.linkedin.com/in/irishclairecatungal"
                   target="_blank"
@@ -207,8 +207,8 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="relative w-full max-w-[420px] mx-auto">
-              <div className="absolute -top-6 -right-4 w-40 h-40 bg-[#CFE3D5] rounded-full blur-3xl opacity-70" />
+            <div className="relative w-full max-w-[320px] md:max-w-[420px] mx-auto">
+              <div className="absolute -top-6 -right-4 w-32 h-32 md:w-40 md:h-40 bg-[#CFE3D5] rounded-full blur-3xl opacity-70" />
               <svg viewBox="0 0 500 500" className="w-full h-full">
                 <defs>
                   <clipPath id="chatCloverMask">

@@ -30,15 +30,15 @@ const SOCIAL_LINKS = [
 export default function ContactPage() {
   return (
     <main className="bg-white min-h-screen text-[#3f3737]">
-      <section className="pt-40 pb-24">
-        <div className="mx-auto px-8 max-w-[1400px]">
-          <div className="grid gap-16 items-center text-center lg:text-left lg:grid-cols-[1fr,1fr]">
+      <section className="pt-24 md:pt-40 pb-16 md:pb-24">
+        <div className="mx-auto px-4 md:px-8 max-w-[1400px]">
+          <div className="grid gap-10 md:gap-16 items-center text-center lg:text-left lg:grid-cols-[1fr,1fr]">
             <div>
-              <h1 className="text-[48px] font-semibold text-black mb-6">Contact me</h1>
-              <p className="text-[20px] leading-relaxed text-[#6F7462] max-w-[540px] mx-auto lg:mx-0 mb-8">
+              <h1 className="text-[36px] md:text-[48px] font-semibold text-black mb-4 md:mb-6">Contact me</h1>
+              <p className="text-[18px] md:text-[20px] leading-relaxed text-[#6F7462] max-w-[540px] mx-auto lg:mx-0 mb-6 md:mb-8 px-4 md:px-0">
                 Lorem ipsum dolor sit amet consectetur. Libero nibh amet eu rhoncus cursus.
               </p>
-            <div className="flex items-center justify-center lg:justify-start gap-4">
+              <div className="flex items-center justify-center lg:justify-start gap-3 md:gap-4">
                 {SOCIAL_LINKS.map(({ label, href, path, fill, stroke }) => (
                   <a
                     key={label}
@@ -46,10 +46,10 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="h-12 w-12 rounded-full border border-[#D7DACD] flex items-center justify-center hover:bg-white/80 transition"
+                    className="h-10 w-10 md:h-12 md:w-12 rounded-full border border-[#D7DACD] flex items-center justify-center hover:bg-white/80 transition"
                   >
                     <svg
-                      className="w-5 h-5"
+                      className="w-4 h-4 md:w-5 md:h-5"
                       fill={stroke ? "none" : "currentColor"}
                       stroke={stroke ? "currentColor" : undefined}
                       viewBox="0 0 24 24"
@@ -66,7 +66,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="relative w-full max-w-[520px] mx-auto lg:mx-0">
+            <div className="relative w-full max-w-[340px] md:max-w-[520px] mx-auto lg:mx-0">
               <svg viewBox="0 0 500 500" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
                 <defs>
                   <clipPath id="contactCloverMask">

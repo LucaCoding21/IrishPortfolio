@@ -14,25 +14,25 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-[#4A7C59]/30 bg-white text-[#4A7C59]">
-      <div className="container max-w-[1500px] mx-auto px-8 py-8">
-        <div className="flex items-center justify-between">
-          <p className="text-[20px] font-medium text-[#4A7C59] flex items-center gap-2">
+      <div className="container max-w-[1500px] mx-auto px-4 md:px-8 py-6 md:py-8">
+        <div className="flex flex-col md:flex-row items-center justify-center md:justify-between gap-4 md:gap-0">
+          <p className="text-[16px] md:text-[20px] font-medium text-[#4A7C59] flex items-center gap-2">
             made with love & care
             <svg className="w-[17px] h-[17px]" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
             </svg>
           </p>
           
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 md:gap-4">
             {socialLinks.map((social, i) => (
               <a
                 key={i}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="h-12 w-12 rounded-full border border-[#4A7C59]/40 flex items-center justify-center hover:bg-[#4A7C59]/5 transition-opacity"
+                className="h-10 w-10 md:h-12 md:w-12 rounded-full border border-[#4A7C59]/40 flex items-center justify-center hover:bg-[#4A7C59]/5 transition-opacity"
               >
-            <svg className="w-[17px] h-[17px]" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 md:w-[17px] md:h-[17px]" fill="currentColor" viewBox="0 0 24 24">
                   <path d={social.path}/>
                 </svg>
               </a>
@@ -40,9 +40,9 @@ export default function Footer() {
             <a
               href="mailto:irishclaireparayno@gmail.com"
               aria-label="Email Irish Claire"
-              className="h-12 w-12 rounded-full border border-[#4A7C59]/40 flex items-center justify-center hover:bg-[#4A7C59]/5 transition-opacity"
+              className="h-10 w-10 md:h-12 md:w-12 rounded-full border border-[#4A7C59]/40 flex items-center justify-center hover:bg-[#4A7C59]/5 transition-opacity"
             >
-              <svg className="w-[17px] h-[17px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 md:w-[17px] md:h-[17px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
             </a>

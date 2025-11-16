@@ -3,18 +3,22 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import TriangleMask from "./TriangleMask";
+import MobileFlowingReveal from "./MobileFlowingReveal";
 
 export default function Hero() {
   const ref = useRef(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [bgLoaded, setBgLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [blobTarget, setBlobTarget] = useState(null);
 
   useEffect(() => {
     const update = () => {
       const r = ref.current?.getBoundingClientRect();
       if (!r) return;
       setSize({ w: Math.round(r.width), h: Math.round(r.height) });
+      setIsMobile(window.innerWidth < 768); // md breakpoint
     };
     update();
     window.addEventListener("resize", update);
@@ -44,8 +48,27 @@ export default function Hero() {
     img2.src = "/images/hero-after.png";
   }, []);
 
+  const handlePointerDown = (event) => {
+    if (!isMobile || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    setBlobTarget({ x, y, ts: Date.now() });
+  };
+
+  useEffect(() => {
+    if (!isMobile) {
+      setBlobTarget(null);
+    }
+  }, [isMobile]);
+
   return (
-    <section id="hero" ref={ref} className="relative h-screen overflow-hidden border-b border-white/10 cursor-none snap-start snap-always">
+    <section
+      id="hero"
+      ref={ref}
+      onPointerDown={handlePointerDown}
+      className="relative h-screen overflow-hidden border-b border-white/10 md:cursor-none snap-start snap-always"
+    >
       {/* Loading overlay with smooth fade out */}
       <AnimatePresence>
         {!bgLoaded && (
@@ -84,13 +107,13 @@ export default function Hero() {
         />
       </motion.div>
 
-      {/* Triangle mask SVG definition */}
-      {size.w > 0 && size.h > 0 && (
+      {/* Desktop: Triangle mask, Mobile: Flowing blur reveal */}
+      {size.w > 0 && size.h > 0 && !isMobile && (
         <TriangleMask width={size.w} height={size.h} />
       )}
 
-      {/* Revealed image layer with smooth fade in */}
-      {size.w > 0 && size.h > 0 && imagesLoaded && (
+      {/* Desktop: Revealed image layer with triangle clip */}
+      {size.w > 0 && size.h > 0 && imagesLoaded && !isMobile && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -108,13 +131,18 @@ export default function Hero() {
         </motion.div>
       )}
 
+      {/* Mobile: Flowing blur with ripple reveal */}
+      {size.w > 0 && size.h > 0 && imagesLoaded && isMobile && (
+        <MobileFlowingReveal width={size.w} height={size.h} target={blobTarget} />
+      )}
+
       {/* Foreground content with improved animations */}
       <div className="relative z-10 h-full flex flex-col">
         {/* Main content centered */}
         <div className="flex-1 flex items-center">
-          <div className="container max-w-[1500px]">
+          <div className="container max-w-[1500px] px-4 md:px-8">
             <motion.h1
-              className="text-[35px] font-normal tracking-tight text-center"
+              className="text-[24px] md:text-[35px] font-normal tracking-tight text-center px-4"
               style={{ fontFamily: "Figtree, sans-serif" }}
               initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
               animate={{ 
@@ -134,7 +162,7 @@ export default function Hero() {
         </div>
 
         {/* Footer elements with staggered animation */}
-        <div className="container max-w-[1500px] mx-auto px-8 pb-8 flex items-end justify-between">
+        <div className="container max-w-[1500px] mx-auto px-4 md:px-8 pb-6 md:pb-8 flex flex-col md:flex-row items-center md:items-end justify-center md:justify-between gap-4 md:gap-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ 
@@ -147,16 +175,16 @@ export default function Hero() {
               ease: [0.25, 0.1, 0.25, 1]
             }}
           >
-            <p className="text-[20px] font-sans font-semibold text-white flex items-center gap-2">
+            <p className="text-[16px] md:text-[20px] font-sans font-semibold text-white flex items-center gap-2">
               made with love & care 
-              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3 h-3 md:w-4 md:h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
               </svg>
             </p>
           </motion.div>
 
           <motion.div
-            className="flex items-center gap-4"
+            className="flex items-center gap-3 md:gap-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ 
               opacity: bgLoaded ? 1 : 0, 
@@ -177,7 +205,7 @@ export default function Hero() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="h-12 w-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
+                className="h-10 w-10 md:h-12 md:w-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ 
@@ -187,7 +215,7 @@ export default function Hero() {
                 }}
                 whileHover={{ scale: 1.1, y: -2 }}
               >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d={social.path}/>
                 </svg>
               </motion.a>
@@ -205,7 +233,7 @@ export default function Hero() {
               }}
               whileHover={{ scale: 1.1, y: -2 }}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
             </motion.a>

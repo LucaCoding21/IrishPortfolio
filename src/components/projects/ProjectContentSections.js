@@ -6,12 +6,12 @@ import ImageLightbox from "@/components/ui/ImageLightbox";
 import { CASE_STUDY_SECTION_TEMPLATE } from "@/lib/projects";
 
 const HEADING_CLASSES = {
-  xl: "text-[40px] font-heading font-semibold text-black mb-4",
-  accent: "text-[25px] font-heading font-semibold text-[#3A7B36] mb-4",
-  default: "text-[25px] font-heading font-semibold text-black mb-4",
+  xl: "text-[28px] md:text-[40px] font-heading font-semibold text-black mb-3 md:mb-4",
+  accent: "text-[20px] md:text-[25px] font-heading font-semibold text-[#3A7B36] mb-3 md:mb-4",
+  default: "text-[20px] md:text-[25px] font-heading font-semibold text-black mb-3 md:mb-4",
 };
 
-const PARAGRAPH_CLASS = "text-[#3f3737] text-[25px] font-sans font-medium leading-relaxed";
+const PARAGRAPH_CLASS = "text-[#3f3737] text-[18px] md:text-[25px] font-sans font-medium leading-relaxed";
 
 const renderHeading = (text, variant = "default", className = "") => {
   if (!text) return null;
@@ -56,7 +56,7 @@ const renderTextBlock = (block, index, isFirst) => {
     <div key={index} className={`${spacing}`.trim()}>
       {renderHeading(block.heading, block.headingVariant ?? "default")}
       {block.subheading && (
-        <h4 className="text-[25px] font-heading font-semibold text-[#3A7B36] mb-3">
+        <h4 className="text-[20px] md:text-[25px] font-heading font-semibold text-[#3A7B36] mb-2 md:mb-3">
           {block.subheading}
         </h4>
       )}
@@ -65,27 +65,27 @@ const renderTextBlock = (block, index, isFirst) => {
           const label = block.highlightedLabel;
           const rest = paragraph.replace(label, "").trimStart();
           return (
-            <p key={idx} className={`${PARAGRAPH_CLASS}${idx !== arr.length - 1 ? " mb-8" : ""}`}>
-              <span className="text-[#3A7B36] font-sans text-[25px] font-semibold mr-2">
+            <p key={idx} className={`${PARAGRAPH_CLASS}${idx !== arr.length - 1 ? " mb-6 md:mb-8" : ""}`}>
+              <span className="text-[#3A7B36] font-sans text-[18px] md:text-[25px] font-semibold mr-2">
                 {label}
               </span>
-              <span className="text-[#3f3737] font-sans font-medium text-[25px] leading-relaxed">
+              <span className="text-[#3f3737] font-sans font-medium text-[18px] md:text-[25px] leading-relaxed">
                 {rest}
               </span>
             </p>
           );
         }
         return (
-          <p key={idx} className={`${PARAGRAPH_CLASS}${idx !== arr.length - 1 ? " mb-8" : ""}`}>
+          <p key={idx} className={`${PARAGRAPH_CLASS}${idx !== arr.length - 1 ? " mb-6 md:mb-8" : ""}`}>
             {paragraph}
           </p>
         );
       })}
       {block.list && (
-        <ul className="space-y-3 text-[#3f3737] text-[25px] font-sans font-medium leading-relaxed">
+        <ul className="space-y-2 md:space-y-3 text-[#3f3737] text-[18px] md:text-[25px] font-sans font-medium leading-relaxed">
           {block.list.map((item) => (
             <li key={item} className="flex items-start">
-              <span className="mr-3">•</span>
+              <span className="mr-2 md:mr-3">•</span>
               <span>{item}</span>
             </li>
           ))}
@@ -118,8 +118,8 @@ const renderImageBlock = (block, index, isFirst) =>
 
 const renderImageGridBlock = (block, index, isFirst) => {
   const spacing = block.spacing ?? (isFirst ? "" : "mt-12");
-  const columns = block.columns === 1 ? "grid-cols-1" : block.columns === 3 ? "grid-cols-3" : "grid-cols-2";
-  const gap = block.gapClass ?? "gap-6";
+  const columns = block.columns === 1 ? "grid-cols-1" : block.columns === 3 ? "grid-cols-1 md:grid-cols-3" : "grid-cols-1 md:grid-cols-2";
+  const gap = block.gapClass ?? "gap-4 md:gap-6";
 
   return (
     <div key={index} className={`${spacing}`.trim()}>
@@ -139,14 +139,14 @@ const renderImageGridBlock = (block, index, isFirst) => {
 
 const renderPlaceholderBlock = (block, index, isFirst) => {
   const spacing = block.spacing ?? (isFirst ? "" : "mt-12");
-  const heightClass = block.heightClass ?? "h-[600px]";
+  const heightClass = block.heightClass ?? "h-[400px] md:h-[600px]";
   return (
     <div key={index} className={`${spacing}`.trim()}>
       {renderHeading(block.heading, block.headingVariant ?? "accent")}
         <div
           className={`relative w-full ${heightClass} rounded-2xl overflow-hidden bg-gray-100 flex items-center justify-center`}
         >
-          <div className="text-[#3f3737] font-medium text-lg">{block.label ?? "Placeholder"}</div>
+          <div className="text-[#3f3737] font-medium text-base md:text-lg">{block.label ?? "Placeholder"}</div>
         </div>
       </div>
     );
@@ -230,18 +230,18 @@ export default function ProjectContentSections({ sections }) {
   const activeIndex = sectionsToRender.findIndex((s) => s.id === activeSection);
 
   return (
-    <div className="container max-w-[1500px] mx-auto px-8 pb-12">
-      <div className="bg-white rounded-3xl p-16">
+    <div className="container max-w-[1500px] mx-auto px-4 md:px-8 pb-8 md:pb-12">
+      <div className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-16">
         {sectionsToRender.map((section, index) => {
           const isActive = activeSection === section.id;
           const distanceFromActive = activeIndex === -1 ? Infinity : Math.abs(index - activeIndex);
           return (
             <div
               key={section.id}
-              className="grid grid-cols-[380px_1fr] gap-20 mb-32 last:mb-0"
+              className="grid grid-cols-1 md:grid-cols-[280px_1fr] lg:grid-cols-[380px_1fr] gap-8 md:gap-12 lg:gap-20 mb-16 md:mb-32 last:mb-0"
             >
-              <div className="relative">
-                <div className="sticky top-32 pb-32 overflow-hidden">
+              <div className="relative hidden md:block">
+                <div className="sticky top-24 md:top-32 pb-24 md:pb-32 overflow-hidden">
                   <motion.h2
                     initial={{
                       opacity: 0,
@@ -293,7 +293,7 @@ export default function ProjectContentSections({ sections }) {
                         stiffness: 100
                       }
                     }}
-                    className="text-[25px] font-sans font-semibold text-[#959494] leading-tight"
+                    className="text-[20px] md:text-[25px] font-sans font-semibold text-[#959494] leading-tight"
                     style={{
                       transformPerspective: 1000,
                       transformStyle: "preserve-3d"
@@ -307,7 +307,7 @@ export default function ProjectContentSections({ sections }) {
               <section
                 id={section.id}
                 ref={(el) => (sectionsRef.current[section.id] = el)}
-                className="pt-5 scroll-mt-32 md:scroll-mt-48 flex flex-col"
+                className="pt-0 md:pt-5 scroll-mt-24 md:scroll-mt-32 lg:scroll-mt-48 flex flex-col"
               >
                 {(section.blocks ?? []).map((block, blockIndex) => renderBlock(block, blockIndex))}
               </section>
