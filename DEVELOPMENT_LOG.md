@@ -720,4 +720,45 @@ src/
 
 ---
 
-_Last updated: November 10, 2025_
+---
+
+## November 17, 2025
+
+### Mobile Menu Enhancements ✓
+
+**Redesigned mobile menu with clover icon and vertical expansion:**
+
+1. **Clover Icon Morph Animation**
+   - Default state: Stroke clover outline (`/images/menulogo-stroke.svg`)
+   - On hover: Rotates 90° with smooth animation
+   - On click: Morphs into filled clover (`/icons/hamburgerMenu-white.svg`)
+   - Smooth transition between stroke and filled versions
+   - Scale and opacity animation during morph
+   - No rotation on click, only on hover
+
+2. **Vertical Menu Expansion**
+   - Menu expands downward with height animation (not sliding from side)
+   - Uses spring physics for natural expansion (damping: 25, stiffness: 300)
+   - Menu items fade and slide in as container expands
+   - Staggered entrance (0.08s delay between items)
+   - Positioned below hamburger button at `top-16 right-4`
+   - Frosted glass effect with backdrop blur
+
+3. **Active Menu Item States**
+   - Tracks which menu item is active via state
+   - Active color: #7A9578 for both icon and text
+   - Default: white
+   - Hover: #334732
+   - Smooth 300ms color transitions
+   - Active state persists after selection
+
+4. **Menu Items with Icons**
+   - Uses react-icons (HiHome, HiBriefcase, HiUser, HiMail)
+   - Icons above text labels
+   - Four items: Home, Works, About, Contact
+   - Hover effects: scale and slight lift
+   - Color transitions on hover and active states
+
+---
+
+_Last updated: November 17, 2025_
