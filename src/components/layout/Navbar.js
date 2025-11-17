@@ -4,11 +4,13 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { HiHome, HiBriefcase, HiUser, HiMail, HiX } from "react-icons/hi";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isOverHero, setIsOverHero] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Check if we're on a project details page or the About page
   // These routes share the same solid/scrolling navbar style
@@ -16,6 +18,10 @@ export default function Navbar() {
     pathname?.startsWith("/projects/") || pathname === "/about" || pathname === "/contact";
 
   const resolveHref = (label) => {
+    if (label === "Home") {
+      return "/";
+    }
+
     if (label === "Works") {
       return pathname === "/" ? "#projects" : "/#projects";
     }
@@ -26,6 +32,13 @@ export default function Navbar() {
 
     return "/contact";
   };
+
+  const menuItems = [
+    { label: "Home", icon: HiHome },
+    { label: "Works", icon: HiBriefcase },
+    { label: "About", icon: HiUser },
+    { label: "Contact", icon: HiMail }
+  ];
 
   useEffect(() => {
     // Reset to hero view when pathname changes to homepage
@@ -71,6 +84,27 @@ export default function Navbar() {
 
   // Always show full navbar on project pages
   const showFullNavbar = isProjectPage || isOverHero;
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
+
+  const handleNavClick = () => {
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <AnimatePresence mode="wait">
@@ -122,7 +156,8 @@ export default function Navbar() {
               </motion.div>
             </Link>
             
-            <nav className="flex items-center gap-4 md:gap-8 text-[16px] md:text-[20px] font-sans font-semibold text-black">
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-4 md:gap-8 text-[16px] md:text-[20px] font-sans font-semibold text-black">
               {["Works", "About", "Contact"].map((item, i) => {
                 const href = resolveHref(item);
                 return (
@@ -139,6 +174,51 @@ export default function Navbar() {
                 );
               })}
             </nav>
+
+            {/* Mobile Hamburger Button */}
+            {!isMobileMenuOpen && (
+              <motion.button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="md:hidden flex items-center justify-center w-8 h-8 z-[70] relative cursor-pointer"
+                aria-label="Toggle menu"
+                style={{ 
+                  filter: 'none', 
+                  WebkitFilter: 'none',
+                  isolation: 'isolate',
+                  position: 'relative'
+                }}
+              >
+                {/* Hamburger Icon with rotation animation */}
+                <motion.div
+                  className="relative z-10 w-10 h-10"
+                  whileHover={{ rotate: 90 }}
+                  transition={{
+                    rotate: {
+                      duration: 0.4,
+                      ease: [0.25, 0.1, 0.25, 1]
+                    }
+                  }}
+                  style={{ 
+                    filter: 'none', 
+                    WebkitFilter: 'none',
+                    isolation: 'isolate'
+                  }}
+                >
+                  <Image
+                    src="/icons/hamburgerMenu-white.svg"
+                    alt="Menu"
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-contain"
+                    style={{
+                      filter: 'brightness(0) saturate(100%) invert(27%) sepia(15%) saturate(1234%) hue-rotate(78deg) brightness(95%) contrast(88%)',
+                      WebkitFilter: 'brightness(0) saturate(100%) invert(27%) sepia(15%) saturate(1234%) hue-rotate(78deg) brightness(95%) contrast(88%)',
+                      isolation: 'isolate'
+                    }}
+                  />
+                </motion.div>
+              </motion.button>
+            )}
           </motion.div>
         </motion.header>
       ) : (
@@ -216,7 +296,8 @@ export default function Navbar() {
                 </Link>
               </motion.div>
               
-              <nav className="flex items-center gap-4 md:gap-8 text-[16px] md:text-[20px] font-sans font-semibold text-black">
+              {/* Desktop Navigation */}
+              <nav className="hidden md:flex items-center gap-4 md:gap-8 text-[16px] md:text-[20px] font-sans font-semibold text-black">
                 {["Works", "About", "Contact"].map((item, i) => {
                   const href = resolveHref(item);
                   return (
@@ -257,6 +338,51 @@ export default function Navbar() {
                   );
                 })}
               </nav>
+
+              {/* Mobile Hamburger Button */}
+              {!isMobileMenuOpen && (
+                <motion.button
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  className="md:hidden flex items-center justify-center w-8 h-8 z-[70] relative cursor-pointer"
+                  aria-label="Toggle menu"
+                  style={{ 
+                    filter: 'none', 
+                    WebkitFilter: 'none',
+                    isolation: 'isolate',
+                    position: 'relative'
+                  }}
+                >
+                  {/* Hamburger Icon with rotation animation */}
+                  <motion.div
+                    className="relative z-10 w-10 h-10"
+                    whileHover={{ rotate: 90 }}
+                    transition={{
+                      rotate: {
+                        duration: 0.4,
+                        ease: [0.25, 0.1, 0.25, 1]
+                      }
+                    }}
+                    style={{ 
+                      filter: 'none', 
+                      WebkitFilter: 'none',
+                      isolation: 'isolate'
+                    }}
+                  >
+                    <Image
+                      src="/icons/hamburgerMenu-white.svg"
+                      alt="Menu"
+                      width={40}
+                      height={40}
+                      className="w-full h-full object-contain"
+                      style={{
+                        filter: 'brightness(0) saturate(100%) invert(27%) sepia(15%) saturate(1234%) hue-rotate(78deg) brightness(95%) contrast(88%)',
+                        WebkitFilter: 'brightness(0) saturate(100%) invert(27%) sepia(15%) saturate(1234%) hue-rotate(78deg) brightness(95%) contrast(88%)',
+                        isolation: 'isolate'
+                      }}
+                    />
+                  </motion.div>
+                </motion.button>
+              )}
               </motion.div>
             </motion.div>
           ) : (
@@ -269,13 +395,14 @@ export default function Navbar() {
                 >
                   <Link 
                     href="/" 
-                    className="font-semibold font-sans tracking-tight text-[18px] md:text-[22px] text-fg"
+                    className="font-semibold font-sans tracking-tight text-[22px] text-fg"
                   >
                     iclaire
                   </Link>
                 </motion.div>
                 
-                <nav className="flex items-center gap-4 md:gap-8 text-[16px] md:text-[20px] font-sans font-semibold text-fg">
+                {/* Desktop Navigation */}
+                <nav className="hidden md:flex items-center gap-4 md:gap-8 text-[16px] md:text-[20px] font-sans font-semibold text-fg">
                   {["Works", "About", "Contact"].map((item, i) => {
                     const href = resolveHref(item);
                     return (
@@ -292,11 +419,159 @@ export default function Navbar() {
                     );
                   })}
                 </nav>
+
+                {/* Mobile Hamburger Button */}
+                {!isMobileMenuOpen && (
+                  <motion.button
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    className="md:hidden flex items-center justify-center w-8 h-8 z-[70] relative cursor-pointer"
+                    aria-label="Toggle menu"
+                    style={{ 
+                      filter: 'none', 
+                      WebkitFilter: 'none',
+                      isolation: 'isolate',
+                      position: 'relative'
+                    }}
+                  >
+                    {/* Hamburger Icon with rotation animation */}
+                    <motion.div
+                      className="relative z-10 w-10 h-10"
+                      whileHover={{ rotate: 90 }}
+                      transition={{
+                        rotate: {
+                          duration: 0.4,
+                          ease: [0.25, 0.1, 0.25, 1]
+                        }
+                      }}
+                      style={{ 
+                        filter: 'none', 
+                        WebkitFilter: 'none',
+                        isolation: 'isolate'
+                      }}
+                    >
+                      <Image
+                        src="/icons/hamburgerMenu-white.svg"
+                        alt="Menu"
+                        width={40}
+                        height={40}
+                        className="w-full h-full object-contain"
+                        style={{ 
+                          filter: 'none', 
+                          WebkitFilter: 'none',
+                          isolation: 'isolate'
+                        }}
+                      />
+                    </motion.div>
+                  </motion.button>
+                )}
               </div>
             </div>
           )}
         </motion.header>
       )}
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 md:hidden"
+            />
+
+            {/* Menu Panel */}
+            <motion.div
+              initial={{ opacity: 0, y: -20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{
+                type: "spring",
+                damping: 25,
+                stiffness: 300,
+                mass: 0.8
+              }}
+              className="fixed top-16 right-4 bg-white/20 backdrop-blur-xl z-50 md:hidden rounded-2xl border border-white/30 shadow-2xl"
+              style={{
+                boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)'
+              }}
+            >
+              {/* Close Button (X Icon) */}
+              <motion.button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="absolute -top-12 right-0 w-10 h-10 flex items-center justify-center z-[60]"
+                aria-label="Close menu"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                whileHover={{ rotate: 90, scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{
+                  duration: 0.3,
+                  ease: [0.25, 0.1, 0.25, 1]
+                }}
+                style={{ 
+                  filter: 'none', 
+                  WebkitFilter: 'none',
+                  isolation: 'isolate'
+                }}
+              >
+                <HiX className="w-8 h-8 text-white" />
+              </motion.button>
+
+              {/* Menu Content */}
+              <div className="px-5 py-5">
+                <nav className="flex flex-col gap-7">
+                  {menuItems.map((item, i) => {
+                    const href = resolveHref(item.label);
+                    return (
+                      <motion.a
+                        key={item.label}
+                        href={href}
+                        onClick={handleNavClick}
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{
+                          delay: i * 0.05,
+                          duration: 0.3,
+                          ease: [0.25, 0.1, 0.25, 1]
+                        }}
+                        whileHover={{ 
+                          scale: 1.05,
+                          y: -2
+                        }}
+                        className="flex flex-col items-center gap-2 group"
+                      >
+                        {/* Icon */}
+                        <motion.div
+                          className="text-white"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                          style={{ filter: 'none', WebkitFilter: 'none' }}
+                        >
+                          <item.icon 
+                            className="w-6 h-6 text-white group-hover:text-[#334732] transition-colors duration-300 ease-in-out" 
+                            style={{ filter: 'none', WebkitFilter: 'none' }}
+                          />
+                        </motion.div>
+                        {/* Text */}
+                        <span className="text-white group-hover:text-[#334732] transition-colors duration-300 ease-in-out text-sm font-sans font-medium uppercase tracking-wide">
+                          {item.label.toLowerCase()}
+                        </span>
+                      </motion.a>
+                    );
+                  })}
+                </nav>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </AnimatePresence>
   );
 }

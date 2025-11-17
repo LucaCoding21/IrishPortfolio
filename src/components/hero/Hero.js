@@ -162,27 +162,7 @@ export default function Hero() {
         </div>
 
         {/* Footer elements with staggered animation */}
-        <div className="container max-w-[1500px] mx-auto px-4 md:px-8 pb-6 md:pb-8 flex flex-col md:flex-row items-center md:items-end justify-center md:justify-between gap-4 md:gap-0">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ 
-              opacity: bgLoaded ? 1 : 0, 
-              y: bgLoaded ? 0 : 20 
-            }}
-            transition={{ 
-              duration: 0.6, 
-              delay: 0.5,
-              ease: [0.25, 0.1, 0.25, 1]
-            }}
-          >
-            <p className="text-[16px] md:text-[20px] font-sans font-semibold text-white flex items-center gap-2">
-              made with love & care 
-              <svg className="w-3 h-3 md:w-4 md:h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-              </svg>
-            </p>
-          </motion.div>
-
+        <div className="container max-w-[1500px] mx-auto px-4 md:px-8 pb-6 md:pb-8 flex flex-col md:flex-row items-center md:items-end justify-center md:justify-end gap-4 md:gap-0">
           <motion.div
             className="flex items-center gap-3 md:gap-4"
             initial={{ opacity: 0, y: 20 }}
