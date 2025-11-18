@@ -4,7 +4,60 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { HiHome, HiBriefcase, HiUser, HiMail, HiX } from "react-icons/hi";
+import { HiHome, HiBriefcase, HiUser, HiMail } from "react-icons/hi";
+
+const MenuLogo = ({ className, style }) => (
+  <svg
+    width="49"
+    height="47"
+    viewBox="0 0 49 47"
+    fill="none"
+    stroke="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    style={style}
+  >
+    <g filter="url(#filter0_g_671_709)">
+      <path
+        d="M6.98828 14.969C7.70032 10.116 13.3091 5.66343 18.1621 6.37528C20.5355 6.7235 23.262 8.9002 25.3467 11.5999C26.7988 9.29114 28.9435 7.41439 31.2471 6.79715C35.985 5.52763 40.8555 8.33951 42.125 13.0774C43.0421 16.5006 41.1674 20.8901 38.2705 23.5423C39.5967 24.3065 40.713 25.326 41.4287 26.5657C42.9052 29.1231 42.9626 32.1083 41.8496 34.6155C40.5658 37.9403 37.3421 40.3001 33.5645 40.3001C32.0054 40.3 30.4032 39.7898 28.9414 38.9388C26.9888 38.1564 25.299 36.8856 24.335 35.2161C24.2477 35.0649 24.1663 34.9111 24.0889 34.7571C22.1945 37.8777 18.5831 40.3001 15.1807 40.3001C10.2757 40.3 6.2998 36.3233 6.2998 31.4182C6.29997 28.6222 8.03607 25.7855 10.4375 23.8626C8.17361 21.0035 6.61586 17.5081 6.98828 14.969Z"
+        fill="currentColor"
+        stroke="none"
+      />
+    </g>
+    <defs>
+      <filter
+        id="filter0_g_671_709"
+        x="-0.000195503"
+        y="4.86374e-05"
+        width="48.9188"
+        height="46.6"
+        filterUnits="userSpaceOnUse"
+        colorInterpolationFilters="sRGB"
+      >
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="BackgroundImageFix"
+          result="shape"
+        />
+        <feTurbulence type="fractalNoise" baseFrequency="2 2" numOctaves="3" seed="719" />
+        <feDisplacementMap
+          in="shape"
+          scale="12.600000381469727"
+          xChannelSelector="R"
+          yChannelSelector="G"
+          result="displacedImage"
+          width="100%"
+          height="100%"
+        />
+        <feMerge result="effect1_texture_671_709">
+          <feMergeNode in="displacedImage" />
+        </feMerge>
+      </filter>
+    </defs>
+  </svg>
+);
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -41,25 +94,88 @@ export default function Navbar() {
     { label: "Contact", icon: HiMail }
   ];
 
+  const isHeroScrolled = pathname === "/" && isScrolled;
+  const isPanelSolid = !isOverHero;
+  const closedPanelDiameter = 72;
+  const panelBorderRadius = isMobileMenuOpen ? "32px" : "999px";
+  const panelBackgroundColor = isPanelSolid
+    ? "rgba(255, 255, 255, 1)"
+    : isHeroScrolled
+      ? "rgba(255, 255, 255, 1)"
+      : "rgba(255, 255, 255, 0.2)";
+  const panelBackdropFilter = isPanelSolid
+    ? "blur(0px)"
+    : isHeroScrolled
+      ? "blur(0px)"
+      : "blur(24px)";
+  const panelBorderColor = isPanelSolid
+    ? "rgba(0, 0, 0, 0.1)"
+    : isHeroScrolled
+      ? "rgba(0, 0, 0, 0.1)"
+      : "rgba(255, 255, 255, 0.3)";
+  const menuButtonColor = isPanelSolid ? "#7A9578" : "#ffffff";
+  const menuButtonHoverColor = isPanelSolid ? "#A4BCA2" : "#475D45";
+  const menuContentBg = panelBackgroundColor;
+
+  const menuContentVariants = {
+    open: {
+      height: "auto",
+      opacity: 1,
+      backgroundColor: menuContentBg,
+      transition: {
+        height: {
+          type: "spring",
+          damping: 40,
+          stiffness: 300,
+          mass: 1
+        },
+        opacity: {
+          duration: 0.25,
+          ease: [0.4, 0, 0.2, 1]
+        },
+        backgroundColor: {
+          duration: 0.3,
+          ease: [0.4, 0, 0.2, 1]
+        }
+      }
+    },
+    closed: {
+      height: 0,
+      opacity: 0,
+      backgroundColor: "transparent",
+      transition: {
+        height: {
+          type: "spring",
+          damping: 40,
+          stiffness: 300,
+          mass: 1
+        },
+        opacity: {
+          duration: 0.2,
+          ease: [0.4, 0, 0.2, 1]
+        }
+      }
+    }
+  };
+
   useEffect(() => {
-    // Reset to hero view when pathname changes to homepage
-    if (pathname === '/') {
-      setIsOverHero(true);
+    if (pathname !== "/") {
+      setIsOverHero(false);
+      return;
     }
 
-    // Observe the hero section
-    const hero = document.querySelector('#hero');
+    setIsOverHero(true);
+
+    const hero = document.querySelector("#hero");
     if (!hero) return;
 
     const heroObserver = new IntersectionObserver(
       ([entry]) => {
-        // When we're viewing the hero, show normal nav
-        // When scrolled away from hero, show pill nav
         setIsOverHero(entry.isIntersecting);
       },
-      { 
+      {
         threshold: 0.1,
-        rootMargin: "0px 0px -80% 0px" // Trigger when mostly scrolled away
+        rootMargin: "0px 0px -80% 0px",
       }
     );
 
@@ -132,7 +248,7 @@ export default function Navbar() {
               <motion.div
                 initial={{ scale: 0, rotate: -180 }}
                 animate={{ scale: 1, rotate: 0 }}
-                whileHover={{ rotate: 90 }}
+                whileHover={{ rotate: 90, color: menuButtonHoverColor }}
                 transition={{
                   scale: { 
                     delay: 0.2,
@@ -141,7 +257,7 @@ export default function Navbar() {
                     damping: 15
                   },
                   rotate: {
-                    duration: 0.4,
+                    duration: 0.25,
                     ease: [0.25, 0.1, 0.25, 1]
                   }
                 }}
@@ -181,46 +297,33 @@ export default function Navbar() {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="md:hidden flex items-center justify-center w-8 h-8 z-[70] relative cursor-pointer"
               aria-label="Toggle menu"
-              style={{ 
-                filter: 'none', 
-                WebkitFilter: 'none',
+              style={{
                 isolation: 'isolate',
-                position: 'relative'
+                position: 'relative',
+                color: menuButtonColor
               }}
             >
               {/* Stroke Clover Icon */}
-              <motion.div
-                className="relative z-10 w-10 h-10"
-                whileHover={{ rotate: 90 }}
-                animate={{ opacity: isMobileMenuOpen ? 0 : 1 }}
-                transition={{
-                  rotate: {
-                    duration: 0.4,
-                    ease: [0.25, 0.1, 0.25, 1]
-                  },
-                  opacity: {
-                    duration: 0.2
-                  }
-                }}
-                style={{ 
-                  filter: 'none', 
-                  WebkitFilter: 'none',
-                  isolation: 'isolate'
-                }}
-              >
-                <Image
-                  src="/images/menulogo2.svg"
-                  alt="Menu"
-                  width={40}
-                  height={40}
-                  className="w-full h-full object-contain"
-                  style={{
-                    filter: 'brightness(0) saturate(100%) invert(27%) sepia(15%) saturate(1234%) hue-rotate(78deg) brightness(95%) contrast(88%)',
-                    WebkitFilter: 'brightness(0) saturate(100%) invert(27%) sepia(15%) saturate(1234%) hue-rotate(78deg) brightness(95%) contrast(88%)',
-                    isolation: 'isolate'
+                <motion.div
+                  className="relative z-10 w-10 h-10"
+                  whileHover={{ rotate: 90, color: menuButtonHoverColor }}
+                  animate={{ opacity: isMobileMenuOpen ? 0 : 1 }}
+                  transition={{
+                    rotate: {
+                      duration: 0.25,
+                      ease: [0.25, 0.1, 0.25, 1]
+                    },
+                    opacity: {
+                      duration: 0.2
+                    }
                   }}
-                />
-              </motion.div>
+                  style={{ isolation: 'isolate', color: menuButtonColor }}
+                >
+                  <MenuLogo
+                    className="w-full h-full object-contain"
+                    style={{ color: 'inherit' }}
+                  />
+                </motion.div>
             </motion.button>
           </motion.div>
         </motion.header>
@@ -284,7 +387,7 @@ export default function Navbar() {
                   <motion.div 
                     whileHover={{ rotate: 90 }}
                     transition={{ 
-                      duration: 0.4,
+                      duration: 0.25,
                       ease: [0.25, 0.1, 0.25, 1]
                     }}
                   >
@@ -311,7 +414,7 @@ export default function Navbar() {
                       animate={{ y: 0, opacity: 1 }}
                       whileHover={{ 
                         scale: 1.05,
-                        color: '#4A7C59'
+                        color: '#475D45'
                       }}
                       transition={{
                         y: { delay: 0.15 + i * 0.05, duration: 0.4 },
@@ -330,7 +433,7 @@ export default function Navbar() {
                     >
                       {item}
                       <motion.span
-                        className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#4A7C59]"
+                        className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#475D45]"
                         whileHover={{ width: '100%' }}
                         transition={{
                           duration: 0.15,
@@ -348,43 +451,30 @@ export default function Navbar() {
                 className="md:hidden flex items-center justify-center w-8 h-8 z-[70] relative cursor-pointer"
                 aria-label="Toggle menu"
                 style={{ 
-                  filter: 'none', 
-                  WebkitFilter: 'none',
                   isolation: 'isolate',
-                  position: 'relative'
+                  position: 'relative',
+                  color: menuButtonColor
                 }}
               >
                 {/* Stroke Clover Icon */}
                 <motion.div
                   className="relative z-10 w-10 h-10"
-                  whileHover={{ rotate: 90 }}
+                  whileHover={{ rotate: 90, color: menuButtonHoverColor }}
                   animate={{ opacity: isMobileMenuOpen ? 0 : 1 }}
                   transition={{
                     rotate: {
-                      duration: 0.4,
+                      duration: 0.25,
                       ease: [0.25, 0.1, 0.25, 1]
                     },
                     opacity: {
                       duration: 0.2
                     }
                   }}
-                  style={{ 
-                    filter: 'none', 
-                    WebkitFilter: 'none',
-                    isolation: 'isolate'
-                  }}
+                  style={{ isolation: 'isolate', color: menuButtonColor }}
                 >
-                  <Image
-                    src="/images/menulogo2.svg"
-                    alt="Menu"
-                    width={40}
-                    height={40}
+                  <MenuLogo
                     className="w-full h-full object-contain"
-                    style={{
-                      filter: 'brightness(0) saturate(100%) invert(27%) sepia(15%) saturate(1234%) hue-rotate(78deg) brightness(95%) contrast(88%)',
-                      WebkitFilter: 'brightness(0) saturate(100%) invert(27%) sepia(15%) saturate(1234%) hue-rotate(78deg) brightness(95%) contrast(88%)',
-                      isolation: 'isolate'
-                    }}
+                    style={{ color: 'inherit' }}
                   />
                 </motion.div>
               </motion.button>
@@ -444,27 +534,16 @@ export default function Navbar() {
                     animate={{ opacity: isMobileMenuOpen ? 0 : 1 }}
                     transition={{
                       rotate: {
-                        duration: 0.4,
+                        duration: 0.25,
                         ease: [0.25, 0.1, 0.25, 1]
                       },
                       opacity: {
                         duration: 0.2
                       }
                     }}
-                    style={{ 
-                      filter: 'none', 
-                      WebkitFilter: 'none',
-                      isolation: 'isolate'
-                    }}
                   >
-                    <Image
-                      src="/images/menulogo2.svg"
-                      alt="Menu"
-                      width={40}
-                      height={40}
-                      className="w-full h-full object-contain"
-                    />
-                  </motion.div>
+                  <MenuLogo className="w-full h-full object-contain transition-all duration-300" />
+                </motion.div>
                 </motion.button>
               </div>
             </div>
@@ -475,22 +554,32 @@ export default function Navbar() {
 
       {/* Mobile Menu Panel */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
+        initial={{
+          opacity: 0,
+          scale: 0.9,
+          borderRadius: "999px",
+          width: closedPanelDiameter,
+          height: closedPanelDiameter
+        }}
         animate={{ 
           opacity: 1, 
           scale: 1,
-          backgroundColor: pathname === '/' && isScrolled ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.2)',
-          backdropFilter: pathname === '/' && isScrolled ? 'blur(0px)' : 'blur(24px)',
-          borderColor: pathname === '/' && isScrolled ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.3)'
+          backgroundColor: panelBackgroundColor,
+          backdropFilter: panelBackdropFilter,
+          borderColor: panelBorderColor,
+          height: isMobileMenuOpen ? "auto" : closedPanelDiameter,
+          borderRadius: panelBorderRadius
         }}
         exit={{ opacity: 0, scale: 0.9 }}
         transition={{
           duration: 0.4,
           ease: [0.25, 0.1, 0.25, 1]
         }}
-        className="fixed top-4 right-4 z-50 md:hidden rounded-2xl shadow-2xl overflow-hidden"
+        className="fixed top-4 right-4 z-50 md:hidden shadow-2xl overflow-hidden"
         style={{
-          boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)'
+          boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)',
+          width: closedPanelDiameter,
+          minWidth: closedPanelDiameter
         }}
       >
         {/* Clover Icon (Always Visible) */}
@@ -500,192 +589,132 @@ export default function Navbar() {
           aria-label="Toggle menu"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          style={{ 
+            color: menuButtonColor,
+            backgroundColor: panelBackgroundColor
+          }}
         >
-          <motion.div
-            className="w-10 h-10 group/icon"
-            whileHover={{ rotate: 90 }}
+            <motion.div
+              className="w-10 h-10 group/icon"
+              whileHover={{ rotate: 90 }}
             transition={{
               type: "spring",
-              stiffness: 300,
-              damping: 25
+              stiffness: 400,
+              damping: 30
             }}
           >
-            <AnimatePresence mode="wait" initial={false}>
-              {!isMobileMenuOpen ? (
-                <motion.div
-                  key="stroke"
-                  initial={{ opacity: 0, scale: 0.97, rotate: 45 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  exit={{ opacity: 0, scale: 0.97, rotate: -45 }}
-                  transition={{ 
-                    type: "spring",
-                    stiffness: 350,
-                    damping: 45,
-                    mass: 1,
-                    opacity: { 
-                      duration: 0.25,
-                      ease: [0.4, 0, 0.2, 1]
-                    }
-                  }}
-                  className="relative"
-                >
-                  <Image
-                    src="/images/menulogo2.svg"
-                    alt="Menu"
-                    width={40}
-                    height={40}
-                    className="w-full h-full object-contain transition-all duration-300"
-                    style={{
-                      filter: 'brightness(0) saturate(100%) invert(28%) sepia(12%) saturate(800%) hue-rotate(75deg) brightness(90%) contrast(85%)',
-                      WebkitFilter: 'brightness(0) saturate(100%) invert(28%) sepia(12%) saturate(800%) hue-rotate(75deg) brightness(90%) contrast(85%)'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.filter = 'brightness(0) saturate(100%) invert(28%) sepia(15%) saturate(1000%) hue-rotate(75deg) brightness(85%) contrast(90%)';
-                      e.currentTarget.style.WebkitFilter = 'brightness(0) saturate(100%) invert(28%) sepia(15%) saturate(1000%) hue-rotate(75deg) brightness(85%) contrast(90%)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.filter = 'brightness(0) saturate(100%) invert(28%) sepia(12%) saturate(800%) hue-rotate(75deg) brightness(90%) contrast(85%)';
-                      e.currentTarget.style.WebkitFilter = 'brightness(0) saturate(100%) invert(28%) sepia(12%) saturate(800%) hue-rotate(75deg) brightness(90%) contrast(85%)';
-                    }}
-                  />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="filled"
-                  initial={{ opacity: 0, scale: 0.97, rotate: -45 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  exit={{ opacity: 0, scale: 0.97, rotate: 45 }}
-                  transition={{ 
-                    type: "spring",
-                    stiffness: 350,
-                    damping: 45,
-                    mass: 1,
-                    opacity: { 
-                      duration: 0.25,
-                      ease: [0.4, 0, 0.2, 1]
-                    }
-                  }}
-                  className="relative"
-                >
-                  <Image
-                    src="/icons/hamburgerMenu-white.svg"
-                    alt="Menu Active"
-                    width={40}
-                    height={40}
-                    className="w-full h-full object-contain transition-all duration-300"
-                    style={{
-                      filter: 'brightness(0) saturate(100%) invert(28%) sepia(12%) saturate(800%) hue-rotate(75deg) brightness(90%) contrast(85%)',
-                      WebkitFilter: 'brightness(0) saturate(100%) invert(28%) sepia(12%) saturate(800%) hue-rotate(75deg) brightness(90%) contrast(85%)'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.filter = 'brightness(0) saturate(100%) invert(28%) sepia(15%) saturate(1000%) hue-rotate(75deg) brightness(85%) contrast(90%)';
-                      e.currentTarget.style.WebkitFilter = 'brightness(0) saturate(100%) invert(28%) sepia(15%) saturate(1000%) hue-rotate(75deg) brightness(85%) contrast(90%)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.filter = 'brightness(0) saturate(100%) invert(28%) sepia(12%) saturate(800%) hue-rotate(75deg) brightness(90%) contrast(85%)';
-                      e.currentTarget.style.WebkitFilter = 'brightness(0) saturate(100%) invert(28%) sepia(12%) saturate(800%) hue-rotate(75deg) brightness(90%) contrast(85%)';
-                    }}
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <motion.div
+              key="clover-icon"
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ 
+                opacity: 1, 
+                scale: 1,
+                rotate: isMobileMenuOpen ? 45 : 0
+              }}
+              exit={{ opacity: 0, scale: 0.97 }}
+              transition={{ 
+                type: "spring",
+                stiffness: 350,
+                damping: 45,
+                mass: 1,
+                opacity: { 
+                  duration: 0.25,
+                  ease: [0.4, 0, 0.2, 1]
+                }
+              }}
+              className="relative"
+            >
+              <MenuLogo
+                className="w-full h-full object-contain transition-all duration-150"
+                style={{ color: 'inherit' }}
+              />
+            </motion.div>
           </motion.div>
         </motion.button>
 
         {/* Expandable Menu Content */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              key="menu-content"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ 
-                height: "auto", 
-                opacity: 1,
-                backgroundColor: pathname === '/' && isScrolled ? 'rgba(255, 255, 255, 1)' : 'transparent'
-              }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{
-                height: {
-                  type: "spring",
-                  damping: 40,
-                  stiffness: 300,
-                  mass: 1
-                },
-                opacity: {
-                  duration: 0.25,
-                  ease: [0.4, 0, 0.2, 1]
-                },
-                backgroundColor: {
-                  duration: 0.3,
-                  ease: [0.4, 0, 0.2, 1]
-                }
-              }}
-              className="overflow-hidden"
-            >
-                {/* Menu Content */}
-                <div className="px-5 pb-5">
-                  <nav className="flex flex-col gap-7">
-                    {menuItems.map((item, i) => {
-                      const href = resolveHref(item.label);
-                      const isActive = activeMenuItem === item.label;
-                      const isScrolledOnHero = pathname === '/' && isScrolled;
-                      return (
-                        <motion.a
-                          key={item.label}
-                          href={href}
-                          onClick={() => {
-                            setActiveMenuItem(item.label);
-                            handleNavClick();
-                          }}
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          transition={{
-                            delay: i * 0.05,
-                            duration: 0.3,
-                            ease: [0.4, 0, 0.2, 1]
-                          }}
-                          whileHover={{ 
-                            scale: 1.05,
-                            y: -2
-                          }}
-                          className="flex flex-col items-center gap-2 group"
-                        >
-                          {/* Icon */}
-                          <motion.div
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                            style={{ filter: 'none', WebkitFilter: 'none' }}
-                          >
-                            <item.icon 
-                              className={`w-6 h-6 transition-colors duration-300 ease-in-out ${
-                                isActive 
-                                  ? 'text-[#7A9578]' 
-                                  : isScrolledOnHero
-                                    ? 'text-[#475D45] group-hover:text-[#334732]'
-                                    : 'text-white group-hover:text-[#334732]'
-                              }`}
-                              style={{ filter: 'none', WebkitFilter: 'none' }}
-                            />
-                          </motion.div>
-                          {/* Text */}
-                          <span className={`transition-colors duration-300 ease-in-out text-sm font-sans font-medium uppercase tracking-wide ${
-                            isActive 
-                              ? 'text-[#7A9578]' 
-                              : isScrolledOnHero
-                                ? 'text-[#475D45] group-hover:text-[#334732]'
-                                : 'text-white group-hover:text-[#334732]'
-                          }`}>
-                            {item.label.toLowerCase()}
-                          </span>
-                        </motion.a>
-                      );
-                    })}
-                  </nav>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+        <motion.div
+          initial={false}
+          animate={isMobileMenuOpen ? "open" : "closed"}
+          variants={menuContentVariants}
+          className="overflow-hidden"
+          style={{ pointerEvents: isMobileMenuOpen ? "auto" : "none" }}
+        >
+            {/* Menu Content */}
+            <div className="px-3 pb-5">
+              <nav className="flex flex-col gap-7">
+                {menuItems.map((item, i) => {
+                  const href = resolveHref(item.label);
+                  const isActive = activeMenuItem === item.label;
+                  const solidIconColor = isActive ? "#2c7b40" : "#475D45";
+                  const glassIconColor = "#ffffff";
+                  const iconColor = isPanelSolid ? solidIconColor : glassIconColor;
+                  const iconHoverColor = isPanelSolid ? "#A4BCA2" : "#475D45";
+                  return (
+                    <motion.a
+                      key={item.label}
+                      href={href}
+                      onClick={() => {
+                        setActiveMenuItem(item.label);
+                        handleNavClick();
+                      }}
+                      animate={
+                        isMobileMenuOpen
+                          ? { opacity: 1, y: 0 }
+                          : { opacity: 0, y: -8 }
+                      }
+                      whileHover={{ 
+                        scale: 1.05,
+                        y: -2,
+                        color: iconHoverColor
+                      }}
+                      transition={{
+                        delay: isMobileMenuOpen ? i * 0.05 : 0,
+                        duration: 0.3,
+                        ease: [0.4, 0, 0.2, 1],
+                        scale: {
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 30
+                        },
+                        color: {
+                          duration: 0.15,
+                          ease: [0.25, 0.1, 0.25, 1]
+                        }
+                      }}
+                      style={{ color: iconColor }}
+                      className="flex flex-col items-center gap-2 group"
+                    >
+                      {/* Icon */}
+                      <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{
+                          scale: {
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 30
+                          }
+                        }}
+                      >
+                        <item.icon 
+                          className="w-5 h-5 transition-colors duration-150 ease-in-out"
+                          color="currentColor"
+                        />
+                      </motion.div>
+                      {/* Text */}
+                      <span
+                        className="transition-colors duration-150 ease-in-out text-sm font-sans font-medium uppercase tracking-wide"
+                        style={{ color: "inherit" }}
+                      >
+                        {item.label.toLowerCase()}
+                      </span>
+                    </motion.a>
+                  );
+                })}
+              </nav>
+            </div>
+        </motion.div>
       </motion.div>
 
       {/* Backdrop (only when menu is open) */}

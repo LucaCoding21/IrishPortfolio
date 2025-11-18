@@ -23,7 +23,7 @@ export default function Projects() {
             Focused Projects
           </motion.h2>
           <motion.p
-            className="text-[#3f3737] max-w-lg text-left leading-relaxed text-[18px] md:text-[25px] font-medium font-sans md:pt-1"
+            className="text-[#3f3737] max-w-lg text-left leading-relaxed text-[21px] md:text-[25px] font-medium font-sans md:pt-1"
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}

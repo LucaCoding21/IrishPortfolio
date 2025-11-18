@@ -648,8 +648,17 @@ const founditDesignBlocks = [
   },
   {
     type: "image",
-    src: "/images/foundit-design.png",
+    src: "/images/foundit-design1.png",
     alt: "Foundit brand identity overview",
+    width: 1590,
+    height: 3284,
+    spacing: "mt-12",
+    lightbox: true,
+  },
+  {
+    type: "image",
+    src: "/images/foundit-design2.png",
+    alt: "Foundit design details",
     width: 1590,
     height: 3284,
     spacing: "mt-12",
@@ -900,7 +909,7 @@ export const PROJECT_CASE_STUDIES = {
   emdep: EMDEP_CASE_STUDY,
   foundit: createCaseStudyTemplate("Foundit", {
     hero: {
-      banner: "/images/foundit-cover.jpg",
+      banner: "/images/foundit-mobile.png",
       secondary: "/images/foundit-photo.png",
       description: "move the tags in the bottom instead and include the glass effect again",
     },
@@ -920,7 +929,7 @@ export const PROJECT_CASE_STUDIES = {
   }),
   "fitcheck": createCaseStudyTemplate("FitCheck", {
     hero: {
-      banner: "/images/fitcheck/FitcheckCover.png",
+      banner: "/images/fitcheck/fitcheck-mobile.png",
       secondary: "/images/fitcheck/FitCheck-preview.png",
       description:
         "FitCheck is a social app where friends post daily outfits and rate each other anonymously for fun competition.",
@@ -1184,14 +1193,14 @@ export const PROJECT_CASE_STUDIES = {
                 "Profile & Archive: Visit gallery full of past fits and track consistency",
               ],
               highlightedLabel: "Profile & Archive:",
-              spacing: "mb-12",
+              spacing: "mb-6",
             },
             {
               type: "text",
               paragraphs: [
                 "Below are the main MVP screens showing final interfaces.",
               ],
-              spacing: "mt-12 mb-4",
+              spacing: "mt-6 mb-4",
             },
             {
               type: "image",

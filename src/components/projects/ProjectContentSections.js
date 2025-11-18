@@ -7,11 +7,11 @@ import { CASE_STUDY_SECTION_TEMPLATE } from "@/lib/projects";
 
 const HEADING_CLASSES = {
   xl: "text-[28px] md:text-[40px] font-heading font-semibold text-black mb-3 md:mb-4",
-  accent: "text-[20px] md:text-[25px] font-heading font-semibold text-[#3A7B36] mb-3 md:mb-4",
-  default: "text-[20px] md:text-[25px] font-heading font-semibold text-black mb-3 md:mb-4",
+  accent: "text-[21px] md:text-[25px] font-heading font-semibold text-[#3A7B36] mb-3 md:mb-4",
+  default: "text-[21px] md:text-[25px] font-heading font-semibold text-black mb-3 md:mb-4",
 };
 
-const PARAGRAPH_CLASS = "text-[#3f3737] text-[18px] md:text-[25px] font-sans font-medium leading-relaxed";
+const PARAGRAPH_CLASS = "text-[#3f3737] text-[21px] md:text-[25px] font-sans font-medium leading-relaxed";
 
 const renderHeading = (text, variant = "default", className = "") => {
   if (!text) return null;
@@ -22,8 +22,9 @@ const renderHeading = (text, variant = "default", className = "") => {
 const renderImage = (image, key, wrapperClass = "") => {
   if (!image?.src) return null;
   const className = `relative w-full h-auto rounded-2xl overflow-hidden ${image.className ?? ""}`.trim();
+  const useLightbox = image.lightbox ?? true;
 
-  if (image.lightbox) {
+  if (useLightbox) {
     return (
       <div key={key} className={`${wrapperClass}`.trim()}>
         <ImageLightbox
@@ -56,7 +57,7 @@ const renderTextBlock = (block, index, isFirst) => {
     <div key={index} className={`${spacing}`.trim()}>
       {renderHeading(block.heading, block.headingVariant ?? "default")}
       {block.subheading && (
-        <h4 className="text-[20px] md:text-[25px] font-heading font-semibold text-[#3A7B36] mb-2 md:mb-3">
+        <h4 className="text-[21px] md:text-[25px] font-heading font-semibold text-[#3A7B36] mb-2 md:mb-3">
           {block.subheading}
         </h4>
       )}
@@ -66,10 +67,10 @@ const renderTextBlock = (block, index, isFirst) => {
           const rest = paragraph.replace(label, "").trimStart();
           return (
             <p key={idx} className={`${PARAGRAPH_CLASS}${idx !== arr.length - 1 ? " mb-6 md:mb-8" : ""}`}>
-              <span className="text-[#3A7B36] font-sans text-[18px] md:text-[25px] font-semibold mr-2">
+              <span className="text-[#3A7B36] font-sans text-[21px] md:text-[25px] font-semibold mr-2">
                 {label}
               </span>
-              <span className="text-[#3f3737] font-sans font-medium text-[18px] md:text-[25px] leading-relaxed">
+              <span className="text-[#3f3737] font-sans font-medium text-[21px] md:text-[25px] leading-relaxed">
                 {rest}
               </span>
             </p>
@@ -82,7 +83,7 @@ const renderTextBlock = (block, index, isFirst) => {
         );
       })}
       {block.list && (
-        <ul className="space-y-2 md:space-y-3 text-[#3f3737] text-[18px] md:text-[25px] font-sans font-medium leading-relaxed">
+        <ul className="space-y-2 md:space-y-3 text-[#3f3737] text-[21px] md:text-[25px] font-sans font-medium leading-relaxed">
           {block.list.map((item) => (
             <li key={item} className="flex items-start">
               <span className="mr-2 md:mr-3">•</span>
@@ -293,7 +294,7 @@ export default function ProjectContentSections({ sections }) {
                         stiffness: 100
                       }
                     }}
-                    className="text-[20px] md:text-[25px] font-sans font-semibold text-[#959494] leading-tight"
+                    className="text-[21px] md:text-[25px] font-sans font-semibold text-[#959494] leading-tight"
                     style={{
                       transformPerspective: 1000,
                       transformStyle: "preserve-3d"

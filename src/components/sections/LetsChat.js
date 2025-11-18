@@ -39,12 +39,12 @@ export default function LetsChat() {
                 Let&apos;s Chat!
               </motion.h2>
               <motion.p
-                className="mb-6 md:mb-8 text-[18px] md:text-[25px] font-medium font-sans text-[#3f3737] max-w-[520px] mx-auto md:mx-0"
+                className="mb-6 md:mb-8 text-[21px] md:text-[25px] font-medium font-sans text-[#3f3737] max-w-[520px] mx-auto md:mx-0"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
               >
-                Every connection starts with a conversation. Let's create something meaningful together!
+                Every connection starts with a conversation. Let&apos;s create something meaningful together!
               </motion.p>
               
               <motion.div
@@ -94,14 +94,14 @@ export default function LetsChat() {
 
             {/* Right side - Clover shape image with animation */}
             <motion.div
-              className="relative aspect-square max-w-[400px] md:max-w-[580px] w-full mx-auto lg:ml-auto"
+              className="relative aspect-square max-w-[480px] md:max-w-[680px] w-full mx-auto lg:ml-auto"
               initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
               animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.9, rotate: -5 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <div className="w-full h-full rounded-full bg-white">
                 <svg
-                  viewBox="0 0 550 500"
+                  viewBox="0 0 500 550"
                   className="w-full h-full"
                   preserveAspectRatio="xMidYMid meet"
                 >

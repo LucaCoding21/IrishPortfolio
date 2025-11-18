@@ -68,13 +68,13 @@ export default function ImageLightbox({ src, alt, width, height, className = "" 
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-1 md:p-4"
             onClick={closeModal}
           >
             {/* Close button */}
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10"
+              className="absolute top-2 right-2 md:top-4 md:right-4 text-white hover:text-gray-300 transition-colors z-10"
               aria-label="Close image"
             >
               <svg
@@ -95,11 +95,11 @@ export default function ImageLightbox({ src, alt, width, height, className = "" 
 
             {/* Image Container - Prevent closing when clicking on image */}
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+              exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="relative max-w-[90vw] max-h-[90vh] w-auto h-auto"
+              className="relative max-w-[98vw] max-h-[98vh] md:max-w-[90vw] md:max-h-[90vh] w-auto h-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <Image
@@ -107,7 +107,7 @@ export default function ImageLightbox({ src, alt, width, height, className = "" 
                 alt={alt}
                 width={width}
                 height={height}
-                className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-lg"
+                className="max-w-full max-h-[98vh] md:max-h-[90vh] w-auto h-auto object-contain rounded-lg"
                 priority
               />
             </motion.div>

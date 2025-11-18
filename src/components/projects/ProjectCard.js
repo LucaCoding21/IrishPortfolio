@@ -8,8 +8,8 @@ const TAG_BASE =
 
 const CARD_VARIANTS = {
   featured: {
-    container: "rounded-[40px] aspect-[16/7] md:aspect-[16/6] lg:aspect-[21/8]",
-    overlay: "bg-gradient-to-t from-black/60 via-black/15 to-transparent",
+    container: "rounded-3xl aspect-[16/10] md:rounded-[40px] md:aspect-[16/6] lg:aspect-[21/8]",
+    overlay: "bg-gradient-to-t from-black/55 via-black/15 to-transparent md:from-black/60",
     tagClass: TAG_BASE,
   },
   standard: {

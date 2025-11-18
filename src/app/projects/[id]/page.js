@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PROJECTS, PROJECT_CASE_STUDIES } from "@/lib/projects";
-import ScrollToTop from "@/components/ui/ScrollToTop";
 import ProjectContentSections from "@/components/projects/ProjectContentSections";
 
 const TOOL_ICONS = {
@@ -21,9 +20,10 @@ const VIEW_MORE_IMAGES = {
 const TAG_CHIP_CLASS =
   "px-4 py-2 rounded-full text-sm font-semibold tracking-wide text-white transition shadow-2xl shadow-black/20 border border-white/40 bg-white/15 backdrop-blur-xl";
 
-export default function ProjectDetailPage({ params }) {
-  const project = PROJECTS.find((p) => p.id === params.id);
-  const caseStudy = PROJECT_CASE_STUDIES[params.id] ?? PROJECT_CASE_STUDIES.emdep;
+export default async function ProjectDetailPage({ params }) {
+  const { id } = await params;
+  const project = PROJECTS.find((p) => p.id === id);
+  const caseStudy = PROJECT_CASE_STUDIES[id] ?? PROJECT_CASE_STUDIES.emdep;
 
   if (!project) {
     return <div>Project not found</div>;
@@ -64,7 +64,7 @@ export default function ProjectDetailPage({ params }) {
               <h1 className="font-heading text-[32px] md:text-[50px] font-semibold text-black mb-3 md:mb-4 leading-tight">
                 {heroTitle}
               </h1>
-              <p className="text-[#3f3737] text-[18px] md:text-[25px] font-sans font-medium leading-relaxed mb-8 md:mb-12">
+              <p className="text-[#3f3737] text-[21px] md:text-[25px] font-sans font-medium leading-relaxed mb-8 md:mb-12">
                 {heroDescription}
               </p>
 
@@ -72,18 +72,18 @@ export default function ProjectDetailPage({ params }) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 md:gap-x-8 gap-y-6 md:gap-y-8 mb-6 md:mb-8">
                 {detailEntries.map((entry) => (
                   <div key={entry.label}>
-                    <p className="text-[18px] md:text-[25px] text-[#4A7C59] font-heading font-bold mb-1 md:mb-2 leading-tight">{entry.label}</p>
+                    <p className="text-[21px] md:text-[25px] text-[#4A7C59] font-heading font-bold mb-1 md:mb-2 leading-tight">{entry.label}</p>
                     {Array.isArray(entry.value) ? (
                       entry.value.map((item) => (
                         <p
                           key={`${entry.label}-${item}`}
-                          className="text-[16px] md:text-[25px] text-[#3f3737] font-sans font-medium leading-relaxed"
+                          className="text-[21px] md:text-[25px] text-[#3f3737] font-sans font-medium leading-relaxed"
                         >
                           {item}
                         </p>
                       ))
                     ) : (
-                      <p className="text-[16px] md:text-[25px] text-[#3f3737] font-sans font-medium leading-relaxed">
+                      <p className="text-[21px] md:text-[25px] text-[#3f3737] font-sans font-medium leading-relaxed">
                         {entry.value}
                       </p>
                     )}
@@ -153,12 +153,12 @@ export default function ProjectDetailPage({ params }) {
                     key={item.id ?? index}
                     className={`flex items-center gap-4 md:gap-6 py-4 md:py-6 ${borderClass} border-gray-600`}
                   >
-                    <span className="text-[18px] md:text-[25px] text-[#4A7C59] font-heading font-medium flex-shrink-0">
+                    <span className="text-[21px] md:text-[25px] text-[#4A7C59] font-heading font-medium flex-shrink-0">
                       {number}
                     </span>
                     <a
                       href={`#${item.id}`}
-                      className="text-[18px] md:text-[25px] text-[#3f3737] font-medium hover:text-black"
+                      className="text-[21px] md:text-[25px] text-[#3f3737] font-medium hover:text-black"
                     >
                       {item.title}
                     </a>
@@ -179,7 +179,7 @@ export default function ProjectDetailPage({ params }) {
           <div className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-12">
             <h2 className="text-2xl md:text-3xl font-semibold text-black mb-6 md:mb-8">View More Projects</h2>
             <div className={`grid grid-cols-1 ${PROJECTS.length - 1 > 1 ? "md:grid-cols-2" : ""} gap-4 md:gap-6`}>
-              {PROJECTS.filter((p) => p.id !== params.id)
+              {PROJECTS.filter((p) => p.id !== id)
                 .slice(0, 2)
                 .map((proj) => (
                   <Link
@@ -242,7 +242,6 @@ export default function ProjectDetailPage({ params }) {
       </div>
 
       {/* Scroll to Top Button */}
-      <ScrollToTop />
     </main>
   );
 }

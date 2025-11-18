@@ -21,19 +21,19 @@ export const metadata = {
 
 export default function AboutPage() {
   const TOOLS = [
-    { label: "Figma", Icon: SiFigma },
-    { label: "Adobe Photoshop", Icon: SiAdobephotoshop },
-    { label: "Adobe Illustrator", Icon: SiAdobeillustrator },
-    { label: "After Effects", Icon: SiAdobeaftereffects },
-    { label: "Premiere Pro", Icon: SiAdobepremierepro },
-    { label: "Canva", Icon: SiCanva },
+    { label: "Figma", Icon: SiFigma, color: "#F24E1E" },
+    { label: "Adobe Photoshop", Icon: SiAdobephotoshop, color: "#001E36" },
+    { label: "Adobe Illustrator", Icon: SiAdobeillustrator, color: "#FF9A00" },
+    { label: "After Effects", Icon: SiAdobeaftereffects, color: "#1D2A78" },
+    { label: "Premiere Pro", Icon: SiAdobepremierepro, color: "#4B2C74" },
+    { label: "Canva", Icon: SiCanva, color: "#00C4CC" },
   ];
 
   const DEVELOPMENT = [
-    { label: "WordPress", Icon: SiWordpress },
-    { label: "HTML/CSS", Icon: SiHtml5 },
-    { label: "JavaScript", Icon: SiJavascript },
-    { label: "React (basic)", Icon: SiReact },
+    { label: "WordPress", Icon: SiWordpress, color: "#21759B" },
+    { label: "HTML/CSS", Icon: SiHtml5, color: "#E54D26" },
+    { label: "JavaScript", Icon: SiJavascript, color: "#F0DB4F" },
+    { label: "React (basic)", Icon: SiReact, color: "#61DAFB" },
   ];
 
   return (
@@ -53,7 +53,7 @@ export default function AboutPage() {
             <div className="space-y-6 md:space-y-8 text-center lg:text-left">
               <div>
                 <h1 className="text-[36px] md:text-[48px] font-semibold text-black">Claire</h1>
-                <p className="text-[18px] md:text-[20px] text-[#6F7462] mt-2">
+                <p className="text-[21px] md:text-[20px] text-[#6F7462] mt-2">
                   UI/UX Designer • Product Designer • Web Developer
                 </p>
               </div>
@@ -62,50 +62,56 @@ export default function AboutPage() {
                 className="bg-white border border-[#D7DACD] rounded-2xl md:rounded-3xl px-6 md:px-8 py-5 md:py-6 shadow-sm max-w-[720px] mx-auto lg:mx-0"
                 style={{ boxShadow: "10px 10px 0 rgba(58, 123, 54, 0.25)" }}
               >
-                <p className="text-[18px] md:text-[22px] leading-relaxed text-[#3c3d32]">
+                <p className="text-[21px] md:text-[22px] leading-relaxed text-[#3c3d32]">
                   Hi, my name is Irish! I work with design and a little bit of development
                   in Vancouver, BC. Let me know if anything catches your eye!
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-10 pt-6 md:pt-8">
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 md:gap-10 pt-8 md:pt-10">
                 <div>
-                  <p className="text-[14px] md:text-[18px] uppercase tracking-[0.3em] text-[#9AA08F] mb-3">
+                  <p className="text-[16px] md:text-[20px] uppercase tracking-[0.35em] text-[#50594B] mb-3">
                     Tools
                   </p>
-                  <div className="grid grid-cols-2 gap-3 md:gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
                     {TOOLS.map((tool) => (
                       <div
                         key={tool.label}
-                        className="flex items-center gap-2 md:gap-3 border border-[#D7DACD] rounded-xl md:rounded-2xl px-3 md:px-4 py-2 md:py-3 bg-white"
+                        className="flex items-center gap-3 md:gap-4 border border-[#D7DACD] rounded-2xl md:rounded-[18px] px-4 md:px-5 py-3 md:py-4 bg-white"
                       >
                         {tool.Icon ? (
-                          <tool.Icon className="w-5 h-5 md:w-7 md:h-7 flex-shrink-0" />
+                          <tool.Icon
+                            className="w-6 h-6 md:w-8 md:h-8 flex-shrink-0"
+                            style={{ color: tool.color }}
+                          />
                         ) : (
-                          <div className="w-5 h-5 md:w-7 md:h-7 rounded-full bg-[#D4E3C2] flex items-center justify-center text-xs md:text-sm font-semibold text-[#4A6140] flex-shrink-0">
+                          <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-[#D4E3C2] flex items-center justify-center text-[11px] md:text-[13px] font-semibold text-[#4A6140] flex-shrink-0">
                             {tool.label.charAt(0)}
                           </div>
                         )}
-                        <span className="text-[14px] md:text-[17px] text-[#2E2F25] truncate">{tool.label}</span>
+                        <span className="text-[18px] md:text-[20px] text-[#2E2F25] truncate">{tool.label}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <p className="text-[14px] md:text-[18px] uppercase tracking-[0.3em] text-[#9AA08F] mb-3">
+                  <p className="text-[16px] md:text-[20px] uppercase tracking-[0.35em] text-[#50594B] mb-3">
                     Development
                   </p>
-                  <div className="grid grid-cols-2 gap-3 md:gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
                     {DEVELOPMENT.map((item) => (
                       <div
                         key={item.label}
-                        className="flex items-center gap-2 md:gap-3 border border-[#D7DACD] rounded-xl md:rounded-2xl px-3 md:px-4 py-2 md:py-3 bg-white text-[14px] md:text-[17px] text-[#2E2F25]"
+                        className="flex items-center gap-3 md:gap-4 border border-[#D7DACD] rounded-2xl md:rounded-[18px] px-4 md:px-5 py-3 md:py-4 bg-white text-[18px] md:text-[20px] text-[#2E2F25]"
                       >
                         {item.Icon ? (
-                          <item.Icon className="w-5 h-5 md:w-7 md:h-7 flex-shrink-0" />
+                          <item.Icon
+                            className="w-6 h-6 md:w-8 md:h-8 flex-shrink-0"
+                            style={{ color: item.color }}
+                          />
                         ) : (
-                          <div className="w-5 h-5 md:w-7 md:h-7 rounded-full bg-[#D4E3C2] flex items-center justify-center text-xs md:text-sm font-semibold text-[#4A6140] flex-shrink-0">
+                          <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-[#D4E3C2] flex items-center justify-center text-[11px] md:text-[13px] font-semibold text-[#4A6140] flex-shrink-0">
                             {item.label.charAt(0)}
                           </div>
                         )}
@@ -163,7 +169,7 @@ export default function AboutPage() {
               <h2 className="text-[28px] md:text-[38px] font-semibold text-black mb-4 md:mb-6">
                 Let&apos;s Chat!
               </h2>
-              <p className="text-[18px] md:text-[20px] leading-relaxed text-[#3c3d32] max-w-[520px] mx-auto lg:mx-0 mb-6 md:mb-8 px-4">
+              <p className="text-[21px] md:text-[20px] leading-relaxed text-[#3c3d32] max-w-[520px] mx-auto lg:mx-0 mb-6 md:mb-8 px-4">
                 Thanks for stopping by. Feel free to reach out if you want to collaborate,
                 swap ideas, or even just say hi!
               </p>
@@ -234,5 +240,3 @@ export default function AboutPage() {
     </main>
   );
 }
-
-
