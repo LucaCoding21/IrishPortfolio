@@ -1,5 +1,10 @@
+"use client";
+
 import Image from "next/image";
+import bikeImg from "../../../assets/bike.jpg";
+import natureImg from "../../../assets/nature2.jpeg";
 import Footer from "@/components/layout/Footer";
+import { useState, useEffect } from "react";
 import {
   SiFigma,
   SiAdobephotoshop,
@@ -14,12 +19,20 @@ import {
   SiJavascript,
 } from "react-icons/si";
 
-export const metadata = {
-  title: "About Me — iclaire",
-  description: "Learn more about Irish Claire, a junior web developer and designer based in Vancouver, BC.",
-};
 
 export default function AboutPage() {
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [delay, setDelay] = useState(3000); // Start with 3 seconds
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsFlipped((prev) => !prev);
+      setDelay(8000); // Switch to 8 seconds after first flip
+    }, delay);
+
+    return () => clearTimeout(timeout);
+  }, [isFlipped, delay]);
+
   const TOOLS = [
     { label: "Figma", Icon: SiFigma, color: "#F24E1E" },
     { label: "Adobe Photoshop", Icon: SiAdobephotoshop, color: "#001E36" },
@@ -43,9 +56,50 @@ export default function AboutPage() {
         <div className="mx-auto px-8 max-w-[1400px]">
           <div className="grid grid-cols-1 lg:grid-cols-[460px,1fr] gap-16 items-center text-center lg:text-left">
             {/* Left accent panel */}
-            <div className="relative flex justify-center lg:justify-start">
-              <div className="relative bg-white rounded-[24px] md:rounded-[32px] shadow-xl shadow-black/5 border border-black/5 w-full max-w-[300px] md:max-w-[420px] aspect-[3/4] overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-white via-[#F8F8F8] to-[#EDEDED]" />
+            <div className="relative flex justify-center lg:justify-start h-[400px] w-[300px] md:w-[420px]">
+              <div
+                className="relative w-full h-full cursor-pointer group perspective-1000"
+                onClick={() => {
+                  setIsFlipped(!isFlipped);
+                  setDelay(8000); // Ensure it's 8s after interaction
+                }}
+              >
+                {/* Front Image (initially nature) */}
+                <div
+                  className={`absolute inset-0 w-full h-full transition-all duration-700 ease-in-out ${isFlipped
+                    ? "z-0 rotate-6 translate-x-4 translate-y-2 opacity-100"
+                    : "z-10 rotate-0 translate-x-0 translate-y-0 opacity-100"
+                    }`}
+                >
+                  <div className="relative w-full h-full bg-white rounded-[24px] md:rounded-[32px] shadow-xl shadow-black/5 border border-black/5 overflow-hidden">
+                    <Image
+                      src={natureImg}
+                      alt="Nature landscape"
+                      fill
+                      className="object-cover"
+                      placeholder="blur"
+                      priority
+                    />
+                  </div>
+                </div>
+
+                {/* Back Image (initially bike) */}
+                <div
+                  className={`absolute inset-0 w-full h-full transition-all duration-700 ease-in-out ${isFlipped
+                    ? "z-10 rotate-0 translate-x-0 translate-y-0 opacity-100"
+                    : "z-0 -rotate-6 -translate-x-4 translate-y-2 opacity-100"
+                    }`}
+                >
+                  <div className="relative w-full h-full bg-white rounded-[24px] md:rounded-[32px] shadow-xl shadow-black/5 border border-black/5 overflow-hidden">
+                    <Image
+                      src={bikeImg}
+                      alt="Profile picture with bike"
+                      fill
+                      className="object-cover"
+                      placeholder="blur"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -136,9 +190,10 @@ export default function AboutPage() {
                 Behind the Screen
               </h2>
               <p className="text-[22px] leading-relaxed max-w-[560px] mx-auto lg:mx-0 text-[#3c3d32]">
-                When I am not working, I like trying and exploring new hobbies. Drawing
-                helps me slow down, observe the small details, and translate feelings into
-                tangible shapes. It keeps me curious and pushes me to keep experimenting.
+                When I am not working, I like trying and exploring new hobbies or trying new things. One hobby that I am revisiting is drawing. Drawing helps me be more creative and pushes me to stay in touch with my curious side :)
+              </p>
+              <p className="text-[22px] leading-relaxed max-w-[560px] mx-auto lg:mx-0 text-[#3c3d32] mt-4">
+                other than that, I enjoy staying curious and picking up small interests
               </p>
             </div>
 
