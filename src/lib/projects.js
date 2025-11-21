@@ -81,7 +81,7 @@ const createSectionTemplate = (projectName = "Your Project") => ([
         heading: "Goal",
         headingVariant: "xl",
         paragraphs: [
-          "Share a short high-level goal for the project.",
+          "Share a short high level goal for the project.",
         ],
       },
       {
@@ -499,7 +499,7 @@ const EMDEP_CASE_STUDY = {
           heading: "Website Design + Development",
           headingVariant: "accent",
           paragraphs: [
-            "Using the mood board as a foundation, I followed the same modern visual direction and designed the experience mobile first in Figma. I then built the website in WordPress using Blocksy and Kadence, which allowed me to work more efficiently through their pre-made layout components.",
+            "Using the mood board as a foundation, I followed the same modern visual direction and designed the experience mobile first in Figma. I then built the website in WordPress using Blocksy and Kadence, which allowed me to work more efficiently through their premade layout components.",
             "I also implemented SEO best practices which included optimized headings, alt text, metadata, and fast load performance in order to improve discoverability and help the studio attract new customers organically.",
           ],
           spacing: "mt-12",
@@ -771,13 +771,36 @@ const founditFinalSolutionBlocks = [
     ],
   },
   {
+    type: "video",
+    spacing: "mt-6",
+    videos: [
+      {
+        videoId: "veaLHT95Tec",
+        title: "Foundit operations walkthrough",
+        width: 380,
+        height: 822,
+        borderRadius: 40,
+        host: "https://www.youtube-nocookie.com",
+        embedUrl:
+          "https://player.cloudinary.com/embed/?cloud_name=du4aptrjx&public_id=student_rt7n5v&profile=Student-flow",
+      },
+      {
+        videoId: "GrXL9kjBTNM",
+        title: "Foundit campus interaction showcase",
+        width: 375,
+        height: 787,
+        borderRadius: 40,
+      },
+    ],
+  },
+  {
     type: "text",
     heading: "Key Improvements",
     headingVariant: "accent",
     list: [
       "Handwritten logs → Digital reporting dashboard",
-      "Email-based claims → Structured tracking interface",
-      "Unclear ownership → Photo-based verification",
+      "Email based claims → Structured tracking interface",
+      "Unclear ownership → Photo based verification",
     ],
     spacing: "mt-12",
   },
@@ -833,7 +856,7 @@ const FOUNDIT_RESEARCH_DESIGN_SECTION = {
       type: "text",
       paragraphs: [
         "The AI tool used online data to compile on existing lost and found systems, market gaps, user personas, and user flows. This helped speed up the research phase and outline the core pain points.",
-        "My team interviewed campus security and custodians who manage the lost and found process. We discovered issues like inconsistent tracking, inefficient listings, and time wasted verifying ownership. Calling the office for lost items also proved ineffective, often causing delays and miscommunication.",
+        "My team interviewed campus security and custodians who manage the lost and found process. We discovered issues like inconsistent tracking, inefficient listings, and time wasted verifying ownership. Calling the office for lost items also proved ineffective, often causing delays and miscommunication. However, with Foundit, staff can now manage lost and found items more efficiently and will also help students identify their items faster.",
       ],
       spacing: "mt-12",
     },
@@ -910,8 +933,9 @@ export const PROJECT_CASE_STUDIES = {
   foundit: createCaseStudyTemplate("Foundit", {
     hero: {
       banner: "/images/foundit-mobile.png",
+      bannerDesktop: "/images/foundit-cover.jpg",
       secondary: "/images/foundit-photo.png",
-      description: "move the tags in the bottom instead and include the glass effect again",
+      description: "Foundit is a digital lost and found platform that uses AI image recognition to help students and staff recover items.",
     },
     details: {
       date: "October 4 - 5, 2025",
@@ -929,7 +953,7 @@ export const PROJECT_CASE_STUDIES = {
   }),
   "fitcheck": createCaseStudyTemplate("FitCheck", {
     hero: {
-      banner: "/images/fitcheck/fitcheck-mobile.png",
+      banner: "/images/FitCheck-viewCover.png",
       secondary: "/images/fitcheck/FitCheck-preview.png",
       description:
         "FitCheck is a social app where friends post daily outfits and rate each other anonymously for fun competition.",
@@ -963,7 +987,7 @@ export const PROJECT_CASE_STUDIES = {
               heading: problemBlock.heading ?? "Problem",
               headingVariant: problemBlock.headingVariant ?? "xl",
               paragraphs: [
-                "As we get older, we naturally drift apart from close friends because of busy schedules. To counter this, we wanted to use social media to solve this problem however, the traditional social media is filled with:",
+                "As we get older, we naturally drift apart from close friends because of busy schedules. To counter this, we wanted to use social media to solve this problem. However, the traditional social media is filled with:",
               ],
               spacing: "mb-8",
             },
@@ -972,7 +996,7 @@ export const PROJECT_CASE_STUDIES = {
               list: [
                 "Influencers and not real friends",
                 "Pressure to look perfect",
-                "Algorithms which buries connections with friends",
+                "Algorithms which buries the connections with friends",
               ],
               spacing: "mt-8 mb-8",
             },
@@ -1084,7 +1108,7 @@ export const PROJECT_CASE_STUDIES = {
             {
               type: "text",
               paragraphs: [
-                "Through interviews and usability testing, we validated this idea. Users felt more comfortable posting and were more motivated to show up daily.",
+                "Through interviews and usability testing, we validated this idea. Users felt more comfortable posting and were more motivated to post outfits daily.",
               ],
               spacing: "mt-6 mb-8",
             },
@@ -1109,7 +1133,7 @@ export const PROJECT_CASE_STUDIES = {
             {
               type: "text",
               paragraphs: [
-                "I sketched multiple iterations to explore how reactions could feel positive and expressive, I then refined the final four designs in Adobe Illustrator ensuring that it also aligns with FitChecks visual identity.",
+                "When making the stickers, I sketched multiple iterations to explore how reactions could feel positive and expressive, I then refined the final four designs in Adobe Illustrator ensuring that it also aligns with FitChecks visual identity.",
               ],
               spacing: "mt-6 mb-8",
             },

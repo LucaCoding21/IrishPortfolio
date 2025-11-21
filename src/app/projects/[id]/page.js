@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PROJECTS, PROJECT_CASE_STUDIES } from "@/lib/projects";
 import ProjectContentSections from "@/components/projects/ProjectContentSections";
+import AppStoreLink from "@/components/projects/AppStoreLink";
 
 const TOOL_ICONS = {
   Figma: { src: "/icons/figma.svg", alt: "Figma icon" },
@@ -20,6 +21,21 @@ const VIEW_MORE_IMAGES = {
 const TAG_CHIP_CLASS =
   "px-4 py-2 rounded-full text-sm font-semibold tracking-wide text-white transition shadow-2xl shadow-black/20 border border-white/40 bg-white/15 backdrop-blur-xl";
 
+const PROJECT_ICON_LINKS = {
+  fitcheck: {
+    href: "https://apps.apple.com/ca/app/fitcheck/id6749248566",
+    ariaLabel: "Open FitCheck on the App Store",
+    title: "FitCheck on the App Store",
+    srLabel: "Open FitCheck on the App Store",
+  },
+  foundit: {
+    href: "https://www.figma.com/design/iyf8bilJPnZZvrzlS32ZmU/FoundIt?node-id=0-1&t=0XDMvPu5qhdZ8zp0-1",
+    ariaLabel: "View the Foundit design in Figma",
+    title: "Foundit design in Figma",
+    srLabel: "View the Foundit design in Figma",
+  },
+};
+
 export default async function ProjectDetailPage({ params }) {
   const { id } = await params;
   const project = PROJECTS.find((p) => p.id === id);
@@ -30,9 +46,14 @@ export default async function ProjectDetailPage({ params }) {
   }
 
   const heroBanner = caseStudy?.hero?.banner ?? project.image;
+  const heroBannerDesktop =
+    caseStudy?.hero?.bannerDesktop ?? heroBanner;
+  const heroBannerMobile =
+    caseStudy?.hero?.bannerMobile ?? heroBanner;
   const heroSecondary = caseStudy?.hero?.secondary ?? project.image;
   const heroTitle = caseStudy?.hero?.title ?? project.title;
   const heroDescription = caseStudy?.hero?.description ?? project.subtitle;
+  const actionLink = PROJECT_ICON_LINKS[id];
 
   const detailEntries = [
     { label: "Date", value: caseStudy?.details?.date },
@@ -47,10 +68,16 @@ export default async function ProjectDetailPage({ params }) {
       <div className="container max-w-[1500px] mx-auto px-4 md:px-8 pt-24 md:pt-32 pb-6 md:pb-8">
         <div className="relative w-full h-[280px] md:h-[500px] rounded-2xl md:rounded-3xl overflow-hidden">
           <Image
-            src={heroBanner}
+            src={heroBannerDesktop}
             alt={project.title}
             fill
-            className="object-cover"
+            className="hidden md:block object-cover"
+          />
+          <Image
+            src={heroBannerMobile}
+            alt={project.title}
+            fill
+            className="block md:hidden object-cover"
           />
         </div>
       </div>
@@ -61,9 +88,12 @@ export default async function ProjectDetailPage({ params }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start mb-6 md:mb-8">
             {/* Left: Title and Details */}
             <div>
-              <h1 className="font-heading text-[32px] md:text-[50px] font-semibold text-black mb-3 md:mb-4 leading-tight">
-                {heroTitle}
-              </h1>
+              <div className="flex flex-wrap items-center gap-3 mb-3 md:mb-4">
+                <h1 className="font-heading text-[32px] md:text-[50px] font-semibold text-black leading-tight">
+                  {heroTitle}
+                </h1>
+                {actionLink && <AppStoreLink {...actionLink} />}
+              </div>
               <p className="text-[#3f3737] text-[21px] md:text-[25px] font-sans font-medium leading-relaxed mb-8 md:mb-12">
                 {heroDescription}
               </p>

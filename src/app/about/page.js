@@ -3,8 +3,11 @@
 import Image from "next/image";
 import bikeImg from "../../../assets/bike.jpg";
 import natureImg from "../../../assets/nature2.jpeg";
+import nature1Img from "../../../assets/nature1.JPG";
+import bake1Img from "../../../assets/bake1.jpeg";
 import Footer from "@/components/layout/Footer";
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   SiFigma,
   SiAdobephotoshop,
@@ -23,6 +26,7 @@ import {
 export default function AboutPage() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [delay, setDelay] = useState(3000); // Start with 3 seconds
+  const [lightboxImage, setLightboxImage] = useState(null);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -32,6 +36,27 @@ export default function AboutPage() {
 
     return () => clearTimeout(timeout);
   }, [isFlipped, delay]);
+
+  // Close lightbox on Escape key and prevent body scroll when open
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === "Escape" && lightboxImage) {
+        setLightboxImage(null);
+      }
+    };
+    
+    if (lightboxImage) {
+      document.body.style.overflow = "hidden";
+      document.addEventListener("keydown", handleEscape);
+    } else {
+      document.body.style.overflow = "";
+    }
+    
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "";
+    };
+  }, [lightboxImage]);
 
   const TOOLS = [
     { label: "Figma", Icon: SiFigma, color: "#F24E1E" },
@@ -56,7 +81,7 @@ export default function AboutPage() {
         <div className="mx-auto px-8 max-w-[1400px]">
           <div className="grid grid-cols-1 lg:grid-cols-[460px,1fr] gap-16 items-center text-center lg:text-left">
             {/* Left accent panel */}
-            <div className="relative flex justify-center lg:justify-start h-[400px] w-[300px] md:w-[420px]">
+            <div className="relative flex justify-center lg:justify-start h-[400px] w-[360px] md:w-[420px] mx-auto lg:mx-0">
               <div
                 className="relative w-full h-full cursor-pointer group perspective-1000"
                 onClick={() => {
@@ -190,27 +215,52 @@ export default function AboutPage() {
                 Behind the Screen
               </h2>
               <p className="text-[22px] leading-relaxed max-w-[560px] mx-auto lg:mx-0 text-[#3c3d32]">
-                When I am not working, I like trying and exploring new hobbies or trying new things. One hobby that I am revisiting is drawing. Drawing helps me be more creative and pushes me to stay in touch with my curious side :)
+                When I’m not working, I like exploring new hobbies and revisiting old ones. One hobby that I am revisiting is baking. My only favourite part about baking is being able to share the goodies I make with my friends and family. Their satisfaction encourages me to try new recipes.
               </p>
               <p className="text-[22px] leading-relaxed max-w-[560px] mx-auto lg:mx-0 text-[#3c3d32] mt-4">
-                other than that, I enjoy staying curious and picking up small interests
+                Just like with work, I always want to ensure that what I create brings the most satisfaction.
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-4 md:gap-6">
-              {[0, 1].map((index) => (
-                <div
-                  key={index}
-                  className="relative aspect-[3/4] rounded-[24px] md:rounded-[36px] overflow-hidden border border-white shadow-lg shadow-black/10"
-                >
-                  <Image
-                    src="/images/hero-after.png"
-                    alt="Landscape hills"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
+              <div 
+                className="relative aspect-[3/4] rounded-[24px] md:rounded-[36px] overflow-hidden border border-white shadow-lg shadow-black/10 cursor-pointer hover:opacity-90 transition-opacity"
+                onClick={() => setLightboxImage({ src: nature1Img, alt: "Nature landscape" })}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setLightboxImage({ src: nature1Img, alt: "Nature landscape" });
+                  }
+                }}
+              >
+                <Image
+                  src={nature1Img}
+                  alt="Nature landscape"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div 
+                className="relative aspect-[3/4] rounded-[24px] md:rounded-[36px] overflow-hidden border border-white shadow-lg shadow-black/10 cursor-pointer hover:opacity-90 transition-opacity"
+                onClick={() => setLightboxImage({ src: bake1Img, alt: "Baking" })}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setLightboxImage({ src: bake1Img, alt: "Baking" });
+                  }
+                }}
+              >
+                <Image
+                  src={bake1Img}
+                  alt="Baking"
+                  fill
+                  className="object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -291,6 +341,62 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {lightboxImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+            onClick={() => setLightboxImage(null)}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setLightboxImage(null)}
+              className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10"
+              aria-label="Close image"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+
+            {/* Image Container - Prevent closing when clicking on image */}
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="relative max-w-[90vw] max-h-[90vh] w-auto h-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={lightboxImage.src}
+                alt={lightboxImage.alt}
+                width={1200}
+                height={1600}
+                className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-lg"
+                priority
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <Footer />
     </main>
   );

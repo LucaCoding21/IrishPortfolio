@@ -138,6 +138,208 @@ const renderImageGridBlock = (block, index, isFirst) => {
   );
 };
 
+let youtubeApiPromise;
+
+const loadYouTubeApi = () => {
+  if (typeof window === "undefined") {
+    return Promise.reject(new Error("YouTube API requires a browser environment"));
+  }
+
+  if (window.YT && window.YT.Player) {
+    return Promise.resolve(window.YT);
+  }
+
+  if (youtubeApiPromise) {
+    return youtubeApiPromise;
+  }
+
+  youtubeApiPromise = new Promise((resolve) => {
+    const previous = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      if (previous) {
+        previous();
+      }
+      resolve(window.YT);
+    };
+    const script = document.createElement("script");
+    script.src = "https://www.youtube.com/iframe_api";
+    script.async = true;
+    document.body.appendChild(script);
+  });
+
+  return youtubeApiPromise;
+};
+
+const DEFAULT_VIDEO_HOST = "https://www.youtube-nocookie.com";
+
+function YouTubeShort({
+  videoId,
+  width = 380,
+  height = 822,
+  borderRadius = 40,
+  title = "Video preview",
+  host = DEFAULT_VIDEO_HOST,
+}) {
+  const containerRef = useRef(null);
+  const playerRef = useRef(null);
+  const [isReady, setIsReady] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    let isCancelled = false;
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    loadYouTubeApi()
+      .then((YT) => {
+        if (isCancelled || !containerRef.current) {
+          return;
+        }
+
+        const player = new YT.Player(containerRef.current, {
+          width,
+          height,
+          videoId,
+          host,
+          playerVars: {
+            autoplay: 0,
+            controls: 0,
+            mute: 1,
+            modestbranding: 1,
+            rel: 0,
+            playsinline: 1,
+            disablekb: 1,
+            fs: 0,
+            loop: 1,
+            playlist: videoId,
+            showinfo: 0,
+          },
+          events: {
+            onReady: (event) => {
+              event.target.mute();
+              if (!isCancelled) {
+                setIsReady(true);
+                setIsPlaying(false);
+              }
+            },
+            onStateChange: (event) => {
+              if (isCancelled) {
+                return;
+              }
+              if (event.data === YT.PlayerState.PLAYING) {
+                setIsPlaying(true);
+              } else if (event.data === YT.PlayerState.PAUSED) {
+                setIsPlaying(false);
+              } else if (event.data === YT.PlayerState.ENDED) {
+                event.target.seekTo(0);
+                setIsPlaying(false);
+              }
+            },
+          },
+        });
+
+        playerRef.current = player;
+      })
+      .catch(() => {
+        if (!isCancelled) {
+          setIsReady(false);
+        }
+      });
+
+    return () => {
+      isCancelled = true;
+      if (playerRef.current) {
+        playerRef.current.destroy();
+        playerRef.current = null;
+      }
+    };
+  }, [videoId, width, height]);
+
+  const togglePlayback = () => {
+    const player = playerRef.current;
+    if (!player || !isReady) {
+      return;
+    }
+    if (isPlaying) {
+      player.pauseVideo();
+    } else {
+      player.playVideo();
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center gap-3 w-full h-full">
+      <div className="relative w-full h-full">
+        <div
+          ref={containerRef}
+          aria-label={title}
+          role="region"
+          className="absolute inset-0 bg-black"
+          style={{ borderRadius }}
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ borderRadius, border: "1px solid rgba(255,255,255,0.15)" }}
+        />
+      </div>
+      <button
+        type="button"
+        onClick={togglePlayback}
+        disabled={!isReady}
+        className="text-[#3f3737] text-sm font-semibold uppercase tracking-[0.2em] border border-[#D7DACD] rounded-full px-5 py-2 hover:bg-black hover:text-white transition disabled:opacity-40 disabled:cursor-not-allowed"
+      >
+        {isPlaying ? "Pause" : "Play"}
+      </button>
+    </div>
+  );
+}
+
+const renderVideoBlock = (block, index, isFirst) => {
+  const spacing = block.spacing ?? (isFirst ? "" : "mt-12");
+  const layoutClass = block.layoutClass ?? "grid grid-cols-1 md:grid-cols-2 gap-6";
+
+  return (
+    <div key={index} className={`${spacing}`.trim()}>
+      {renderHeading(block.heading, block.headingVariant ?? "accent")}
+      <div className={`${layoutClass}`}>
+        {(block.videos ?? []).map((video) => (
+          <div
+            key={video.videoId}
+            className="flex flex-col items-center"
+          >
+            <div
+              className="relative overflow-hidden rounded-[40px]"
+              style={{ width: video.width ?? 375, height: video.height ?? 787 }}
+            >
+              {video.embedUrl ? (
+                <iframe
+                  src={video.embedUrl}
+                  title={video.title}
+                  frameBorder="0"
+                  allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                  style={{ border: "none" }}
+                />
+              ) : (
+                <YouTubeShort
+                  videoId={video.videoId}
+                  width={video.width ?? 375}
+                  height={video.height ?? 787}
+                  borderRadius={video.borderRadius ?? 40}
+                  title={video.title}
+                  host={video.host}
+                />
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const renderPlaceholderBlock = (block, index, isFirst) => {
   const spacing = block.spacing ?? (isFirst ? "" : "mt-12");
   const heightClass = block.heightClass ?? "h-[400px] md:h-[600px]";
@@ -162,6 +364,8 @@ const renderBlock = (block, index) => {
       return renderImageBlock(block, index, isFirst);
     case "imageGrid":
       return renderImageGridBlock(block, index, isFirst);
+    case "video":
+      return renderVideoBlock(block, index, isFirst);
     case "placeholder":
       return renderPlaceholderBlock(block, index, isFirst);
     default:

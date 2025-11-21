@@ -52,4 +52,11 @@
 - Trimmed remaining placeholder blocks from Foundit’s design section so it now ends before Results & Impact.
 - Renamed Foundit’s “Results & Impact” section (and TOC entry) to “Final Solution”.
 - Replaced Final Solution intro copy with launch summary and added “Key Improvements” bullet list, plus a deliverables subsection.
+- Added a popup-style App Store icon link next to the FitCheck project title that opens the Canadian FitCheck listing in a new tab.
+- Swapped the inline SVG for the FitCheck App Store link with a `FiExternalLink` popup-style icon, matched the button sizing/animation/hover treatment to the Let’s Chat social buttons, extracted the animated button into a dedicated client component (`AppStoreLink`) to keep the project detail page server-rendered, ensured the icon stays black for readability over the white circle, and now use `FitCheck-viewCover.png` for the hero banner to match the cover art.
+- Added the same icon button beside the Foundit project title that opens the shared Figma file in a new tab so reviewers can jump straight into the design reference.
+- Added two muted YouTube shorts with custom play/pause controls directly under the Foundit final solution paragraph so reviewers can watch the quick demo footage inside the case study and ensured they sit inside a rounded container that crops the footage.
+- Swapped the Foundit video embeds to a 380x822 layout, loop the shorts, and keep the `youtube-nocookie` host for the iframe while the API still loads via `https://www.youtube.com/iframe_api` so the clips show the requested URL and only expose the custom play/pause control.
+- Updated the first Foundit video to use the Cloudinary embed (`https://player.cloudinary.com/embed/?cloud_name=du4aptrjx&public_id=student_rt7n5v&profile=Student-flow`) inside the same rounded 380×822 container so it matches the new asset and still looks cropped/optionally looped through the embed.
+- Updated the Foundit hero to show `/images/foundit-cover.jpg` on desktop while still using `/images/foundit-mobile.png` for smaller screens to match the new cover art.
 
