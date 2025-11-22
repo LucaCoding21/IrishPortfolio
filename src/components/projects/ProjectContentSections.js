@@ -295,6 +295,115 @@ function YouTubeShort({
   );
 }
 
+function CloudinaryVideo({ src, title, playOnView = false }) {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (!playOnView || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    const element = videoRef.current;
+    if (!element) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            element.play().catch(() => {});
+          } else {
+            element.pause();
+            element.currentTime = 0;
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
+
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [playOnView]);
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      title={title}
+      autoPlay={!playOnView}
+      muted
+      loop
+      playsInline
+      controls={false}
+      className="absolute inset-0 w-full h-full object-cover"
+    />
+  );
+}
+
+function CloudinaryIframe({ embedUrl, title, playOnView = false, iframeStyle = {}, ...iframeProps }) {
+  const containerRef = useRef(null);
+  const [iframeSrc, setIframeSrc] = useState(embedUrl);
+  const hasAutoplayed = useRef(false);
+
+  useEffect(() => {
+    if (!playOnView || typeof IntersectionObserver === "undefined") {
+      // If playOnView is false, use the original URL without autoplay
+      setIframeSrc(embedUrl);
+      return;
+    }
+
+    const element = containerRef.current;
+    if (!element || hasAutoplayed.current) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAutoplayed.current) {
+            // Add autoplay parameter to URL when video comes into view
+            const separator = embedUrl.includes("?") ? "&" : "?";
+            const newSrc = `${embedUrl}${separator}autoplay=true`;
+            setIframeSrc(newSrc);
+            hasAutoplayed.current = true;
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [playOnView, embedUrl]);
+
+  return (
+    <div ref={containerRef} className="absolute inset-0 w-full h-full">
+      <iframe
+        src={iframeSrc}
+        title={title}
+        frameBorder="0"
+        allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+        allowFullScreen
+        className="absolute inset-0 w-full h-full"
+        style={{
+          border: "none",
+          backgroundColor: "transparent",
+          ...iframeStyle,
+        }}
+        {...iframeProps}
+      />
+    </div>
+  );
+}
+
 const renderVideoBlock = (block, index, isFirst) => {
   const spacing = block.spacing ?? (isFirst ? "" : "mt-12");
   const layoutClass = block.layoutClass ?? "grid grid-cols-1 md:grid-cols-2 gap-6";
@@ -303,24 +412,40 @@ const renderVideoBlock = (block, index, isFirst) => {
     <div key={index} className={`${spacing}`.trim()}>
       {renderHeading(block.heading, block.headingVariant ?? "accent")}
       <div className={`${layoutClass}`}>
-        {(block.videos ?? []).map((video) => (
-          <div
-            key={video.videoId}
-            className="flex flex-col items-center"
-          >
+        {(block.videos ?? []).map((video, videoIndex) => (
+          <div key={video.videoId || videoIndex} className={`flex flex-col ${video.containerClass?.includes("w-full") ? "w-full" : "items-center"} gap-3 ${video.containerClass ?? ""}`}>
+            {video.captionTitle && (
+              <div className="my-10 text-center text-[16px] md:text-[18px] font-heading font-semibold uppercase text-[#3A7B36] tracking-normal">
+                {video.captionTitle}
+              </div>
+            )}
             <div
-              className="relative overflow-hidden rounded-[40px]"
-              style={{ width: video.width ?? 375, height: video.height ?? 787 }}
+              className={`relative overflow-hidden ${video.borderRadius === 0 ? "" : "rounded-[40px]"}`}
+              style={{
+                width: video.width ?? 375,
+                ...(video.maxWidth ? { maxWidth: typeof video.maxWidth === "number" ? `${video.maxWidth}px` : video.maxWidth } : {}),
+                ...(video.aspectRatio
+                  ? { aspectRatio: video.aspectRatio }
+                  : { height: video.height ?? 787 }),
+                ...(video.borderRadius !== undefined && video.borderRadius !== 0
+                  ? { borderRadius: typeof video.borderRadius === "number" ? `${video.borderRadius}px` : video.borderRadius }
+                  : video.borderRadius === 0
+                  ? { borderRadius: 0 }
+                  : {}),
+              }}
             >
-              {video.embedUrl ? (
-                <iframe
-                  src={video.embedUrl}
+              {video.cloudinarySrc ? (
+                <CloudinaryVideo
+                  src={video.cloudinarySrc}
                   title={video.title}
-                  frameBorder="0"
-                  allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-                  allowFullScreen
-                  className="absolute inset-0 w-full h-full"
-                  style={{ border: "none" }}
+                  playOnView={video.playOnView}
+                />
+              ) : video.embedUrl ? (
+                <CloudinaryIframe
+                  embedUrl={video.embedUrl}
+                  title={video.title}
+                  playOnView={video.playOnView ?? false}
+                  iframeStyle={video.iframeStyle}
                 />
               ) : (
                 <YouTubeShort
