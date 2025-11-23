@@ -132,7 +132,7 @@ export default function AboutPage() {
             <div className="space-y-6 md:space-y-8 text-center lg:text-left">
               <div>
                 <h1 className="text-[36px] md:text-[48px] font-semibold text-black">Claire</h1>
-                <p className="text-[21px] md:text-[20px] text-[#6F7462] mt-2">
+                <p className="text-[21px] md:text-[25px] text-[#6F7462] mt-2">
                   UI/UX Designer • Product Designer • Web Developer
                 </p>
               </div>
@@ -141,9 +141,11 @@ export default function AboutPage() {
                 className="bg-white border border-[#D7DACD] rounded-2xl md:rounded-3xl px-6 md:px-8 py-5 md:py-6 shadow-sm max-w-[720px] mx-auto lg:mx-0"
                 style={{ boxShadow: "10px 10px 0 rgba(58, 123, 54, 0.25)" }}
               >
-                <p className="text-[21px] md:text-[22px] leading-relaxed text-[#3c3d32]">
-                  Hi, my name is Irish! I work with design and a little bit of development
-                  in Vancouver, BC. Let me know if anything catches your eye!
+                <p className="text-[21px] md:text-[25px] leading-relaxed text-[#3c3d32] mb-4">
+                 Hi, I'm Claire! I turn “what if” ideas into fun, clean designs fueled by curiosity and a little bit of development.
+                </p>
+                <p className="text-[21px] md:text-[25px] leading-relaxed text-[#3c3d32]">
+                  I am Based in Vancouver, BC and feel free to reach out if anything catches your eye!
                 </p>
               </div>
 
@@ -214,10 +216,10 @@ export default function AboutPage() {
               <h2 className="text-[38px] font-semibold text-black mb-6">
                 Behind the Screen
               </h2>
-              <p className="text-[22px] leading-relaxed max-w-[560px] mx-auto lg:mx-0 text-[#3c3d32]">
-                When I’m not working, I like exploring new hobbies and revisiting old ones. One hobby that I am revisiting is baking. My only favourite part about baking is being able to share the goodies I make with my friends and family. Their satisfaction encourages me to try new recipes.
+              <p className="text-[22px] md:text-[25px] leading-relaxed max-w-[560px] mx-auto lg:mx-0 text-[#3c3d32]">
+                When I'm not working, I like exploring new hobbies and revisiting old ones. One hobby that I am revisiting is baking. My only favourite part about baking is being able to share the goodies I make with my friends and family. Their satisfaction encourages me to try new recipes.
               </p>
-              <p className="text-[22px] leading-relaxed max-w-[560px] mx-auto lg:mx-0 text-[#3c3d32] mt-4">
+              <p className="text-[22px] md:text-[25px] leading-relaxed max-w-[560px] mx-auto lg:mx-0 text-[#3c3d32] mt-6">
                 Just like with work, I always want to ensure that what I create brings the most satisfaction.
               </p>
             </div>
@@ -274,7 +276,7 @@ export default function AboutPage() {
               <h2 className="text-[28px] md:text-[38px] font-semibold text-black mb-4 md:mb-6">
                 Let&apos;s Chat!
               </h2>
-              <p className="text-[21px] md:text-[20px] leading-relaxed text-[#3c3d32] max-w-[520px] mx-auto lg:mx-0 mb-6 md:mb-8 px-4">
+              <p className="text-[21px] md:text-[25px] leading-relaxed text-[#3c3d32] max-w-[520px] mx-auto lg:mx-0 mb-6 md:mb-8 px-4">
                 Thanks for stopping by. Feel free to reach out if you want to collaborate,
                 swap ideas, or even just say hi!
               </p>

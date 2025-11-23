@@ -35,8 +35,8 @@ export default function ContactPage() {
           <div className="grid gap-10 md:gap-16 items-center text-center lg:text-left lg:grid-cols-[1fr,1fr]">
             <div>
               <h1 className="text-[36px] md:text-[48px] font-semibold text-black mb-4 md:mb-6">Contact me</h1>
-              <p className="text-[21px] md:text-[20px] leading-relaxed text-[#6F7462] max-w-[540px] mx-auto lg:mx-0 mb-6 md:mb-8 px-4 md:px-0">
-                Lorem ipsum dolor sit amet consectetur. Libero nibh amet eu rhoncus cursus.
+              <p className="text-[21px] md:text-[25px] leading-relaxed text-[#6F7462] max-w-[540px] mx-auto lg:mx-0 mb-6 md:mb-8 px-4 md:px-0">
+                I would love to explore and work on new ideas with you, feel free to reach out to me!
               </p>
               <div className="flex items-center justify-center lg:justify-start gap-3 md:gap-4">
                 {SOCIAL_LINKS.map(({ label, href, path, fill, stroke }) => (

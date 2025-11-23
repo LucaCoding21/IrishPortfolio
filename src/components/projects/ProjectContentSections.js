@@ -21,7 +21,8 @@ const renderHeading = (text, variant = "default", className = "") => {
 
 const renderImage = (image, key, wrapperClass = "") => {
   if (!image?.src) return null;
-  const className = `relative w-full h-auto rounded-2xl overflow-hidden ${image.className ?? ""}`.trim();
+  const borderRadius = image.className?.includes("rounded-none") ? "" : "rounded-2xl";
+  const className = `relative w-full h-auto ${borderRadius} overflow-hidden ${image.className ?? ""}`.trim();
   const useLightbox = image.lightbox ?? true;
 
   if (useLightbox) {
@@ -480,6 +481,35 @@ const renderPlaceholderBlock = (block, index, isFirst) => {
     );
   };
 
+const renderMetricBoxesBlock = (block, index, isFirst) => {
+  const spacing = block.spacing ?? (isFirst ? "" : "mt-12");
+  const columns = block.columns === 1 ? "grid-cols-1" : block.columns === 3 ? "grid-cols-1 md:grid-cols-3" : "grid-cols-1 md:grid-cols-2";
+  const gap = block.gapClass ?? "gap-4 md:gap-6";
+
+  return (
+    <div key={index} className={`${spacing}`.trim()}>
+      <div className={`grid ${columns} ${gap}`}>
+        {(block.metrics ?? []).map((metric, metricIndex) => (
+          <div
+            key={metricIndex}
+            className="bg-[#F5F7F0] border border-[#3A7B36] rounded-2xl p-6 md:p-8"
+          >
+            <div className="text-[#3A7B36] text-[36px] md:text-[48px] font-semibold mb-3">
+              {metric.percentage}
+            </div>
+            <div className="text-[#3A7B36] text-[21px] md:text-[25px] font-semibold mb-3">
+              {metric.title}
+            </div>
+            <div className="text-[#3f3737] text-[18px] md:text-[20px] font-medium leading-relaxed">
+              {metric.description}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const renderBlock = (block, index) => {
   const isFirst = index === 0;
   switch (block.type) {
@@ -493,6 +523,8 @@ const renderBlock = (block, index) => {
       return renderVideoBlock(block, index, isFirst);
     case "placeholder":
       return renderPlaceholderBlock(block, index, isFirst);
+    case "metricBoxes":
+      return renderMetricBoxesBlock(block, index, isFirst);
     default:
       return null;
   }
