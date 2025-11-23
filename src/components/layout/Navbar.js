@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { HiHome, HiBriefcase, HiUser, HiMail } from "react-icons/hi";
+import { HiHome, HiBriefcase, HiUser, HiMail, HiDocumentText } from "react-icons/hi";
 
 const MenuLogo = ({ className, style }) => (
   <svg
@@ -84,15 +84,27 @@ export default function Navbar() {
       return "/about";
     }
 
-    return "/contact";
+    if (label === "Contact") {
+      return "/contact";
+    }
+
+    if (label === "Resume") {
+      return "#";
+    }
+
+    return "#";
   };
 
   const menuItems = [
     { label: "Home", icon: HiHome },
     { label: "Works", icon: HiBriefcase },
     { label: "About", icon: HiUser },
-    { label: "Contact", icon: HiMail }
+    { label: "Contact", icon: HiMail },
+    { label: "Resume", icon: HiDocumentText }
   ];
+  const mainMenuItems = menuItems.filter((item) => item.label !== "Resume");
+  const resumeMenuItem = menuItems.find((item) => item.label === "Resume");
+  const ResumeIcon = resumeMenuItem?.icon;
 
   const isHeroScrolled = pathname === "/" && isScrolled;
   const isPanelSolid = !isOverHero;
@@ -244,7 +256,13 @@ export default function Navbar() {
             style={{ boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.08), 0 4px 20px rgba(0, 0, 0, 0.12)' }}
           >
             {/* Logo with spin effect */}
-            <Link href="/">
+            <a 
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.href = "/";
+              }}
+            >
               <motion.div
                 initial={{ scale: 0, rotate: -180 }}
                 animate={{ scale: 1, rotate: 0 }}
@@ -261,7 +279,7 @@ export default function Navbar() {
                     ease: [0.25, 0.1, 0.25, 1]
                   }
                 }}
-                className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center flex-shrink-0"
+                className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center flex-shrink-0 cursor-pointer"
               >
                 <Image 
                   src="/Logo.png"
@@ -271,20 +289,27 @@ export default function Navbar() {
                   className="w-full h-full object-contain"
                 />
               </motion.div>
-            </Link>
+            </a>
             
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-4 md:gap-8 text-[16px] md:text-[20px] font-sans font-semibold text-black">
-              {["Works", "About", "Contact"].map((item, i) => {
+              {["Works", "About", "Contact", "Resume"].map((item, i) => {
                 const href = resolveHref(item);
+                const isResume = item === "Resume";
                 return (
                   <motion.a
                     key={item}
                     href={href}
+                    onClick={isResume ? (e) => e.preventDefault() : undefined}
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 + i * 0.05, duration: 0.3 }}
-                    className="hover:opacity-70 transition"
+                    whileHover={isResume ? { scale: 1.05 } : {}}
+                    className={
+                      isResume
+                        ? "bg-white border-2 border-[#3A7B36] text-[#3A7B36] px-5 py-2.5 rounded-full hover:bg-[#3A513B] hover:text-white hover:border-[#556B56] transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg font-semibold"
+                        : "hover:opacity-70 transition"
+                    }
                   >
                     {item}
                   </motion.a>
@@ -380,9 +405,13 @@ export default function Navbar() {
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.1, duration: 0.4, ease: "easeOut" }}
               >
-                <Link 
-                  href="/" 
-                  className="font-semibold tracking-tight text-[25px] text-black"
+                <a 
+                  href="/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.location.href = "/";
+                  }}
+                  className="font-semibold tracking-tight text-[25px] text-black cursor-pointer"
                 >
                   <motion.div 
                     whileHover={{ rotate: 90 }}
@@ -399,20 +428,28 @@ export default function Navbar() {
                       className="h-8 md:h-12 w-auto object-contain"
                     />
                   </motion.div>
-                </Link>
+                </a>
               </motion.div>
               
               {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center gap-4 md:gap-8 text-[16px] md:text-[20px] font-sans font-semibold text-black">
-                {["Works", "About", "Contact"].map((item, i) => {
+                {["Works", "About", "Contact", "Resume"].map((item, i) => {
                   const href = resolveHref(item);
+                  const isResume = item === "Resume";
                   return (
                     <motion.a
                       key={item}
                       href={href}
+                      onClick={isResume ? (e) => e.preventDefault() : undefined}
                       initial={{ y: -10, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      whileHover={{ 
+                      whileHover={isResume ? { 
+                        scale: 1.08,
+                        backgroundColor: '#3A513B',
+                        color: '#ffffff',
+                        borderColor: '#556B56',
+                        boxShadow: '0 8px 20px rgba(58, 123, 54, 0.4)'
+                      } : { 
                         scale: 1.05,
                         color: '#475D45'
                       }}
@@ -425,21 +462,39 @@ export default function Navbar() {
                           damping: 30
                         },
                         color: {
-                          duration: 0.15,
+                          duration: 0.2,
+                          ease: [0.25, 0.1, 0.25, 1]
+                        },
+                        backgroundColor: {
+                          duration: 0.2,
+                          ease: [0.25, 0.1, 0.25, 1]
+                        },
+                        borderColor: {
+                          duration: 0.2,
+                          ease: [0.25, 0.1, 0.25, 1]
+                        },
+                        boxShadow: {
+                          duration: 0.2,
                           ease: [0.25, 0.1, 0.25, 1]
                         }
                       }}
-                      className="relative cursor-pointer"
+                      className={
+                        isResume
+                          ? "bg-white border-2 border-[#3A7B36] text-[#3A7B36] px-5 py-2.5 rounded-full hover:bg-[#3A513B] hover:text-white hover:border-[#556B56] transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg font-semibold relative"
+                          : "relative cursor-pointer"
+                      }
                     >
                       {item}
-                      <motion.span
-                        className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#475D45]"
-                        whileHover={{ width: '100%' }}
-                        transition={{
-                          duration: 0.15,
-                          ease: [0.25, 0.1, 0.25, 1]
-                        }}
-                      />
+                      {!isResume && (
+                        <motion.span
+                          className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#475D45]"
+                          whileHover={{ width: '100%' }}
+                          transition={{
+                            duration: 0.15,
+                            ease: [0.25, 0.1, 0.25, 1]
+                          }}
+                        />
+                      )}
                     </motion.a>
                   );
                 })}
@@ -488,26 +543,37 @@ export default function Navbar() {
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.1, duration: 0.4, ease: "easeOut" }}
                 >
-                  <Link 
-                    href="/" 
-                    className="font-semibold font-sans tracking-tight text-[22px] text-fg"
+                  <a 
+                    href="/"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.location.href = "/";
+                    }}
+                    className="font-semibold font-sans tracking-tight text-[22px] text-fg cursor-pointer"
                   >
                     iclaire
-                  </Link>
+                  </a>
                 </motion.div>
                 
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex items-center gap-4 md:gap-8 text-[16px] md:text-[20px] font-sans font-semibold text-fg">
-                  {["Works", "About", "Contact"].map((item, i) => {
+                  {["Works", "About", "Contact", "Resume"].map((item, i) => {
                     const href = resolveHref(item);
+                    const isResume = item === "Resume";
                     return (
                       <motion.a
                         key={item}
                         href={href}
+                        onClick={isResume ? (e) => e.preventDefault() : undefined}
                         initial={{ y: -10, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.15 + i * 0.05, duration: 0.4 }}
-                        className="hover:opacity-70 transition"
+                        whileHover={isResume ? { scale: 1.05 } : {}}
+                        className={
+                          isResume
+                            ? "bg-white border-2 border-[#3A7B36] text-[#3A7B36] px-5 py-2.5 rounded-full hover:bg-[#3A513B] hover:text-white hover:border-[#556B56] transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg font-semibold"
+                            : "hover:opacity-70 transition"
+                        }
                       >
                         {item}
                       </motion.a>
@@ -553,97 +619,98 @@ export default function Navbar() {
     </AnimatePresence>
 
       {/* Mobile Menu Panel */}
-      <motion.div
-        initial={{
-          opacity: 0,
-          scale: 0.9,
-          borderRadius: "999px",
-          width: closedPanelDiameter,
-          height: closedPanelDiameter
-        }}
-        animate={{ 
-          opacity: 1, 
-          scale: 1,
-          backgroundColor: panelBackgroundColor,
-          backdropFilter: panelBackdropFilter,
-          borderColor: panelBorderColor,
-          height: isMobileMenuOpen ? "auto" : closedPanelDiameter,
-          borderRadius: panelBorderRadius
-        }}
-        exit={{ opacity: 0, scale: 0.9 }}
-        transition={{
-          duration: 0.4,
-          ease: [0.25, 0.1, 0.25, 1]
-        }}
-        className="fixed top-4 right-4 z-50 md:hidden shadow-2xl overflow-hidden"
-        style={{
-          boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)',
-          width: closedPanelDiameter,
-          minWidth: closedPanelDiameter
-        }}
-      >
-        {/* Clover Icon (Always Visible) */}
-        <motion.button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="w-full flex items-center justify-center p-4 cursor-pointer"
-          aria-label="Toggle menu"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          style={{ 
-            color: menuButtonColor,
-            backgroundColor: panelBackgroundColor
+      <div className="fixed top-4 right-4 z-50 md:hidden flex flex-col items-end gap-3">
+        <motion.div
+          initial={{
+            opacity: 0,
+            scale: 0.9,
+            borderRadius: "999px",
+            width: closedPanelDiameter,
+            height: closedPanelDiameter
+          }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+            backgroundColor: panelBackgroundColor,
+            backdropFilter: panelBackdropFilter,
+            borderColor: panelBorderColor,
+            height: isMobileMenuOpen ? "auto" : closedPanelDiameter,
+            borderRadius: panelBorderRadius
+          }}
+          exit={{ opacity: 0, scale: 0.9 }}
+          transition={{
+            duration: 0.4,
+            ease: [0.25, 0.1, 0.25, 1]
+          }}
+          className="shadow-2xl overflow-hidden"
+          style={{
+            boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)',
+            width: closedPanelDiameter,
+            minWidth: closedPanelDiameter
           }}
         >
-            <motion.div
-              className="w-10 h-10 group/icon"
-              whileHover={{ rotate: 90 }}
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 30
+          {/* Clover Icon (Always Visible) */}
+          <motion.button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="w-full flex items-center justify-center p-4 cursor-pointer"
+            aria-label="Toggle menu"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            style={{
+              color: menuButtonColor,
+              backgroundColor: panelBackgroundColor
             }}
           >
             <motion.div
-              key="clover-icon"
-              initial={{ opacity: 0, scale: 0.97 }}
-              animate={{ 
-                opacity: 1, 
-                scale: 1,
-                rotate: isMobileMenuOpen ? 45 : 0
-              }}
-              exit={{ opacity: 0, scale: 0.97 }}
-              transition={{ 
+              className="w-10 h-10 group/icon"
+              whileHover={{ rotate: 90 }}
+              transition={{
                 type: "spring",
-                stiffness: 350,
-                damping: 45,
-                mass: 1,
-                opacity: { 
-                  duration: 0.25,
-                  ease: [0.4, 0, 0.2, 1]
-                }
+                stiffness: 400,
+                damping: 30
               }}
-              className="relative"
             >
-              <MenuLogo
-                className="w-full h-full object-contain transition-all duration-150"
-                style={{ color: 'inherit' }}
-              />
+              <motion.div
+                key="clover-icon"
+                initial={{ opacity: 0, scale: 0.97 }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  rotate: isMobileMenuOpen ? 45 : 0
+                }}
+                exit={{ opacity: 0, scale: 0.97 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 350,
+                  damping: 45,
+                  mass: 1,
+                  opacity: {
+                    duration: 0.25,
+                    ease: [0.4, 0, 0.2, 1]
+                  }
+                }}
+                className="relative"
+              >
+                <MenuLogo
+                  className="w-full h-full object-contain transition-all duration-150"
+                  style={{ color: 'inherit' }}
+                />
+              </motion.div>
             </motion.div>
-          </motion.div>
-        </motion.button>
+          </motion.button>
 
-        {/* Expandable Menu Content */}
-        <motion.div
-          initial={false}
-          animate={isMobileMenuOpen ? "open" : "closed"}
-          variants={menuContentVariants}
-          className="overflow-hidden"
-          style={{ pointerEvents: isMobileMenuOpen ? "auto" : "none" }}
-        >
+          {/* Expandable Menu Content */}
+          <motion.div
+            initial={false}
+            animate={isMobileMenuOpen ? "open" : "closed"}
+            variants={menuContentVariants}
+            className="overflow-hidden"
+            style={{ pointerEvents: isMobileMenuOpen ? "auto" : "none" }}
+          >
             {/* Menu Content */}
             <div className="px-3 pb-5">
               <nav className="flex flex-col gap-7">
-                {menuItems.map((item, i) => {
+                {mainMenuItems.map((item, i) => {
                   const href = resolveHref(item.label);
                   const isActive = activeMenuItem === item.label;
                   const solidIconColor = isActive ? "#2c7b40" : "#475D45";
@@ -663,7 +730,7 @@ export default function Navbar() {
                           ? { opacity: 1, y: 0 }
                           : { opacity: 0, y: -8 }
                       }
-                      whileHover={{ 
+                      whileHover={{
                         scale: 1.05,
                         y: -2,
                         color: iconHoverColor
@@ -678,7 +745,7 @@ export default function Navbar() {
                           damping: 30
                         },
                         color: {
-                          duration: 0.15,
+                          duration: 0.2,
                           ease: [0.25, 0.1, 0.25, 1]
                         }
                       }}
@@ -697,7 +764,7 @@ export default function Navbar() {
                           }
                         }}
                       >
-                        <item.icon 
+                        <item.icon
                           className="w-5 h-5 transition-colors duration-150 ease-in-out"
                           color="currentColor"
                         />
@@ -714,8 +781,48 @@ export default function Navbar() {
                 })}
               </nav>
             </div>
+          </motion.div>
         </motion.div>
-      </motion.div>
+
+        <AnimatePresence>
+          {isMobileMenuOpen && resumeMenuItem && ResumeIcon && (
+            <motion.a
+              key="resume-circle"
+              href={resolveHref(resumeMenuItem.label)}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick();
+              }}
+              className="flex items-center justify-center rounded-full"
+              aria-label="Resume"
+              initial={{ opacity: 0, y: -16, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -16, scale: 0.8 }}
+              transition={{
+                type: "spring",
+                stiffness: 400,
+                damping: 30
+              }}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 0 18px rgba(139, 182, 112, 0.65), 0 0 36px rgba(139, 182, 112, 0.4)"
+              }}
+              style={{
+                backgroundColor: "#8BB670",
+                color: "#ffffff",
+                width: closedPanelDiameter,
+                minWidth: closedPanelDiameter,
+                height: closedPanelDiameter,
+                border: "1px solid rgba(255,255,255,0.6)",
+                boxShadow: "0 0 12px rgba(139, 182, 112, 0.45), 0 0 24px rgba(139, 182, 112, 0.3)"
+              }}
+            >
+              <ResumeIcon className="w-6 h-6" />
+              <span className="sr-only">{resumeMenuItem.label}</span>
+            </motion.a>
+          )}
+        </AnimatePresence>
+      </div>
 
       {/* Backdrop (only when menu is open) */}
       <AnimatePresence>

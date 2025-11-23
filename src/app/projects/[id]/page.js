@@ -89,6 +89,11 @@ export default async function ProjectDetailPage({ params }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start mb-6 md:mb-8">
             {/* Left: Title and Details */}
             <div>
+              {id === "foundit" && (
+                <p className="text-[16px] md:text-[18px] text-[#4A7C59] font-heading font-semibold mb-2 md:mb-3 uppercase tracking-wide">
+                  stormhacks 2025
+                </p>
+              )}
               <div className="flex flex-wrap items-center gap-3 mb-3 md:mb-4">
                 <h1 className="font-heading text-[32px] md:text-[50px] font-semibold text-black leading-tight">
                   {heroTitle}

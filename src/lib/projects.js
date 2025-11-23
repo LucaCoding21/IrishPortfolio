@@ -351,6 +351,7 @@ const EMDEP_CASE_STUDY = {
           paragraphs: [
             "Em Dep Aesthetics relied on social media and a booking link, but this setup didn't reflect its brand identity or provide enough information about the business.",
           ],
+          paragraphMobileMargin: true,
           image: {
             src: "/images/emdep-problem.png",
             alt: "Problem illustration",
@@ -410,6 +411,7 @@ const EMDEP_CASE_STUDY = {
           alt: "Goals and Tools",
           width: 795,
           height: 248,
+          className: "rounded-none",
           spacing: "mt-12",
         },
       ],
@@ -440,6 +442,7 @@ const EMDEP_CASE_STUDY = {
           paragraphs: [
             "With a minimalist design in mind, I explored clean layouts from different websites and put them together like puzzle pieces to create the right vision.",
           ],
+          paragraphMobileMargin: true,
         },
         {
           type: "image",

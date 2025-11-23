@@ -77,8 +77,9 @@ const renderTextBlock = (block, index, isFirst) => {
             </p>
           );
         }
+        const shouldAddMargin = idx !== arr.length - 1 || block.paragraphMobileMargin;
         return (
-          <p key={idx} className={`${PARAGRAPH_CLASS}${idx !== arr.length - 1 ? " mb-6 md:mb-8" : ""}`}>
+          <p key={idx} className={`${PARAGRAPH_CLASS}${shouldAddMargin ? " mb-6 md:mb-8" : ""}`}>
             {paragraph}
           </p>
         );

@@ -145,7 +145,7 @@ export default function AboutPage() {
                  Hi, I'm Claire! I turn “what if” ideas into fun, clean designs fueled by curiosity and a little bit of development.
                 </p>
                 <p className="text-[21px] md:text-[25px] leading-relaxed text-[#3c3d32]">
-                  I am Based in Vancouver, BC and feel free to reach out if anything catches your eye!
+                  I am based in Vancouver, BC and feel free to reach out if anything catches your eye!
                 </p>
               </div>
 
@@ -277,8 +277,7 @@ export default function AboutPage() {
                 Let&apos;s Chat!
               </h2>
               <p className="text-[21px] md:text-[25px] leading-relaxed text-[#3c3d32] max-w-[520px] mx-auto lg:mx-0 mb-6 md:mb-8 px-4">
-                Thanks for stopping by. Feel free to reach out if you want to collaborate,
-                swap ideas, or even just say hi!
+                Thanks for stopping by. Want to say hi? Contact me below!
               </p>
               <div className="flex items-center justify-center gap-3 md:gap-4">
                 <a
