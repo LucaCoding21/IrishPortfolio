@@ -1,6 +1,7 @@
 "use client";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 
 export default function LetsChat() {
   const ref = useRef(null);
@@ -27,9 +28,9 @@ export default function LetsChat() {
       {/* Main content */}
       <div className="flex-1 flex items-center justify-center py-12 md:py-0">
         <div className="container max-w-[1500px] px-4 md:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-[10rem] items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-[5rem] items-center">
             {/* Left side - Content with staggered animations */}
-            <div className="text-center md:text-left md:ml-2 lg:ml-10">
+            <div className="text-center md:text-left md:ml-8 lg:ml-20">
               <motion.h2
                 className="text-3xl md:text-5xl font-semibold mb-4 md:mb-6"
                 initial={{ opacity: 0, y: 30 }}
@@ -92,35 +93,22 @@ export default function LetsChat() {
               </motion.div>
             </div>
 
-            {/* Right side - Clover shape image with animation */}
+            {/* Right side - Contact GIF with animation */}
             <motion.div
               className="relative aspect-square max-w-[480px] md:max-w-[680px] w-full mx-auto lg:ml-auto"
               initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
               animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.9, rotate: -5 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
             >
-              <div className="w-full h-full rounded-full bg-white">
-                <svg
-                  viewBox="0 0 500 550"
-                  className="w-full h-full"
-                  preserveAspectRatio="xMidYMid meet"
-                >
-                  <defs>
-                    <clipPath id="cloverMask">
-                      <circle cx="145" cy="145" r="145" />
-                      <circle cx="350" cy="145" r="145" />
-                      <circle cx="150" cy="330" r="145" />
-                      <circle cx="350" cy="330" r="145" />
-                    </clipPath>
-                  </defs>
-                  <image
-                    href="/images/hero-after.png"
-                    width="500"
-                    height="500"
-                    clipPath="url(#cloverMask)"
-                    preserveAspectRatio="xMidYMid slice"
-                  />
-                </svg>
+              <div className="w-full h-full rounded-full overflow-hidden">
+                <Image
+                  src="/images/contactgif.gif"
+                  alt="Let's chat"
+                  width={680}
+                  height={680}
+                  className="w-full h-full object-cover"
+                  unoptimized
+                />
               </div>
             </motion.div>
           </div>
