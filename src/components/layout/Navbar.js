@@ -6,6 +6,8 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiHome, HiBriefcase, HiUser, HiMail, HiDocumentText } from "react-icons/hi";
 
+const MotionLink = motion(Link);
+
 const MenuLogo = ({ className, style }) => (
   <svg
     width="49"
@@ -93,6 +95,11 @@ export default function Navbar() {
     }
 
     return "#";
+  };
+
+  // Check if href is an internal Next.js route (should use Link)
+  const isInternalRoute = (href) => {
+    return href && href.startsWith("/") && !href.startsWith("//") && !href.startsWith("http");
   };
 
   // Handle Works click to always scroll to projects section on home page
@@ -332,27 +339,30 @@ export default function Navbar() {
                 const href = resolveHref(item);
                 const isResume = item === "Resume";
                 const isWorks = item === "Works";
-                return (
-                  <motion.a
-                    key={item}
-                    href={href}
-                    onClick={(e) => {
-                      if (isResume) {
-                        e.preventDefault();
-                      } else if (isWorks) {
-                        handleWorksClick(e, href);
-                      }
-                    }}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 + i * 0.05, duration: 0.3 }}
-                    whileHover={isResume ? { scale: 1.05 } : {}}
-                    className={
-                      isResume
-                        ? "bg-white border-2 border-[#3A7B36] text-[#3A7B36] px-5 py-2.5 rounded-full hover:bg-[#3A513B] hover:text-white hover:border-[#556B56] transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg font-semibold"
-                        : "hover:opacity-70 transition"
+                const isInternal = isInternalRoute(href);
+                const { key, ...motionProps } = {
+                  key: item,
+                  onClick: (e) => {
+                    if (isResume) {
+                      e.preventDefault();
+                    } else if (isWorks) {
+                      handleWorksClick(e, href);
                     }
-                  >
+                  },
+                  initial: { opacity: 0, y: -10 },
+                  animate: { opacity: 1, y: 0 },
+                  transition: { delay: 0.1 + i * 0.05, duration: 0.3 },
+                  whileHover: isResume ? { scale: 1.05 } : {},
+                  className: isResume
+                    ? "bg-white border-2 border-[#3A7B36] text-[#3A7B36] px-5 py-2.5 rounded-full hover:bg-[#3A513B] hover:text-white hover:border-[#556B56] transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg font-semibold"
+                    : "hover:opacity-70 transition"
+                };
+                return isInternal ? (
+                  <MotionLink key={key} {...motionProps} href={href}>
+                    {item}
+                  </MotionLink>
+                ) : (
+                  <motion.a key={key} {...motionProps} href={href}>
                     {item}
                   </motion.a>
                 );
@@ -475,60 +485,59 @@ export default function Navbar() {
                   const href = resolveHref(item);
                   const isResume = item === "Resume";
                   const isWorks = item === "Works";
-                  return (
-                    <motion.a
-                      key={item}
-                      href={href}
-                      onClick={(e) => {
-                        if (isResume) {
-                          e.preventDefault();
-                        } else if (isWorks) {
-                          handleWorksClick(e, href);
-                        }
-                      }}
-                      initial={{ y: -10, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      whileHover={isResume ? { 
-                        scale: 1.08,
-                        backgroundColor: '#3A513B',
-                        color: '#ffffff',
-                        borderColor: '#556B56',
-                        boxShadow: '0 8px 20px rgba(58, 123, 54, 0.4)'
-                      } : { 
-                        scale: 1.05,
-                        color: '#475D45'
-                      }}
-                      transition={{
-                        y: { delay: 0.15 + i * 0.05, duration: 0.4 },
-                        opacity: { delay: 0.15 + i * 0.05, duration: 0.4 },
-                        scale: {
-                          type: "spring",
-                          stiffness: 600,
-                          damping: 30
-                        },
-                        color: {
-                          duration: 0.2,
-                          ease: [0.25, 0.1, 0.25, 1]
-                        },
-                        backgroundColor: {
-                          duration: 0.2,
-                          ease: [0.25, 0.1, 0.25, 1]
-                        },
-                        borderColor: {
-                          duration: 0.2,
-                          ease: [0.25, 0.1, 0.25, 1]
-                        },
-                        boxShadow: {
-                          duration: 0.2,
-                          ease: [0.25, 0.1, 0.25, 1]
-                        }
-                      }}
-                      className={
-                        isResume
-                          ? "bg-white border-2 border-[#3A7B36] text-[#3A7B36] px-5 py-2.5 rounded-full hover:bg-[#3A513B] hover:text-white hover:border-[#556B56] transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg font-semibold relative"
-                          : "relative cursor-pointer"
+                  const isInternal = isInternalRoute(href);
+                  const { key, ...motionProps } = {
+                    key: item,
+                    onClick: (e) => {
+                      if (isResume) {
+                        e.preventDefault();
+                      } else if (isWorks) {
+                        handleWorksClick(e, href);
                       }
-                    >
+                    },
+                    initial: { y: -10, opacity: 0 },
+                    animate: { y: 0, opacity: 1 },
+                    whileHover: isResume ? { 
+                      scale: 1.08,
+                      backgroundColor: '#3A513B',
+                      color: '#ffffff',
+                      borderColor: '#556B56',
+                      boxShadow: '0 8px 20px rgba(58, 123, 54, 0.4)'
+                    } : { 
+                      scale: 1.05,
+                      color: '#475D45'
+                    },
+                    transition: {
+                      y: { delay: 0.15 + i * 0.05, duration: 0.4 },
+                      opacity: { delay: 0.15 + i * 0.05, duration: 0.4 },
+                      scale: {
+                        type: "spring",
+                        stiffness: 600,
+                        damping: 30
+                      },
+                      color: {
+                        duration: 0.2,
+                        ease: [0.25, 0.1, 0.25, 1]
+                      },
+                      backgroundColor: {
+                        duration: 0.2,
+                        ease: [0.25, 0.1, 0.25, 1]
+                      },
+                      borderColor: {
+                        duration: 0.2,
+                        ease: [0.25, 0.1, 0.25, 1]
+                      },
+                      boxShadow: {
+                        duration: 0.2,
+                        ease: [0.25, 0.1, 0.25, 1]
+                      }
+                    },
+                    className: isResume
+                      ? "bg-white border-2 border-[#3A7B36] text-[#3A7B36] px-5 py-2.5 rounded-full hover:bg-[#3A513B] hover:text-white hover:border-[#556B56] transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg font-semibold relative"
+                      : "relative cursor-pointer"
+                  };
+                  const content = (
+                    <>
                       {item}
                       {!isResume && (
                         <motion.span
@@ -540,6 +549,15 @@ export default function Navbar() {
                           }}
                         />
                       )}
+                    </>
+                  );
+                  return isInternal ? (
+                    <MotionLink key={key} {...motionProps} href={href}>
+                      {content}
+                    </MotionLink>
+                  ) : (
+                    <motion.a key={key} {...motionProps} href={href}>
+                      {content}
                     </motion.a>
                   );
                 })}
@@ -602,27 +620,30 @@ export default function Navbar() {
                     const href = resolveHref(item);
                     const isResume = item === "Resume";
                     const isWorks = item === "Works";
-                    return (
-                      <motion.a
-                        key={item}
-                        href={href}
-                        onClick={(e) => {
-                          if (isResume) {
-                            e.preventDefault();
-                          } else if (isWorks) {
-                            handleWorksClick(e, href);
-                          }
-                        }}
-                        initial={{ y: -10, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.15 + i * 0.05, duration: 0.4 }}
-                        whileHover={isResume ? { scale: 1.05 } : {}}
-                        className={
-                          isResume
-                            ? "bg-white border-2 border-[#3A7B36] text-[#3A7B36] px-5 py-2.5 rounded-full hover:bg-[#3A513B] hover:text-white hover:border-[#556B56] transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg font-semibold"
-                            : "hover:opacity-70 transition"
+                    const isInternal = isInternalRoute(href);
+                    const { key, ...motionProps } = {
+                      key: item,
+                      onClick: (e) => {
+                        if (isResume) {
+                          e.preventDefault();
+                        } else if (isWorks) {
+                          handleWorksClick(e, href);
                         }
-                      >
+                      },
+                      initial: { y: -10, opacity: 0 },
+                      animate: { y: 0, opacity: 1 },
+                      transition: { delay: 0.15 + i * 0.05, duration: 0.4 },
+                      whileHover: isResume ? { scale: 1.05 } : {},
+                      className: isResume
+                        ? "bg-white border-2 border-[#3A7B36] text-[#3A7B36] px-5 py-2.5 rounded-full hover:bg-[#3A513B] hover:text-white hover:border-[#556B56] transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg font-semibold"
+                        : "hover:opacity-70 transition"
+                    };
+                    return isInternal ? (
+                      <MotionLink key={key} {...motionProps} href={href}>
+                        {item}
+                      </MotionLink>
+                    ) : (
+                      <motion.a key={key} {...motionProps} href={href}>
                         {item}
                       </motion.a>
                     );
@@ -762,48 +783,47 @@ export default function Navbar() {
                   const href = resolveHref(item.label);
                   const isActive = activeMenuItem === item.label;
                   const isWorks = item.label === "Works";
+                  const isInternal = isInternalRoute(href);
                   const solidIconColor = isActive ? "#2c7b40" : "#475D45";
                   const glassIconColor = "#ffffff";
                   const iconColor = isPanelSolid ? solidIconColor : glassIconColor;
                   const iconHoverColor = isPanelSolid ? "#A4BCA2" : "#475D45";
-                  return (
-                    <motion.a
-                      key={item.label}
-                      href={href}
-                      onClick={(e) => {
-                        if (isWorks) {
-                          handleWorksClick(e, href);
-                        }
-                        setActiveMenuItem(item.label);
-                        handleNavClick();
-                      }}
-                      animate={
-                        isMobileMenuOpen
-                          ? { opacity: 1, y: 0 }
-                          : { opacity: 0, y: -8 }
+                  const { key, ...motionProps } = {
+                    key: item.label,
+                    onClick: (e) => {
+                      if (isWorks) {
+                        handleWorksClick(e, href);
                       }
-                      whileHover={{
-                        scale: 1.05,
-                        y: -2,
-                        color: iconHoverColor
-                      }}
-                      transition={{
-                        delay: isMobileMenuOpen ? i * 0.05 : 0,
-                        duration: 0.3,
-                        ease: [0.4, 0, 0.2, 1],
-                        scale: {
-                          type: "spring",
-                          stiffness: 400,
-                          damping: 30
-                        },
-                        color: {
-                          duration: 0.2,
-                          ease: [0.25, 0.1, 0.25, 1]
-                        }
-                      }}
-                      style={{ color: iconColor }}
-                      className="flex flex-col items-center gap-2 group"
-                    >
+                      setActiveMenuItem(item.label);
+                      handleNavClick();
+                    },
+                    animate: isMobileMenuOpen
+                      ? { opacity: 1, y: 0 }
+                      : { opacity: 0, y: -8 },
+                    whileHover: {
+                      scale: 1.05,
+                      y: -2,
+                      color: iconHoverColor
+                    },
+                    transition: {
+                      delay: isMobileMenuOpen ? i * 0.05 : 0,
+                      duration: 0.3,
+                      ease: [0.4, 0, 0.2, 1],
+                      scale: {
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 30
+                      },
+                      color: {
+                        duration: 0.2,
+                        ease: [0.25, 0.1, 0.25, 1]
+                      }
+                    },
+                    style: { color: iconColor },
+                    className: "flex flex-col items-center gap-2 group"
+                  };
+                  const content = (
+                    <>
                       {/* Icon */}
                       <motion.div
                         whileHover={{ scale: 1.1 }}
@@ -828,6 +848,15 @@ export default function Navbar() {
                       >
                         {item.label.toLowerCase()}
                       </span>
+                    </>
+                  );
+                  return isInternal ? (
+                    <MotionLink key={key} {...motionProps} href={href}>
+                      {content}
+                    </MotionLink>
+                  ) : (
+                    <motion.a key={key} {...motionProps} href={href}>
+                      {content}
                     </motion.a>
                   );
                 })}

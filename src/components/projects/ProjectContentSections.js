@@ -187,6 +187,7 @@ function YouTubeShort({
   const [isReady, setIsReady] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     let isCancelled = false;
     if (typeof window === "undefined") {
