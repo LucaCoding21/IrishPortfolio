@@ -98,10 +98,6 @@ export default function Navbar() {
   };
 
   // Check if href is an internal Next.js route (should use Link)
-  const isInternalRoute = (href) => {
-    return href && href.startsWith("/") && !href.startsWith("//") && !href.startsWith("http");
-  };
-
   // Handle Works click to always scroll to projects section on home page
   const handleWorksClick = (e, href) => {
     if (pathname === "/" && href === "#projects") {
@@ -339,7 +335,6 @@ export default function Navbar() {
                 const href = resolveHref(item);
                 const isResume = item === "Resume";
                 const isWorks = item === "Works";
-                const isInternal = isInternalRoute(href);
                 const { key, ...motionProps } = {
                   key: item,
                   onClick: (e) => {
@@ -357,14 +352,10 @@ export default function Navbar() {
                     ? "bg-white border-2 border-[#3A7B36] text-[#3A7B36] px-5 py-2.5 rounded-full hover:bg-[#3A513B] hover:text-white hover:border-[#556B56] transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg font-semibold"
                     : "hover:opacity-70 transition"
                 };
-                return isInternal ? (
+                return (
                   <MotionLink key={key} {...motionProps} href={href}>
                     {item}
                   </MotionLink>
-                ) : (
-                  <motion.a key={key} {...motionProps} href={href}>
-                    {item}
-                  </motion.a>
                 );
               })}
             </nav>
@@ -485,7 +476,6 @@ export default function Navbar() {
                   const href = resolveHref(item);
                   const isResume = item === "Resume";
                   const isWorks = item === "Works";
-                  const isInternal = isInternalRoute(href);
                   const { key, ...motionProps } = {
                     key: item,
                     onClick: (e) => {
@@ -551,14 +541,10 @@ export default function Navbar() {
                       )}
                     </>
                   );
-                  return isInternal ? (
+                  return (
                     <MotionLink key={key} {...motionProps} href={href}>
                       {content}
                     </MotionLink>
-                  ) : (
-                    <motion.a key={key} {...motionProps} href={href}>
-                      {content}
-                    </motion.a>
                   );
                 })}
               </nav>
@@ -617,10 +603,9 @@ export default function Navbar() {
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex items-center gap-4 md:gap-8 text-[16px] md:text-[20px] font-sans font-semibold text-fg">
                   {["Works", "About", "Contact", "Resume"].map((item, i) => {
-                    const href = resolveHref(item);
-                    const isResume = item === "Resume";
-                    const isWorks = item === "Works";
-                    const isInternal = isInternalRoute(href);
+                  const href = resolveHref(item);
+                  const isResume = item === "Resume";
+                  const isWorks = item === "Works";
                     const { key, ...motionProps } = {
                       key: item,
                       onClick: (e) => {
@@ -638,14 +623,10 @@ export default function Navbar() {
                         ? "bg-white border-2 border-[#3A7B36] text-[#3A7B36] px-5 py-2.5 rounded-full hover:bg-[#3A513B] hover:text-white hover:border-[#556B56] transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg font-semibold"
                         : "hover:opacity-70 transition"
                     };
-                    return isInternal ? (
+                    return (
                       <MotionLink key={key} {...motionProps} href={href}>
                         {item}
                       </MotionLink>
-                    ) : (
-                      <motion.a key={key} {...motionProps} href={href}>
-                        {item}
-                      </motion.a>
                     );
                   })}
                 </nav>
@@ -783,7 +764,6 @@ export default function Navbar() {
                   const href = resolveHref(item.label);
                   const isActive = activeMenuItem === item.label;
                   const isWorks = item.label === "Works";
-                  const isInternal = isInternalRoute(href);
                   const solidIconColor = isActive ? "#2c7b40" : "#475D45";
                   const glassIconColor = "#ffffff";
                   const iconColor = isPanelSolid ? solidIconColor : glassIconColor;
@@ -850,14 +830,10 @@ export default function Navbar() {
                       </span>
                     </>
                   );
-                  return isInternal ? (
+                  return (
                     <MotionLink key={key} {...motionProps} href={href}>
                       {content}
                     </MotionLink>
-                  ) : (
-                    <motion.a key={key} {...motionProps} href={href}>
-                      {content}
-                    </motion.a>
                   );
                 })}
               </nav>
@@ -867,11 +843,10 @@ export default function Navbar() {
 
         <AnimatePresence>
           {isMobileMenuOpen && resumeMenuItem && ResumeIcon && (
-            <motion.a
+            <motion.button
+              type="button"
               key="resume-circle"
-              href={resolveHref(resumeMenuItem.label)}
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
                 handleNavClick();
               }}
               className="flex items-center justify-center rounded-full"
@@ -900,7 +875,7 @@ export default function Navbar() {
             >
               <ResumeIcon className="w-6 h-6" />
               <span className="sr-only">{resumeMenuItem.label}</span>
-            </motion.a>
+            </motion.button>
           )}
         </AnimatePresence>
       </div>

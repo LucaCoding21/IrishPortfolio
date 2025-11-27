@@ -1,6 +1,19 @@
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import ScrollToTop from "@/components/ui/ScrollToTop";
+import { Darker_Grotesque, Figtree } from "next/font/google";
+
+const figtree = Figtree({
+  subsets: ["latin"],
+  variable: "--font-figtree",
+  display: "swap",
+});
+
+const darkerGrotesque = Darker_Grotesque({
+  subsets: ["latin"],
+  variable: "--font-darker-grotesque",
+  display: "swap",
+});
 
 export const metadata = {
   title: "iclaire — Portfolio",
@@ -8,12 +21,11 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const htmlClassNames = `${figtree.variable} ${darkerGrotesque.variable}`;
+
   return (
-    <html lang="en">
+    <html lang="en" className={htmlClassNames}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
