@@ -298,10 +298,7 @@ export default function Navbar() {
             style={{ boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.08), 0 4px 20px rgba(0, 0, 0, 0.12)' }}
           >
             {/* Logo with spin effect */}
-            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-            <Link 
-              href="/"
-            >
+            <Link href="/">
               <motion.div
                 initial={{ scale: 0, rotate: -180 }}
                 animate={{ scale: 1, rotate: 0 }}
@@ -449,7 +446,6 @@ export default function Navbar() {
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.1, duration: 0.4, ease: "easeOut" }}
               >
-                {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                 <Link 
                   href="/"
                   className="font-semibold tracking-tight text-[25px] text-black cursor-pointer"
@@ -594,7 +590,6 @@ export default function Navbar() {
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.1, duration: 0.4, ease: "easeOut" }}
                 >
-                  {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                   <Link 
                     href="/"
                     className="font-semibold font-sans tracking-tight text-[22px] text-fg cursor-pointer"

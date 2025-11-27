@@ -187,7 +187,6 @@ function YouTubeShort({
   const [isReady, setIsReady] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     let isCancelled = false;
     if (typeof window === "undefined") {
@@ -282,7 +281,8 @@ function YouTubeShort({
         playerRef.current = null;
       }
     };
-  }, [videoId, width, height, host]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [videoId, width, height]);
 
   const togglePlayback = () => {
     const player = playerRef.current;
