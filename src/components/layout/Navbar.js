@@ -295,12 +295,8 @@ export default function Navbar() {
             style={{ boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.08), 0 4px 20px rgba(0, 0, 0, 0.12)' }}
           >
             {/* Logo with spin effect */}
-            <a 
+            <Link 
               href="/"
-              onClick={(e) => {
-                e.preventDefault();
-                window.location.href = "/";
-              }}
             >
               <motion.div
                 initial={{ scale: 0, rotate: -180 }}
@@ -328,7 +324,7 @@ export default function Navbar() {
                   className="w-full h-full object-contain"
                 />
               </motion.div>
-            </a>
+            </Link>
             
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-4 md:gap-8 text-[16px] md:text-[20px] font-sans font-semibold text-black">
@@ -451,12 +447,8 @@ export default function Navbar() {
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.1, duration: 0.4, ease: "easeOut" }}
               >
-                <a 
+                <Link 
                   href="/"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.location.href = "/";
-                  }}
                   className="font-semibold tracking-tight text-[25px] text-black cursor-pointer"
                 >
                   <motion.div 
@@ -474,7 +466,7 @@ export default function Navbar() {
                       className="h-8 md:h-12 w-auto object-contain"
                     />
                   </motion.div>
-                </a>
+                </Link>
               </motion.div>
               
               {/* Desktop Navigation */}
@@ -596,16 +588,12 @@ export default function Navbar() {
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.1, duration: 0.4, ease: "easeOut" }}
                 >
-                  <a 
+                  <Link 
                     href="/"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      window.location.href = "/";
-                    }}
                     className="font-semibold font-sans tracking-tight text-[22px] text-fg cursor-pointer"
                   >
                     iclaire
-                  </a>
+                  </Link>
                 </motion.div>
                 
                 {/* Desktop Navigation */}

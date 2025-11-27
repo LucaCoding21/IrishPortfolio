@@ -281,7 +281,7 @@ function YouTubeShort({
         playerRef.current = null;
       }
     };
-  }, [videoId, width, height]);
+  }, [videoId, width, height, host]);
 
   const togglePlayback = () => {
     const player = playerRef.current;

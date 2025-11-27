@@ -143,7 +143,7 @@ export default function AboutPage() {
                 style={{ boxShadow: "10px 10px 0 rgba(58, 123, 54, 0.25)" }}
               >
                 <p className="text-[21px] md:text-[25px] leading-relaxed text-[#3c3d32] mb-4">
-                 Hi, I'm Claire! I turn “what if” ideas into fun, clean designs fueled by curiosity and a little bit of development.
+                 Hi, I&apos;m Claire! I turn &quot;what if&quot; ideas into fun, clean designs fueled by curiosity and a little bit of development.
                 </p>
                 <p className="text-[21px] md:text-[25px] leading-relaxed text-[#3c3d32]">
                   I am based in Vancouver, BC and feel free to reach out if anything catches your eye!
@@ -218,7 +218,7 @@ export default function AboutPage() {
                 Behind the Screen
               </h2>
               <p className="text-[22px] md:text-[25px] leading-relaxed max-w-[560px] mx-auto lg:mx-0 text-[#3c3d32]">
-                When I'm not working, I like exploring new hobbies and revisiting old ones. One hobby that I am revisiting is baking. My only favourite part about baking is being able to share the goodies I make with my friends and family. Their satisfaction encourages me to try new recipes.
+                When I&apos;m not working, I like exploring new hobbies and revisiting old ones. One hobby that I am revisiting is baking. My only favourite part about baking is being able to share the goodies I make with my friends and family. Their satisfaction encourages me to try new recipes.
               </p>
               <p className="text-[22px] md:text-[25px] leading-relaxed max-w-[560px] mx-auto lg:mx-0 text-[#3c3d32] mt-6">
                 Just like with work, I always want to ensure that what I create brings the most satisfaction.
