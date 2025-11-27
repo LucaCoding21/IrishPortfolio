@@ -45,6 +45,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Smooth scrolling for in-page anchors (e.g., Table of Contents) */
+/* Note: smooth scrolling may not work in all browsers, but it's a progressive enhancement */
 html { 
   scroll-behavior: smooth;
 }
@@ -52,6 +53,30 @@ html {
 /* Improve scroll snap behavior */
 html {
   scroll-padding-top: 0;
+}
+
+/* Aspect ratio fallback for older browsers */
+/* Modern browsers will use the native aspect-ratio property */
+/* Older browsers will fall back to padding-bottom technique */
+@supports not (aspect-ratio: 1) {
+  .aspect-ratio-fallback {
+    position: relative;
+    width: 100%;
+  }
+  
+  .aspect-ratio-fallback::before {
+    content: '';
+    display: block;
+    padding-bottom: var(--aspect-ratio, 56.25%); /* Default 16:9 */
+  }
+  
+  .aspect-ratio-fallback > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 ::selection { 

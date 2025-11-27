@@ -199,51 +199,76 @@ function YouTubeShort({
           return;
         }
 
-        const player = new YT.Player(containerRef.current, {
-          width,
-          height,
-          videoId,
-          host,
-          playerVars: {
-            autoplay: 0,
-            controls: 0,
-            mute: 1,
-            modestbranding: 1,
-            rel: 0,
-            playsinline: 1,
-            disablekb: 1,
-            fs: 0,
-            loop: 1,
-            playlist: videoId,
-            showinfo: 0,
-          },
-          events: {
-            onReady: (event) => {
-              event.target.mute();
-              if (!isCancelled) {
-                setIsReady(true);
-                setIsPlaying(false);
-              }
+        try {
+          const player = new YT.Player(containerRef.current, {
+            width,
+            height,
+            videoId,
+            host,
+            playerVars: {
+              autoplay: 0,
+              controls: 0,
+              mute: 1,
+              modestbranding: 1,
+              rel: 0,
+              playsinline: 1,
+              disablekb: 1,
+              fs: 0,
+              loop: 1,
+              playlist: videoId,
+              showinfo: 0,
             },
-            onStateChange: (event) => {
-              if (isCancelled) {
-                return;
-              }
-              if (event.data === YT.PlayerState.PLAYING) {
-                setIsPlaying(true);
-              } else if (event.data === YT.PlayerState.PAUSED) {
-                setIsPlaying(false);
-              } else if (event.data === YT.PlayerState.ENDED) {
-                event.target.seekTo(0);
-                setIsPlaying(false);
-              }
+            events: {
+              onReady: (event) => {
+                try {
+                  event.target.mute();
+                  if (!isCancelled) {
+                    setIsReady(true);
+                    setIsPlaying(false);
+                  }
+                } catch (error) {
+                  console.debug("YouTube player ready error:", error);
+                  if (!isCancelled) {
+                    setIsReady(true);
+                  }
+                }
+              },
+              onStateChange: (event) => {
+                if (isCancelled) {
+                  return;
+                }
+                try {
+                  if (event.data === YT.PlayerState.PLAYING) {
+                    setIsPlaying(true);
+                  } else if (event.data === YT.PlayerState.PAUSED) {
+                    setIsPlaying(false);
+                  } else if (event.data === YT.PlayerState.ENDED) {
+                    event.target.seekTo(0);
+                    setIsPlaying(false);
+                  }
+                } catch (error) {
+                  console.debug("YouTube player state change error:", error);
+                }
+              },
+              onError: (event) => {
+                console.debug("YouTube player error:", event.data);
+                if (!isCancelled) {
+                  setIsReady(false);
+                }
+              },
             },
-          },
-        });
+          });
 
-        playerRef.current = player;
+          playerRef.current = player;
+        } catch (error) {
+          console.debug("Failed to create YouTube player:", error);
+          if (!isCancelled) {
+            setIsReady(false);
+          }
+        }
       })
-      .catch(() => {
+      .catch((error) => {
+        console.debug("Failed to load YouTube API:", error);
         if (!isCancelled) {
           setIsReady(false);
         }
@@ -263,10 +288,14 @@ function YouTubeShort({
     if (!player || !isReady) {
       return;
     }
-    if (isPlaying) {
-      player.pauseVideo();
-    } else {
-      player.playVideo();
+    try {
+      if (isPlaying) {
+        player.pauseVideo();
+      } else {
+        player.playVideo();
+      }
+    } catch (error) {
+      console.debug("Failed to toggle YouTube playback:", error);
     }
   };
 
@@ -301,7 +330,8 @@ function CloudinaryVideo({ src, title, playOnView = false }) {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    if (!playOnView || typeof IntersectionObserver === "undefined") {
+    // Check for IntersectionObserver support (browser compatibility)
+    if (!playOnView || typeof window === "undefined" || typeof IntersectionObserver === "undefined") {
       return;
     }
 
@@ -314,7 +344,15 @@ function CloudinaryVideo({ src, title, playOnView = false }) {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            element.play().catch(() => {});
+            // Handle play promise with proper error handling
+            const playPromise = element.play();
+            if (playPromise !== undefined) {
+              playPromise.catch((error) => {
+                // Autoplay was prevented or video failed to play
+                // This is expected in some browsers due to autoplay policies
+                console.debug("Video autoplay prevented:", error);
+              });
+            }
           } else {
             element.pause();
             element.currentTime = 0;
@@ -350,10 +388,20 @@ function CloudinaryIframe({ embedUrl, title, playOnView = false, iframeStyle = {
   const containerRef = useRef(null);
   const [iframeSrc, setIframeSrc] = useState(embedUrl);
   const hasAutoplayed = useRef(false);
+  
+  // Memoize autoplay check to avoid recalculating on every render
+  const hasAutoplayInUrl = useMemo(() => embedUrl.includes("autoplay=true"), [embedUrl]);
 
   useEffect(() => {
-    if (!playOnView || typeof IntersectionObserver === "undefined") {
-      // If playOnView is false, use the original URL without autoplay
+    // If URL already has autoplay, use it immediately
+    if (hasAutoplayInUrl && !playOnView) {
+      setIframeSrc(embedUrl);
+      return;
+    }
+
+    // Check for IntersectionObserver support (browser compatibility)
+    if (!playOnView || typeof window === "undefined" || typeof IntersectionObserver === "undefined") {
+      // If playOnView is false or IntersectionObserver not supported, use the original URL
       setIframeSrc(embedUrl);
       return;
     }
@@ -384,14 +432,13 @@ function CloudinaryIframe({ embedUrl, title, playOnView = false, iframeStyle = {
     return () => {
       observer.disconnect();
     };
-  }, [playOnView, embedUrl]);
+  }, [playOnView, embedUrl, hasAutoplayInUrl]);
 
   return (
     <div ref={containerRef} className="absolute inset-0 w-full h-full">
       <iframe
         src={iframeSrc}
         title={title}
-        frameBorder="0"
         allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
         allowFullScreen
         className="absolute inset-0 w-full h-full"
@@ -573,7 +620,13 @@ export default function ProjectContentSections({ sections }) {
 
     const handleScroll = () => {
       if (!ticking) {
-        window.requestAnimationFrame(updateActiveSection);
+        // Use requestAnimationFrame with fallback for older browsers
+        if (typeof window.requestAnimationFrame !== "undefined") {
+          window.requestAnimationFrame(updateActiveSection);
+        } else {
+          // Fallback for browsers without requestAnimationFrame
+          setTimeout(updateActiveSection, 16);
+        }
         ticking = true;
       }
     };
@@ -581,12 +634,17 @@ export default function ProjectContentSections({ sections }) {
     // Initial measurement
     updateActiveSection();
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll, { passive: true });
+    // Check if window is available (SSR safety)
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      window.addEventListener("resize", handleScroll, { passive: true });
+    }
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
+      if (typeof window !== "undefined") {
+        window.removeEventListener("scroll", handleScroll);
+        window.removeEventListener("resize", handleScroll);
+      }
     };
   }, [sectionsToRender]);
 

@@ -14,6 +14,10 @@ export default function Hero() {
   const [blobTarget, setBlobTarget] = useState(null);
 
   useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
     const update = () => {
       const r = ref.current?.getBoundingClientRect();
       if (!r) return;
@@ -26,6 +30,10 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
     // Preload both images for smooth experience
     const img1 = new window.Image();
     const img2 = new window.Image();

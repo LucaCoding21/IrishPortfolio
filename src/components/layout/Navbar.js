@@ -95,6 +95,35 @@ export default function Navbar() {
     return "#";
   };
 
+  // Handle Works click to always scroll to projects section on home page
+  const handleWorksClick = (e, href) => {
+    if (pathname === "/" && href === "#projects") {
+      e.preventDefault();
+      const projectsSection = document.getElementById("projects");
+      if (projectsSection) {
+        // Check if we're already at the projects section
+        const currentScrollY = window.scrollY;
+        const projectsTop = projectsSection.offsetTop;
+        const isAtProjects = Math.abs(currentScrollY - projectsTop) < 100; // Within 100px of projects section
+        
+        if (isAtProjects) {
+          // If already at projects, refresh by scrolling to top then back to projects
+          // This gives visual feedback that the button is working
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          
+          setTimeout(() => {
+            projectsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+            window.history.replaceState(null, "", "#projects");
+          }, 300); // Wait 300ms for scroll to top to start
+        } else {
+          // Not at projects yet, just scroll there normally
+          projectsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+          window.history.replaceState(null, "", "#projects");
+        }
+      }
+    }
+  };
+
   const menuItems = [
     { label: "Home", icon: HiHome },
     { label: "Works", icon: HiBriefcase },
@@ -178,6 +207,12 @@ export default function Navbar() {
 
     setIsOverHero(true);
 
+    // Check for IntersectionObserver support (browser compatibility)
+    if (typeof window === "undefined" || typeof IntersectionObserver === "undefined") {
+      setIsOverHero(false);
+      return;
+    }
+
     const hero = document.querySelector("#hero");
     if (!hero) return;
 
@@ -200,12 +235,16 @@ export default function Navbar() {
 
   // Scroll detection for project pages and hero page
   useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
     const handleScroll = () => {
       const scrollY = window.scrollY;
       setIsScrolled(scrollY > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll(); // Check initial scroll position
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -296,11 +335,18 @@ export default function Navbar() {
               {["Works", "About", "Contact", "Resume"].map((item, i) => {
                 const href = resolveHref(item);
                 const isResume = item === "Resume";
+                const isWorks = item === "Works";
                 return (
                   <motion.a
                     key={item}
                     href={href}
-                    onClick={isResume ? (e) => e.preventDefault() : undefined}
+                    onClick={(e) => {
+                      if (isResume) {
+                        e.preventDefault();
+                      } else if (isWorks) {
+                        handleWorksClick(e, href);
+                      }
+                    }}
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 + i * 0.05, duration: 0.3 }}
@@ -436,11 +482,18 @@ export default function Navbar() {
                 {["Works", "About", "Contact", "Resume"].map((item, i) => {
                   const href = resolveHref(item);
                   const isResume = item === "Resume";
+                  const isWorks = item === "Works";
                   return (
                     <motion.a
                       key={item}
                       href={href}
-                      onClick={isResume ? (e) => e.preventDefault() : undefined}
+                      onClick={(e) => {
+                        if (isResume) {
+                          e.preventDefault();
+                        } else if (isWorks) {
+                          handleWorksClick(e, href);
+                        }
+                      }}
                       initial={{ y: -10, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       whileHover={isResume ? { 
@@ -560,11 +613,18 @@ export default function Navbar() {
                   {["Works", "About", "Contact", "Resume"].map((item, i) => {
                     const href = resolveHref(item);
                     const isResume = item === "Resume";
+                    const isWorks = item === "Works";
                     return (
                       <motion.a
                         key={item}
                         href={href}
-                        onClick={isResume ? (e) => e.preventDefault() : undefined}
+                        onClick={(e) => {
+                          if (isResume) {
+                            e.preventDefault();
+                          } else if (isWorks) {
+                            handleWorksClick(e, href);
+                          }
+                        }}
                         initial={{ y: -10, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.15 + i * 0.05, duration: 0.4 }}
@@ -713,6 +773,7 @@ export default function Navbar() {
                 {mainMenuItems.map((item, i) => {
                   const href = resolveHref(item.label);
                   const isActive = activeMenuItem === item.label;
+                  const isWorks = item.label === "Works";
                   const solidIconColor = isActive ? "#2c7b40" : "#475D45";
                   const glassIconColor = "#ffffff";
                   const iconColor = isPanelSolid ? solidIconColor : glassIconColor;
@@ -721,7 +782,10 @@ export default function Navbar() {
                     <motion.a
                       key={item.label}
                       href={href}
-                      onClick={() => {
+                      onClick={(e) => {
+                        if (isWorks) {
+                          handleWorksClick(e, href);
+                        }
                         setActiveMenuItem(item.label);
                         handleNavClick();
                       }}

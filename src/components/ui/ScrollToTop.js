@@ -6,6 +6,10 @@ export default function ScrollToTop() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
     const handleScroll = () => {
       setVisible(window.scrollY > 200);
     };
@@ -16,11 +20,22 @@ export default function ScrollToTop() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToTop = () =>
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+  const scrollToTop = () => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    
+    // Check if smooth scrolling is supported
+    try {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    } catch (error) {
+      // Fallback for browsers that don't support smooth scroll behavior
+      window.scrollTo(0, 0);
+    }
+  };
 
   if (!visible) {
     return null;
